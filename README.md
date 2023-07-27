@@ -26,7 +26,7 @@
 
 ![未来计划](example/example5.png)
 ## 安装指南
-
+ 
 1.基础模型安装：Releases-Checkpoint.7z存有监督微调后的Lora权重，可根据配置条件(建议在搭载GPU的环境运行)，参考ChatGLM2-6B官方教程加载,或直接使用Wenda(闻达)。
 
   模型文件组成：
