@@ -1,4 +1,4 @@
-![image](https://github.com/Yu-Yang-Li/StarGLM/assets/113218777/d6ded892-b7a3-454a-8fec-57474d02b484)# StarGLM
+# StarGLM
 
 ## 项目描述
 
