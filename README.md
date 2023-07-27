@@ -87,9 +87,15 @@ Checkpoint
 
 ## 引用
 如果这篇工作对你有帮助，请引用：
+
 @Misc{chatglm-for-variable-star,
+
   title = {StarGLM},
+  
   author = {YuYang Li, CunShi Wang, MengWei Qu, JiFeng Liu, Yu Bai, Roberto Soria},
+  
   howpublished = {\url{https://github.com/Yu-Yang-Li/StarGLM}},
+  
   year = {2023}
+  
 }
