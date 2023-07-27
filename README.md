@@ -1,10 +1,10 @@
-# StarGLM
+![image](https://github.com/Yu-Yang-Li/StarGLM/assets/113218777/07e0541f-c18f-45e7-a6ee-0ab89fc6263e)# StarGLM
 
 ## 项目描述
 
-我们整合了司天工程相关的语料数据与知识库资料，训练得到了天文大语言模型StarGLM(GLM for Variable Star)。
+我们整合了司天工程相关的语料数据与知识库资料，训练得到了天文大语言模型StarGLM(ChatGLM for Variable Star)。
 
-以期解决大语言模型在部分天文通用知识和前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑打下基础。
+以期缓解大语言模型在部分天文通用知识和前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
 
 ## 功能展示
 
@@ -27,23 +27,39 @@
 ![未来计划](example/example5.png)
 ## 安装指南
 
-1.基础模型安装：Checkpoint中存有Lora文件，Model中保存了相应模型，可根据配置条件自行选择合适方式加载，具体可参考ChatGLM2-6B官方教程。
+1.基础模型安装：Releases-Checkpoint.7z存有监督微调后的Lora权重，可根据配置条件(建议在搭载GPU的环境运行)，参考ChatGLM2-6B官方教程加载,或直接使用Wenda(闻达)。
 
-2.链接知识库/StableDiffusion:建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库筛选、AI绘画等任务。
+模型文件组成：
+Checkpoint 
+    ├── adapter_config.json
+    └── adapter_model.bin
+
+2.链接知识库/StableDiffusion:建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
 (注：考虑到版权因素，暂不直接提供知识库文件，经典书籍可参考example/books，感谢沈长安（一只张秀）同学提供。变星领域相关知识，将在司天-变星知识图谱完善后一同发布。StableDiffusion使用的基模型与Lora权重见“使用/推荐的相关项目”)
+## 司天项目介绍
+
+当今天文学已经从刻画静态宇宙发展到认识动态宇宙。对宇宙空间中任何时间变化加以研究的时域天文学，将揭示各类天体的变化、发现和探索新天体、新现象并开拓新的理论空间，已成为天文和天体物理界最活跃和最具突破性的前沿领域之一。高效搜寻和监测天体动态事件需要大视场、多波段和高频次的时域巡天，高性能观测设备与能充分发挥设备观测能力的优质天文台址缺一不可。司天工程是我国天文学家面向时域天文学所提出的“十五五”天文重大基础设施，一期计划在国内多个优选观测台址布置54台（18组）口径1米级的大视场望远镜，组成多波段同时监测网络，每30分钟完成1万平方度天区的高精度三色“凝视”巡天。司天的采样频率比全球其它巡天项目高近两个量级，将突破目前探测时标的限制，在新的空域和时域下发现大批新天体、新现象，在宇宙极端高能爆发源、引力波电磁对应体、系外行星和太阳系天体等理论和观测研究中形成新的突破，在“两暗一黑三起源”等重大科学问题研究以及地球文明灾难预警等国家空间安全问题方面发挥重要作用。
+
+其中司天"大脑"作为数据智能处理中枢，需要适配于天文的AI工具。StarGLM作为其备选方案，在使用大模型整合天文知识的同时，探索多模态解决具体天文问题的可能性。
+![sitian](example/Sitian_brain.png)
 ## 许可证信息
 
 项目源码遵从Alpaca 2.0，ChatGLM2-6b的模型权重使用需遵从相应许可。
 
 ## 使用/推荐的相关项目
 
-- [ChatGLM2-6B](https://github.com/thudm/chatglm2-6b)
-- [Wenda](https://github.com/wenda-LLM/wenda)
-- [VisualGLM-6B](https://github.com/THUDM/VisualGLM-6B)
-- [ChatGLM-Efficient-Tuning](https://github.com/hiyouga/ChatGLM-Efficient-Tuning)
-- [BelleGroup](https://huggingface.co/BelleGroup)
-- 
+- THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com) 
+- wenda-LLM/wenda: 闻达：一个LLM调用平台。目标为针对特定环境的高效内容生成，同时考虑个人和中小企业的计算资源局限性，以及知识安全和私密性问题 (github.com) 
+- THUDM/VisualGLM-6B: Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型 (github.com) 
+- hiyouga/ChatGLM-Efficient-Tuning: Fine-tuning ChatGLM-6B with PEFT | 基于 PEFT 的高效 ChatGLM 微调 (github.com) 
+- BelleGroup (BELLE Group // Be Everyone's Large Language model Engine) (huggingface.co)
+- PlexPt/chatgpt-corpus: ChatGPT 中文语料库 对话语料 小说语料 客服语料 用于训练大模型 (github.com)
+- YeungNLP/firefly-train-1.1M · Datasets at Hugging Face
+- XueFuzhao/InstructionWild (github.com)
+- Instruction-Tuning-with-GPT-4/GPT-4-LLM: Instruction Tuning with GPT-4 (github.com)
+- rexwang8/stellar-diffusion · Hugging Face
+- 光芒-极光｜LiblibAI
 ## To do list
 
 ### 大语言模型（科普方式）
