@@ -8,11 +8,11 @@
  
 ## 功能展示
 
-![监督微调](example/example1.png)
+![监督微调](example/example_1.png)
 
 <br>
 
-![链接知识库](example/example2.png)
+![链接知识库](example/example_2.png)
 
 <br>
 
