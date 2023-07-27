@@ -3,7 +3,11 @@
 ## 项目描述
 
 StarGLM：ChatGLM for Variable Star，我们整合了司天工程相关的语料数据与知识库资料，训练得到了天文大语言模型StarGLM（GLM for Variable Star），以期解决大语言模型在部分天文通用知识和前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测智能体——司天大脑打下基础。
-
+![监督微调](example/example1.png)
+![链接知识库](example/example2.png)
+![链接StableDiffusion](example/example3.png)
+![多模态探索](example/example4.png)
+![未来计划](example/example5.png)
 ## 安装指南
 
 Checkpoint中保存了相应Lora文件，Model中保存了Lora导出的模型，可根据配置条件自行选择合适方式加载。
