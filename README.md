@@ -49,7 +49,7 @@ Checkpoint
 其中司天"大脑"作为数据智能处理中枢，需要适配于天文的AI工具。StarGLM作为其备选方案，在使用大模型整合天文知识的同时，探索多模态解决具体天文问题的可能性。
 ## 许可证信息
 
-项目源码遵从Alpaca 2.0，ChatGLM2-6b的模型权重使用需遵从相应许可。
+项目源码遵从Alpaca 2.0，ChatGLM2-6B的模型权重使用需遵从相应许可。
 
 ## 使用/推荐的相关项目
 
@@ -84,3 +84,12 @@ Checkpoint
 - [ ]  结合CodeGeeX2工作，提升模型在天文领域的编程能力。
 - [ ]  考虑通过工具学习，链接相关天文专业工具。
 - [ ]  紧跟Agent相关工作，验证作为司天大脑备选方案的可行性。
+
+## 引用
+如果这篇工作对你有帮助，请引用：
+@Misc{chatglm-for-variable-star,
+  title = {StarGLM},
+  author = {YuYang Li, CunShi Wang, MengWei Qu, JiFeng Liu, Yu Bai, Roberto Soria},
+  howpublished = {\url{https://github.com/Yu-Yang-Li/StarGLM}},
+  year = {2023}
+}
