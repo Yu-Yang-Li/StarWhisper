@@ -16,7 +16,7 @@
 
 <br>
 
-![链接StableDiffusion](example/example3.png)
+![链接SD](example/example3.png)
 
 <br>
 
