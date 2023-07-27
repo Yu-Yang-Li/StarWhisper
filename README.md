@@ -29,9 +29,9 @@
 
 1.基础模型安装：Releases-Checkpoint.7z存有监督微调后的Lora权重，可根据配置条件(建议在搭载GPU的环境运行)，参考ChatGLM2-6B官方教程加载,或直接使用Wenda(闻达)。
 
-模型文件组成：
+  模型文件组成：
 
-Checkpoint 
+  Checkpoint 
 
     ├── adapter_config.json
     
@@ -83,7 +83,7 @@ Checkpoint
 
 - [ ]  结合CodeGeeX2-6B工作，提升模型在天文领域的编程能力。
 - [ ]  考虑通过工具学习，链接相关天文专业工具。
-- [ ]  紧跟Agent相关工作，验证作为司天大脑备选方案的可行性。
+- [ ]  尝试Agent相关工作，验证作为司天大脑备选方案的可行性。
 
 ## 引用
 如果这篇工作对你有帮助，请引用：
