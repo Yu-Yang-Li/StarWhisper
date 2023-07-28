@@ -6,7 +6,7 @@
  
 ## 功能展示
 
-![监督微调](example/example_1.png)
+![监督微调](example/example1.png)
 
 <br>
 
