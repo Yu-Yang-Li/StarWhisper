@@ -26,7 +26,7 @@
 ## 安装指南
  
 1.基础模型安装：Releases-Checkpoint.7z存有监督微调后的Lora权重，可根据配置条件(建议在搭载GPU的环境运行)，参考ChatGLM2-6B官方教程加载,或直接使用Wenda(闻达)。
-
+![release](example/Release.png)
 2.链接知识库/StableDiffusion:建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
 (注：考虑到版权因素，暂不直接提供知识库文件，经典书籍可参考example/books，感谢沈长安（一只张秀）同学提供。变星领域相关知识，将在司天-变星知识图谱完成后一同发布。推荐StableDiffusion使用的基模型与Lora权重见“使用/推荐的相关项目”)
