@@ -53,6 +53,7 @@ Checkpoint.7z存有监督微调后的Lora权重，可根据配置条件(建议�
 - YeungNLP/firefly-train-1.1M · Datasets at Hugging Face
 - XueFuzhao/InstructionWild (github.com)
 - Instruction-Tuning-with-GPT-4/GPT-4-LLM: Instruction Tuning with GPT-4 (github.com)
+- MeteorCollector/iris_AstroQnA_ZH: Astronomy Q-A pairs in simplified Chinese. (github.com)
 - rexwang8/stellar-diffusion · Hugging Face
 - 光芒-极光｜LiblibAI
 - dallinmackay/JWST-Deep-Space-diffusion · Hugging Face
