@@ -18,7 +18,7 @@
 
 <br>
 
-![多模态探索](example/example4.png)
+![多模态探索](example/example_4.png)
 
 <br>
 
