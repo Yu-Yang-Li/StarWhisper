@@ -7,23 +7,27 @@
 ### 重要更新：通过改变训练方式，v0.1.1很大程度缓解了上一版本的灾难性遗忘问题，请使用Release中新的权重
 ## 功能展示
 
-![监督微调](example/example1.png)
+![监督微调](example/StarGLM_1.png)
 
 <br>
 
-![链接知识库](example/example2.png)
+![链接知识库](example/StarGLM_2.png)
 
 <br>
 
-![链接SD](example/example_3.png)
+![链接SD](example/StarGLM_3.png)
 
 <br>
 
-![多模态探索](example/example_4.png)
+![RLHF](example/StarGLM_4.png)
 
 <br>
 
-![未来计划](example/example5.png)
+![多模态探索](example/StarGLM_5.png)
+
+<br>
+
+![未来计划](example/StarGLM_6.png)
 ## 安装指南
  
 1.基础模型安装：Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.1)
