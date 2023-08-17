@@ -7,9 +7,7 @@
 ## 版本更新：
 通过修改训练方法、添加长文本回答语料、人工反馈强化学习/直接偏好优化等方法进行了优化，很大程度缓解了先前版本的灾难性遗忘问题，并提高了模型基于知识库回答的质量与逻辑性。
 
-更新后的监督学习权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2-sft
-
-更新后的DPO权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2-dpo
+更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2
 
 合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 ## 功能展示
