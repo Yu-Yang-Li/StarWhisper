@@ -33,12 +33,32 @@
 <br>
 
 ![未来计划](example/StarGLM_6.jpg)
+
 ## 安装指南
  
-1.基础模型安装：Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)
--Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时需二者合并加载，已合并可直接加载的模型可通过HuggingFace主页：https://huggingface.co/Yu-Yang-Li/StarGLM
+1.基础模型安装：
+Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)-Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时需二者合并加载。
 
-2.链接知识库/StableDiffusion:建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
+也可直接通过transformer库导入使用。
+
+对于精确问答，建议设置temperature=0.01，top_p=0.8。
+```python
+import sys
+from peft import PeftModel
+from transformers import AutoModel, AutoTokenizer
+sys.path.append('..')
+model = AutoModel.from_pretrained("Yu-Yang-Li/StarGLM",  device_map='auto')
+model = model.half().cuda()
+tokenizer = AutoTokenizer.from_pretrained("Yu-Yang-Li/StarGLM", trust_remote_code=True)
+sents = ['什么是引力透镜。\n答：']
+for s in sents:
+    response = model.chat(tokenizer, s, max_length=128, eos_token_id=tokenizer.eos_token_id)
+    print(response)
+```
+
+2.链接知识库/StableDiffusion:
+
+建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
 (注：考虑到版权因素，暂不直接提供知识库文件，经典书籍可参考example/books，感谢张家硕同学提供。变星领域相关知识，将在司天-变星知识图谱完成后一同发布。推荐StableDiffusion使用的基模型与Lora权重见“使用/推荐的相关项目”)
 ## 司天工程
