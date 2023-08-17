@@ -4,10 +4,10 @@
 
 以期缓解大语言模型在部分天文通用知识和前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
 
-### 重要更新[Release:v2.0.0]：
+## 版本更新：
 通过修改训练方法、添加长文本回答语料、进行人工反馈强化学习等方法训练得到了StarGLM v2，很大程度解决了先前版本的灾难性遗忘问题，并提高了模型基于知识库回复的质量与逻辑性。
 
-合并后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0
+更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0
 
 合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 ## 功能展示
@@ -36,7 +36,7 @@
 ## 安装指南
  
 1.基础模型安装：Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)
-Checkpoint.7z[已更新,很大程度缓解了v0.1.0存在的灾难性遗忘问题]存有监督微调和经过DPO的Lora权重，运行时需二者合并加载，已合并可直接加载的模型，可通过HuggingFace主页：https://huggingface.co/Yu-Yang-Li/StarGLM。
+-Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时需二者合并加载，已合并可直接加载的模型可通过HuggingFace主页：https://huggingface.co/Yu-Yang-Li/StarGLM
 
 2.链接知识库/StableDiffusion:建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
@@ -57,16 +57,13 @@ Checkpoint.7z[已更新,很大程度缓解了v0.1.0存在的灾难性遗忘问�
 - THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com) 
 - wenda-LLM/wenda: 闻达：一个LLM调用平台。目标为针对特定环境的高效内容生成，同时考虑个人和中小企业的计算资源局限性，以及知识安全和私密性问题 (github.com) 
 - THUDM/VisualGLM-6B: Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型 (github.com) 
-- hiyouga/ChatGLM-Efficient-Tuning: Fine-tuning ChatGLM-6B with PEFT | 基于 PEFT 的高效 ChatGLM 微调 (github.com) 
-- BelleGroup (BELLE Group // Be Everyone's Large Language model Engine) (huggingface.co)
-- PlexPt/chatgpt-corpus: ChatGPT 中文语料库 对话语料 小说语料 客服语料 用于训练大模型 (github.com)
-- YeungNLP/firefly-train-1.1M · Datasets at Hugging Face
-- XueFuzhao/InstructionWild (github.com)
-- Instruction-Tuning-with-GPT-4/GPT-4-LLM: Instruction Tuning with GPT-4 (github.com)
-- MeteorCollector/iris_AstroQnA_ZH: Astronomy Q-A pairs in simplified Chinese. (github.com)
+- hiyouga/ChatGLM-Efficient-Tuning: Fine-tuning ChatGLM-6B with PEFT | 基于 PEFT 的高效 ChatGLM 微调 (github.com)
 - rexwang8/stellar-diffusion · Hugging Face
 - 光芒-极光｜LiblibAI
 - dallinmackay/JWST-Deep-Space-diffusion · Hugging Face
+- MeteorCollector/iris_AstroQnA_ZH: Astronomy Q-A pairs in simplified Chinese. (github.com)
+- HIT-SCIR/huozi (github.com)
+- Instruction-Tuning-with-GPT-4/GPT-4-LLM: Instruction Tuning with GPT-4 (github.com)
 ## To do list
 
 ### 大语言模型（科普方式）
