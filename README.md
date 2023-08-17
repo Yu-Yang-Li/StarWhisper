@@ -37,7 +37,9 @@
 ## 安装指南
  
 1.基础模型安装：
-Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)-Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时需二者合并加载。
+
+Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)
+Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时二者合并加载。
 
 也可直接通过transformer库导入使用。
 
