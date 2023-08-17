@@ -5,11 +5,11 @@
 以期缓解大语言模型在部分天文通用知识和前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
 
 ## 版本更新：
-通过修改训练方法、添加长文本回答语料、进行人工反馈强化学习等方法进行了优化，很大程度解决了先前版本的灾难性遗忘问题，并提高了模型基于知识库回复的质量与逻辑性。
+通过修改训练方法、添加长文本回答语料、人工反馈强化学习/直接偏好优化等方法进行了优化，很大程度缓解了先前版本的灾难性遗忘问题，并提高了模型基于知识库回答的质量与逻辑性。
 
-更新后的监督学习权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0-sft
+更新后的监督学习权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2-sft
 
-更新后的DPO权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0-dpo
+更新后的DPO权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2-dpo
 
 合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 ## 功能展示
