@@ -36,7 +36,7 @@
 
 ## 安装指南
  
-1.基础模型安装：
+1.基础模型安装（推荐显存>=16G）：
 
 Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)
 Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时二者合并加载。
