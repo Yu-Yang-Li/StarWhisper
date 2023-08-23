@@ -49,8 +49,7 @@ import sys
 from peft import PeftModel
 from transformers import AutoModel, AutoTokenizer
 sys.path.append('..')
-model = AutoModel.from_pretrained("Yu-Yang-Li/StarGLM",  device_map='auto')
-model = model.half().cuda()
+model = AutoModel.from_pretrained("Yu-Yang-Li/StarGLM",  device_map='auto', trust_remote_code=True)
 tokenizer = AutoTokenizer.from_pretrained("Yu-Yang-Li/StarGLM", trust_remote_code=True)
 sents = ['什么是引力透镜。\n答：']
 for s in sents:
