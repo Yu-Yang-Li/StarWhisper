@@ -10,6 +10,8 @@
 更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2
 
 合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
+
+【已通过高质量GPT4生成、人工标注语料微调GPT3.5 Turbo，预计最近会开放体验demo】
 ## 功能展示
 
 ![监督微调](example/StarGLM_1.jpg)
