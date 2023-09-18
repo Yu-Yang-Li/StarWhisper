@@ -1,17 +1,15 @@
 # StarGLM
 
-我们整合了司天工程相关的语料数据与知识库资料，训练得到了天文大模型StarGLM(ChatGLM for Variable Star)。
+我们整合了天文科学教育联盟、司天工程、集思谱文献平台相关的语料数据与知识库资料，训练得到了天文大模型StarGLM(ChatGLM for Star)。
 
-以期缓解大语言模型在天文通用知识和部分前沿变星领域的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
+以期缓解大语言模型在天文专业的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
 
 ## 版本更新：
-通过修改训练方法、添加长文本回答语料、人工反馈强化学习/直接偏好优化等方法进行了优化，很大程度缓解了先前版本的灾难性遗忘问题，并提高了模型基于知识库回答的质量与逻辑性。
+1.通过Tool learning语料训练，提升了模型通过Agent进行工具规划调度与执行回复的能力。
+2.公布了上一版本在CG-Eval评测上的结果，天文物理能力提升明显，数学推理计算得分高于文心一言。
+更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 
-更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.2
-
-合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
-
-【已通过高质量GPT4生成、人工标注语料微调GPT3.5 Turbo，预计最近会开放体验demo】
+sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 ## 功能展示
 
 ![监督微调](example/StarGLM_1.jpg)
@@ -59,6 +57,9 @@ for s in sents:
     print(response)
 ```
 
+2. 加载工具学习权重
+https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载。
+【经过工具学习语料训练后的版本，对原天文知识有一定灾难性遗忘，下一版本将探索缓解】
 2.链接知识库/StableDiffusion:
 
 建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
