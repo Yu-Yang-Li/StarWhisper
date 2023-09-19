@@ -122,6 +122,7 @@ https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 ### 观测Agent（司天大脑）
 
 - [ ]  结合CodeGeeX2-6B工作，提升模型在天文领域的编程能力。
+- [ ]  在MiniSiTian/司天样机上，进行与天文环境交互的Agent探索工作。
 - 考虑通过工具学习，链接天文专业工具。
 - 尝试Agent相关工作，验证作为司天大脑备选方案的可行性。
 
