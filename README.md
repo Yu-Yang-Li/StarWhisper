@@ -72,9 +72,10 @@ for s in sents:
 
 2. 加载工具学习权重
 https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
-，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载。
-【经过工具学习语料训练后的版本，对原天文知识有一定灾难性遗忘，下一版本将探索缓解】
-2.链接知识库/StableDiffusion:
+，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载，具体使用可参考demo_starglm_agent.ipynb。
+【经过工具学习语料训练后的版本，对原天文知识有一定灾难性遗忘，下一版本将尝试缓解】
+
+3.链接知识库/StableDiffusion:
 
 建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
