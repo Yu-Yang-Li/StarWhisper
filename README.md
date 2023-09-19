@@ -41,11 +41,11 @@ sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 
 <br>
 
-![Eval](StarGPT/Eval.png)
+![Eval](example/Eval.png)
 
 <br>
 
-![StarGPT](example/StarGPT.jpg)
+![StarGPT](example/StarGPT.png)
 ## 安装指南
  
 1.基础模型安装（推荐显存>=16G）：
