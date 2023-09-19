@@ -7,7 +7,7 @@
 ## 版本更新：
 1.通过Tool learning语料训练，提升了模型通过Agent进行工具规划调度与执行回复的能力。
 
-2.公布了上一版本在CG-Eval评测上的结果，天文物理能力提升明显，数学推理计算得分高于文心一言。
+2.公布了上一版本在CG-Eval评测上的结果，天文能力提升明显，数学推理计算得分高于文心一言。
 更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 
 sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
@@ -35,6 +35,17 @@ sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
 
 ![未来计划](example/StarGLM_6.jpg)
 
+<br>
+
+![Agent](example/Agent.png)
+
+<br>
+
+![Eval](StarGPT/Eval.png)
+
+<br>
+
+![StarGPT](example/StarGPT.jpg)
 ## 安装指南
  
 1.基础模型安装（推荐显存>=16G）：
@@ -110,8 +121,8 @@ https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 ### 观测Agent（司天大脑）
 
 - [ ]  结合CodeGeeX2-6B工作，提升模型在天文领域的编程能力。
-- [ ]  考虑通过工具学习，链接天文专业工具。
-- [ ]  尝试Agent相关工作，验证作为司天大脑备选方案的可行性。
+- 考虑通过工具学习，链接天文专业工具。
+- 尝试Agent相关工作，验证作为司天大脑备选方案的可行性。
 
 ## 引用
 如果这篇工作对你有帮助，请引用：
