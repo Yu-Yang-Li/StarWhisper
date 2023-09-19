@@ -6,6 +6,7 @@
 
 ## 版本更新：
 1.通过Tool learning语料训练，提升了模型通过Agent进行工具规划调度与执行回复的能力。
+
 2.公布了上一版本在CG-Eval评测上的结果，天文物理能力提升明显，数学推理计算得分高于文心一言。
 更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 
@@ -57,8 +58,10 @@ for s in sents:
     print(response)
 ```
 
+
 2. 加载工具学习权重
-https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载。
+https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
+，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载。
 【经过工具学习语料训练后的版本，对原天文知识有一定灾难性遗忘，下一版本将探索缓解】
 2.链接知识库/StableDiffusion:
 
