@@ -1,16 +1,17 @@
-# StarGLM
+# StarGLM(StarGPT)
 
-我们整合了天文科学教育联盟、司天工程、集思谱文献平台相关的语料数据与知识库资料，训练得到了天文大模型StarGLM(ChatGLM for Star)。
+在天文科学教育联盟、集思谱文献平台的支持下，基于司天工程相关的数据资料，我们以StarGLM进一步训练得到了天文大模型StarGPT。 
 
-以期缓解大语言模型在天文专业的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的观测Agent——司天大脑（数据智能处理）打下基础。
+以进一步缓解大模型在天文通用知识的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的科学具身智能——司天大脑打下基础。
 
 ## 版本更新：
-1.通过Tool learning语料训练，提升了模型通过Agent进行工具规划调度与执行回复的能力。
+1.通过数据集清洗再训练，缓解了先前版本经过Agent/工具学习训练后对原有知识的灾难性遗忘，并显著提升了数学推理、代码能力，可通过code interpreter解决一系列问题。
 
-2.公布了上一版本在CG-Eval评测上的结果，天文能力提升明显，数学推理计算得分高于文心一言。
-更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
+2.公布了现版本在CG-Eval评测上的结果，总排名达到第二，仅次于GPT-4，数学推理和天文能力接近或超过GPT 3.5 Turbo。
+更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
 
-sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
+3.相关技术论文、天文多模态训练相关将于月底发布。
+sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarGPT
 ## 功能展示
 
 ![监督微调](example/StarGLM_1.jpg)
@@ -50,34 +51,12 @@ sft与dpo权重合并后的模型：https://huggingface.co/Yu-Yang-Li/StarGLM
  
 1.基础模型安装（推荐显存>=16G）：
 
-Releases(https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v2.0.0)
-Checkpoint.7z存有监督微调和经过DPO的Lora权重，运行时二者合并加载。
+Releases存有监督微调和经过DPO的Lora权重，运行时二者合并加载。
 
-也可直接通过transformer库导入使用。
-
-对于精确问答，建议设置temperature=0.01，top_p=0.8。
-```python
-import sys
-from peft import PeftModel
-from transformers import AutoModel, AutoTokenizer
-sys.path.append('..')
-model = AutoModel.from_pretrained("Yu-Yang-Li/StarGLM",  device_map='auto', trust_remote_code=True)
-tokenizer = AutoTokenizer.from_pretrained("Yu-Yang-Li/StarGLM", trust_remote_code=True)
-sents = ['什么是引力透镜。\n答：']
-for s in sents:
-    response = model.chat(tokenizer, s, max_length=128, eos_token_id=tokenizer.eos_token_id)
-    print(response)
-```
+也可直接通过AI-wisemodel平台下载模型权重后加载。
 
 
-
-2. 加载工具学习权重
-https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
-，存有工具学习后的Lora权重，运行时需与第一步的基础模型合并加载，具体使用可参考demo_starglm_agent.ipynb。
-
-【经过工具学习语料训练后的版本，对原天文知识有一定灾难性遗忘，下一版本将尝试缓解】
-
-3.链接知识库/StableDiffusion:
+2.链接知识库/StableDiffusion:
 
 建议使用Wenda(闻达)实现，基于StarGLM，能够进行多种天文相关的文本处理、知识库回答、AI绘画等任务。
 
@@ -91,7 +70,7 @@ https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.1.3
 其中司天"大脑"作为数据智能处理中枢，需要适配于天文的AI工具。StarGLM作为其备选方案，在使用大模型整合天文知识的同时，探索多模态解决具体天文问题的可能性。
 ## 许可证信息
 
-项目源码遵从Apache-2.0 license，ChatGLM2-6B的模型权重使用需遵从相应许可。
+项目源码遵从Apache-2.0 license，ChatGLM2-6B、Qwen-14B Chat的模型权重使用需遵从相应许可。
 
 ## 使用/推荐的相关项目
 
