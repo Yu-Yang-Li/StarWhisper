@@ -14,10 +14,10 @@
 sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarGPT
 ## 功能展示
 
-![StarGPT](example/Context.jpg)
+![StarGPT](example/Context.png)
 ## 安装指南
  
-1.基础模型安装（推荐显存>=16G）：
+1.基础模型安装（推荐显存>=24G）：
 
 Releases存有监督微调和经过DPO的Lora权重，运行时二者合并加载。
 
@@ -42,7 +42,8 @@ Releases存有监督微调和经过DPO的Lora权重，运行时二者合并加�
 
 ## 使用/推荐的相关项目
 
-- THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com) 
+- THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com)
+- qwen/Qwen-14B-Chat: 通义千问-14B（Qwen-14B） 是阿里云研发的通义千问大模型系列的140亿参数规模的模型。
 - wenda-LLM/wenda: 闻达：一个LLM调用平台。目标为针对特定环境的高效内容生成，同时考虑个人和中小企业的计算资源局限性，以及知识安全和私密性问题 (github.com) 
 - THUDM/VisualGLM-6B: Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型 (github.com) 
 - hiyouga/ChatGLM-Efficient-Tuning: Fine-tuning ChatGLM-6B with PEFT | 基于 PEFT 的高效 ChatGLM 微调 (github.com)
