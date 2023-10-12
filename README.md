@@ -14,39 +14,7 @@
 sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarGPT
 ## 功能展示
 
-![监督微调](example/StarGLM_1.jpg)
-
-<br>
-
-![链接知识库](example/StarGLM_2.jpg)
-
-<br>
-
-![链接SD](example/StarGLM_3.jpg)
-
-<br>
-
-![RLHF](example/StarGLM_4.jpg)
-
-<br>
-
-![多模态探索](example/StarGLM_5.jpg)
-
-<br>
-
-![未来计划](example/StarGLM_6.jpg)
-
-<br>
-
-![Agent](example/Agent.png)
-
-<br>
-
-![Eval](example/Eval.png)
-
-<br>
-
-![StarGPT](example/StarGPT.png)
+![StarGPT](example/context.jpg)
 ## 安装指南
  
 1.基础模型安装（推荐显存>=16G）：
