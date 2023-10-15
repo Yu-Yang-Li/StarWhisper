@@ -1,6 +1,6 @@
-# StarGLM(StarGPT)
+# StarWhisper(StarGLM)
 
-在天文科学教育联盟、集思谱文献平台、司天工程的支持下，基于天文大模型StarGLM开发经验，我们进一步训练了StarGPT(包括7B,13B,14B,20B)。 
+在天文科学教育联盟、集思谱文献平台、司天工程的支持下，基于天文大模型StarGLM开发经验，我们进一步训练了StarWhisper(包括7B,13B,14B,20B)。 
 
 以进一步缓解大模型在天文通用知识的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的科学具身智能——司天大脑打下基础。
 
@@ -11,10 +11,10 @@
 更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
 
 3.相关技术论文、天文多模态训练相关将于月底发布。
-sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarGPT
+sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarWhisper
 ## 功能展示
 
-![StarGPT](example/Context.png)
+![StarWhisper](example/Context.png)
 ## 安装指南
  
 1.基础模型安装（推荐显存>=24G）：
