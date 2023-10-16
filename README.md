@@ -1,4 +1,4 @@
-# StarWhisper
+# 星语StarWhisper
 
 在天文科学教育联盟、集思谱文献平台、司天工程的支持下，基于天文大模型StarGLM开发经验，我们进一步训练了星语StarWhisper系列模型(包括6B,7B,13B,14B,20B)。 
 
