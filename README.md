@@ -98,3 +98,7 @@ Releases存有监督微调和经过DPO的Lora权重，运行时二者合并加�
   year = {2023}
   
 }
+
+## Star History
+
+![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
