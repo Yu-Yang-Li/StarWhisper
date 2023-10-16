@@ -14,6 +14,7 @@
 3.相关技术论文、天文多模态训练相关将于月底发布。
 
 更新后的权重：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
+
 sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarWhisper
 ## 功能展示
 
