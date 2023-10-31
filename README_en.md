@@ -22,7 +22,7 @@ updated checkpoint：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
 
 model after merged：https://wisemodel.cn/models/LiYuYang/StarWhisper
 
-## Function
+## Introduction
 
 ![StarWhisper](example/context_en.png)
 
