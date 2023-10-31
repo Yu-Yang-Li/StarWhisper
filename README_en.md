@@ -26,13 +26,15 @@ model after merged：https://wisemodel.cn/models/LiYuYang/StarWhisper
 
 ![StarWhisper](example/context_en.png)
 
-## Installation(Recommended Memory >= 24G)
+## Installation
+
+Recommended Memory >= 24G
 
 Releases store both supervised fine-tuned and DPO checkpoints, which should be loaded together at runtime.
 
 You can also directly download the model weights through the AI-wisemodel platform and load them.
 
-
+## SiTian Project
 
 SiTian is an ambitious ground-based all-sky optical monitoring project, developed by the Chinese Academy of Sciences. The concept is an integrated network of dozens of 1-m-class telescopes deployed partly in China and partly at various other sites around the world. The main science goals are the detection, identification and monitoring of optical transients (such as gravitational wave events, fast radio bursts, supernovae) on the largely unknown timescales of less than 1 day; SiTian will also provide a treasure trove of data for studies of AGN, quasars, variable stars, planets, asteroids, and microlensing events. To achieve those goals, SiTian will scan at least 10,000 square deg of sky every 30 min, down to a detection limit of  V≈21
   mag. The scans will produce simultaneous light-curves in 3 optical bands. In addition, SiTian will include at least three 4-m telescopes specifically allocated for follow-up spectroscopy of the most interesting targets. We plan to complete the installation of 72 telescopes by 2030 and start full scientific operations in 2032.
