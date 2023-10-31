@@ -10,7 +10,7 @@ With the support of the Astronomical Science Education Alliance, the Giiisp Lite
 
 To further alleviate the hallucination phenomenon of LLM in astronomy, laying the foundation for the following handling of astronomical multimodal tasks and the deployment of scientific embodied intelligence in telescope arrays - the SiTian Brain.
 
-## Version Update: 
+## Version: 
 
 1. Through dataset cleaning and retraining, the catastrophic forgetting of previous knowledge after training with Agent/tool learning has been alleviated, significantly improving mathematical reasoning and coding capabilities. A series of problems can be solved through code interpreters.
 
@@ -27,7 +27,7 @@ model after merged：https://wisemodel.cn/models/LiYuYang/StarWhisper
 
 ## Function
 
-![StarWhisper](example/context.png)
+![StarWhisper](example/context_en.png)
 
 ## Installation(Recommended Memory >= 24G)
 
@@ -46,7 +46,7 @@ SiTian is an ambitious ground-based all-sky optical monitoring project, develope
 
 The source code of the project complies with the Apache-2.0 license, and the model of ChatGLM2-6B, Qwen-14B Chat use will comply with the corresponding license.
 
-## 使用/推荐的相关项目
+## Used/Recommend Related Projects
 
 - THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com)
 - qwen/Qwen-14B-Chat: 通义千问-14B（Qwen-14B） 是阿里云研发的通义千问大模型系列的140亿参数规模的模型。
@@ -71,11 +71,10 @@ The source code of the project complies with the Apache-2.0 license, and the mod
 
 ### Professional Multimodal (Research Tool)
 
-- [ ]  开源在变星光变曲线上训练的VisualGLM微调权重。
-- [ ]  进一步探索多模态模型在天文图像生成与识别上应用的可能性。
+- [ ]  Further explore the possibility of applying multimodal models in astronomical image generation and recognition.
 
 
-### embodied intelligence (SiTian Brain)
+### Embodied Intelligence (SiTian Brain)
 
 - [ ]  Enhance the programming capability of the model in the field of astronomy.
 - [ ]  Agent exploration on MiniSiTian, agent interacts with the astronomical environment.
