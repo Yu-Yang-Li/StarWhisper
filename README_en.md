@@ -16,8 +16,6 @@ To further alleviate the hallucination phenomenon of LLM in astronomy, laying th
 
 2. The results of the current version on CG-Eval are published, with a total ranking of second only to GPT-4, and mathematical reasoning and astronomical ability close to or exceeding GPT 3.5 Turbo. CG-Eval：http://cgeval.besteasy.com/leaderboard.html
 
-3.Relevant papers and astronomical multi-modal training will be released at the end of the month.
-
 updated checkpoint：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
 
 model after merged：https://wisemodel.cn/models/LiYuYang/StarWhisper
