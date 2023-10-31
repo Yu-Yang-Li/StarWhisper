@@ -41,7 +41,7 @@ SiTian is an ambitious ground-based all-sky optical monitoring project, develope
 
 ![sitian](example/Sitian.png)
 
-##License
+## License
 
 The source code of the project complies with the Apache-2.0 license, and the model of ChatGLM2-6B, Qwen-14B Chat use will comply with the corresponding license.
 
