@@ -22,7 +22,7 @@
 sft与dpo权重合并后的模型：https://wisemodel.cn/models/LiYuYang/StarWhisper
 ## 功能展示
 
-![StarWhisper](example/Context.png)
+![StarWhisper](example/context.png)
 ## 安装指南
  
 1.基础模型安装（推荐显存>=24G）：
