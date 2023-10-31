@@ -14,7 +14,9 @@ To further alleviate the hallucination phenomenon of LLM in astronomy, laying th
 
 1. Through dataset cleaning and retraining, the catastrophic forgetting of previous knowledge after training with Agent/tool learning has been alleviated, significantly improving mathematical reasoning and coding capabilities. A series of problems can be solved through code interpreters.
 
-2. The results of the current version on CG-Eval are published, with a total ranking of second only to GPT-4, and mathematical reasoning and astronomical ability close to or exceeding GPT 3.5 Turbo. CG-Eval：http://cgeval.besteasy.com/leaderboard.html
+2. The results of the current version on CG-Eval are published, with a total ranking of second only to GPT-4, and mathematical reasoning and astronomical ability close to or exceeding GPT 3.5 Turbo.
+
+CG-Eval：http://cgeval.besteasy.com/leaderboard.html
 
 updated checkpoint：https://github.com/Yu-Yang-Li/StarGLM/releases/tag/v0.2.0
 
