@@ -26,7 +26,7 @@ V1版本在CG-Eval评测上的结果，总排名达到第二，仅次于GPT-4，
 
 ## 功能展示
 
-<div align=center><img src="example/starwhisper.png"/></div>
+<div align=center><img src="example/StarWhisper.png"/></div>
 
 ## 快速使用
 模型已上传魔搭社区：https://modelscope.cn/models/AstroYuYang/StarWhisper
