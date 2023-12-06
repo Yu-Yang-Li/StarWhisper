@@ -4,6 +4,9 @@
 [![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Yu-Yang-Li/StarWhisper)](https://github.com/Yu-Yang-Li/StarWhisper/commits/main)
 
+🤖 <a href="https://modelscope.cn/models/AstroYuYang/StarWhisper">ModelScope
+
+
 
 在国家天文台人工智能工作组的支持下，基于天文大模型StarGLM开发经验，我们进一步训练了星语StarWhisper系列模型(包括6B,7B,13B,14B,20B)。 
 
