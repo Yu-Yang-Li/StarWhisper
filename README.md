@@ -1,4 +1,4 @@
-# 星语StarWhisper
+![image](https://github.com/Yu-Yang-Li/StarWhisper/assets/113218777/c5d26671-19f2-48c7-a58e-c57e6f35ea3d)# 星语StarWhisper
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
 [![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
@@ -18,6 +18,8 @@
 2.添加了专业英文语料，并进行英文反馈对齐，显著提升模型双语处理专业问题的能力。
 
 3.发布了天文AI绘画的LORA权重，通过BLIP2+多模态模型+专家订正标注，可基于基模型输出星空图像，也可在其它模型上基于星空光效风格进行AI绘画生成。
+
+4.通过工具调用实现了基础的多模态框架、与望远镜控制系统进行对接。
 
 V1版本在CG-Eval[23/10/15]评测上的结果，总排名达到第二，仅次于GPT-4，数学推理和天文能力接近或超过GPT 3.5 Turbo。
 
