@@ -1,4 +1,4 @@
-![image](https://github.com/Yu-Yang-Li/StarWhisper/assets/113218777/c5d26671-19f2-48c7-a58e-c57e6f35ea3d)# 星语StarWhisper
+# 星语StarWhisper
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
 [![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
@@ -28,6 +28,7 @@ V1版本在CG-Eval[23/10/15]评测上的结果，总排名达到第二，仅次�
 <div align=center><img src="example/StarWhisper.png"/></div>
 
 ## 快速使用
+
 模型已上传魔搭社区：https://modelscope.cn/models/AstroYuYang/StarWhisper
 
 下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
