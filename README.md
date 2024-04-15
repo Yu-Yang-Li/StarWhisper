@@ -1,31 +1,42 @@
 # 星语StarWhisper
 
+🤖 <a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub项目</a>
+🥳 <a href="https://www.liblib.art/modelinfo/f188f72645024f82bd114344cf82474f">星语绘卷权重</a>
+---
+language:
+- zh
+- en
+tags:
+- qwen
+pipeline_tag: text-generation
+license: Apache License 2.0
+tasks:
+- text-generation
+---
+
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
 [![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Yu-Yang-Li/StarWhisper)](https://github.com/Yu-Yang-Li/StarWhisper/commits/main)
 
-🤖 <a href="https://modelscope.cn/models/AstroYuYang/StarWhisper">模型权重[魔搭社区]  || <a href="https://wisemodel.cn/models/LiYuYang/StarWhisper">模型权重[始智AI] || 🥳 <a href="https://www.liblib.art/modelinfo/f188f72645024f82bd114344cf82474f">绘画权重
 
+在国家天文台人工智能工作组的支持下，我们开发了StarWhisper3天文大模型系列，包括语言模型、时序模型、多模态模型（7B-72B）。 
 
-在国家天文台人工智能工作组的支持下，基于天文大模型StarGLM开发经验，我们进一步训练了星语StarWhisper系列模型(包括6B,7B,13B,14B,20B)。 
-
-以进一步缓解大模型在天文通用知识的幻觉现象，为接下来可处理天文多模态任务、部署于望远镜阵列的科学具身智能——司天大脑打下基础。
+将随着技术文章发表，逐渐开源相应模型权重、使用Demo。
 
 ## 版本更新：
 
-基于InternLM2-Math-20B，我们与上海天文馆的科教工作者共同训练了StarWhisper Edu版本。
+1.通过清洗订正科普、科研数据飞轮得到的数据，改进训练方法，进一步提升了模型的天文物理、代码与Agent能力。
 
-本模型针对天文知识科普教育场景研发，进行了定向知识扩充与完善、下游任务增强、偏好对齐，适合面对不同知识层次的用户进行天文教育使用。通过智能体，能够实现天文数据处理、仪器控制等智能科研任务功能，同时内置了多种基础交互功能。
+2.基于LLM、MLLM、Audio Model的天文时间序列处理，相关技术报告即将发布。
 
-https://openxlab.org.cn/models/detail/Astro_YuYang/StarWhisper-Edu
+3.通过工具调用实现了多模态多任务框架、与望远镜控制系统进行对接。
+
 
 ## 功能展示
 
-<div align=center><img src="example/StarWhisper.png"/></div>
+<div align=center><img src="example/StarWhisper3.png"/></div>
 
 ## 快速使用
-
-模型已上传魔搭社区：https://modelscope.cn/models/AstroYuYang/StarWhisper
 
 下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
 
@@ -33,9 +44,9 @@ https://openxlab.org.cn/models/detail/Astro_YuYang/StarWhisper-Edu
 from modelscope import AutoModelForCausalLM, AutoTokenizer
 from modelscope import GenerationConfig
 
-tokenizer = AutoTokenizer.from_pretrained("AstroYuYang/StarWhisper", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("AstroYuYang/StarWhisper3", trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper", device_map="auto", trust_remote_code=True).eval()
+model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper3", device_map="auto", trust_remote_code=True).eval()
 
 # 在cpu上推理
 # model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper", device_map="cpu", trust_remote_code=True).eval()
@@ -58,20 +69,11 @@ print(response)
 
 <div align=center><img src="example/sitian.png"/></div>
 
-其中司天"大脑"作为数据智能处理中枢，需要适配于天文的AI工具。StarGLM作为其备选方案，在使用大模型整合天文知识的同时，探索多模态解决具体天文问题的可能性。
+其中司天"大脑"作为数据智能处理中枢，需要适配于天文的AI工具。StarWhisper作为其备选方案，在使用大模型整合天文知识的同时，探索多模态解决具体天文问题的可能性。
 ## 许可证信息
 
-项目源码遵从Apache-2.0 license，ChatGLM2-6B、Qwen-14B Chat的模型权重使用需遵从相应许可。
+项目源码遵从Apache-2.0 license，Qwen1.5-14B Chat的模型权重使用需遵从相应许可。
 
-## 使用/推荐的相关项目
-
-- THUDM/ChatGLM2-6B: ChatGLM2-6B: An Open Bilingual Chat LLM | 开源双语对话语言模型 (github.com)
-- qwen/Qwen-14B-Chat: 通义千问-14B（Qwen-14B） 是阿里云研发的通义千问大模型系列的140亿参数规模的模型。
-- wenda-LLM/wenda: 闻达：一个LLM调用平台。目标为针对特定环境的高效内容生成，同时考虑个人和中小企业的计算资源局限性，以及知识安全和私密性问题 (github.com) 
-- THUDM/VisualGLM-6B: Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型 (github.com) 
-- hiyouga/LLaMA-Factory: 基于 PEFT 的高效模型微调 (github.com)
-- MeteorCollector/iris_AstroQnA_ZH: Astronomy Q-A pairs in simplified Chinese. (github.com)
-- HIT-SCIR/huozi (github.com)
 ## To do list
 
 ### 大语言模型（科普方式）
@@ -80,18 +82,18 @@ print(response)
 - 调整监督微调中，通用数据和专业数据的比例，缓解灾难性遗忘问题。
 - 通过人工反馈的强化学习，进一步提升模型性能。
 - 通过特定数据集微调，提升模型总结能力，进一步适配知识库。
-- [ ]  完成司天-变星知识图谱，与模型链接，进一步降低变星领域的幻觉现象。
+- 完成司天-变星知识图谱，与模型链接，进一步降低变星领域的幻觉现象。
 
 ### 专业多模态（科研工具）
 
-- [ ]  开源在变星光变曲线上训练的多模态微调权重。
+- [ ]  开源在多模态微调权重[即将开源]。
 - [ ]  进一步探索多模态模型在天文图像生成与识别上应用的可能性。
 
 
 ### 观测Agent（司天大脑）
 
 - 提升模型在天文领域的编程能力。
-- [ ]  在MiniSiTian/司天样机上，进行与天文环境交互的Agent探索工作。
+- 在MiniSiTian/司天样机上，进行与天文环境交互的Agent探索工作。
 - 考虑通过工具学习，链接天文专业工具。
 - 尝试Agent相关工作，验证作为司天大脑备选方案的可行性。
 
@@ -109,7 +111,6 @@ print(response)
   year = {2023}
   
 }
-
 
 ## Star History
 
