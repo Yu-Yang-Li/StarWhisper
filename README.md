@@ -2,17 +2,6 @@
 
 🤖 <a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub项目</a>
 🥳 <a href="https://www.liblib.art/modelinfo/f188f72645024f82bd114344cf82474f">星语绘卷权重</a>
----
-language:
-- zh
-- en
-tags:
-- qwen
-pipeline_tag: text-generation
-license: Apache License 2.0
-tasks:
-- text-generation
----
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
 [![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
