@@ -12,11 +12,11 @@
 
 ## 版本更新：
 
-我们发布了StarWhisper LC的技术报告，一种基于大模型的光变曲线数据处理方法：
+**我们发布了StarWhisper LC的技术报告，一种基于大模型的光变曲线数据处理方法：
 
 Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification
 
-https://arxiv.org/pdf/2404.10757.pdf
+https://arxiv.org/pdf/2404.10757.pdf**
 
 1.通过清洗订正科普、科研数据飞轮得到的数据，改进训练方法，进一步提升了模型的天文物理、代码与Agent能力。
 
