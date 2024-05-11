@@ -10,7 +10,11 @@
 
 在国家天文台人工智能工作组的支持下，我们开发了StarWhisper3天文大模型系列，包括语言模型、时序模型、多模态模型（7B-72B）。 
 
-将随着技术文章发表，逐渐开源相应模型权重、使用Demo。
+我们很高兴介绍StarWhisper LC，一种基于大模型的光变曲线数据处理方法：
+
+Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification
+
+https://arxiv.org/pdf/2404.10757.pdf
 
 ## 版本更新：
 
