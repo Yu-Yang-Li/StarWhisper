@@ -18,7 +18,7 @@
 
 3.通过工具调用实现了多模态多任务框架、与望远镜控制系统进行对接。
 
-4.我们很高兴介绍StarWhisper LC，一种基于大模型的光变曲线数据处理方法：
+4.发布了StarWhisper LC的技术报告，一种基于大模型的光变曲线数据处理方法：
 
 Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification
 
