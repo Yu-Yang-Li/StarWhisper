@@ -1,6 +1,6 @@
 # 星语StarWhisper
 
-🤖 <a href="https://github.com/Yu-Yang-Li/StarWhisper4">GitHub项目</a>
+🤖 <a href="https://www.modelscope.cn/models/AstroYuYang/StarWhisper4">多模态模型权重</a>
 🥳 <a href="https://www.liblib.art/modelinfo/f188f72645024f82bd114344cf82474f">星语绘卷权重</a>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
