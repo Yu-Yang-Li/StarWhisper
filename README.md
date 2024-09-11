@@ -24,7 +24,6 @@
 
 <div align=center><img src="example/图片1.png"/></div>
 
-<div align=center><img src="example/图片3.png"/></div>
 
 <div align=center><img src="example/图片2.png"/></div>
 
@@ -68,6 +67,9 @@ print(response)
 项目源码遵从Apache-2.0 license，Qwen1.5-14B Chat的模型权重使用需遵从相应许可。
 
 ## To do list
+
+<div align=center><img src="example/图片3.png"/></div>
+
 
 ### 大语言模型（科普方式）
 
