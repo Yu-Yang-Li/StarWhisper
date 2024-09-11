@@ -138,16 +138,14 @@ print(output_text)
 ## 引用
 如果这篇工作对你有帮助，请引用：
 
-@Misc{chatglm-for-variable-star,
-
-  title = {StarGLM},
-  
-  author = {YuYang Li, CunShi Wang, MengWei Qu, Yu Bai, Roberto Soria, JiFeng Liu},
-  
-  howpublished = {\url{https://github.com/Yu-Yang-Li/StarGLM}},
-  
-  year = {2023}
-  
+@misc{li2024deeplearningllmbasedmethods,
+      title={Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification}, 
+      author={Yu-Yang Li and Yu Bai and Cunshi Wang and Mengwei Qu and Ziteng Lu and Roberto Soria and Jifeng Liu},
+      year={2024},
+      eprint={2404.10757},
+      archivePrefix={arXiv},
+      primaryClass={astro-ph.IM},
+      url={https://arxiv.org/abs/2404.10757}, 
 }
 
 ## Star History
