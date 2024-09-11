@@ -24,9 +24,11 @@
 
 <div align=center><img src="example/图片1.png"/></div>
 
+<div align=center><img src="example/图片3.png"/></div>
+
 <div align=center><img src="example/图片2.png"/></div>
 
-<div align=center><img src="example/图片3.png"/></div>
+
 ## 快速使用
 
 下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
