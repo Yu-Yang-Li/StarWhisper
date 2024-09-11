@@ -139,6 +139,7 @@ print(output_text)
 如果这篇工作对你有帮助，请引用：
 
 @misc{
+
       li2024deeplearningllmbasedmethods,
 
       title={Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification}, 
