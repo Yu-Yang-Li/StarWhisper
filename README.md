@@ -138,7 +138,8 @@ print(output_text)
 ## 引用
 如果这篇工作对你有帮助，请引用：
 
-@misc{li2024deeplearningllmbasedmethods,
+@misc{
+      li2024deeplearningllmbasedmethods,
 
       title={Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification}, 
       
@@ -152,8 +153,7 @@ print(output_text)
       
       primaryClass={astro-ph.IM},
       
-      url={https://arxiv.org/abs/2404.10757}, 
-      
+      url={https://arxiv.org/abs/2404.10757},    
 }
 
 ## Star History
