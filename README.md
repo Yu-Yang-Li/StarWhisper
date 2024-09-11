@@ -138,25 +138,17 @@ print(output_text)
 ## 引用
 如果这篇工作对你有帮助，请引用：
 
-@misc{
-
-      li2024deeplearningllmbasedmethods,
-
+```BibTeX
+@misc{li2024deeplearningllmbasedmethods,
       title={Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification}, 
-      
       author={Yu-Yang Li and Yu Bai and Cunshi Wang and Mengwei Qu and Ziteng Lu and Roberto Soria and Jifeng Liu},
-      
       year={2024},
-      
       eprint={2404.10757},
-      
       archivePrefix={arXiv},
-      
       primaryClass={astro-ph.IM},
-      
-      url={https://arxiv.org/abs/2404.10757},    
+      url={https://arxiv.org/abs/2404.10757}, 
 }
-
+```
 ## Star History
 
 ![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
