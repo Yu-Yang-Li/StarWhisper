@@ -1,6 +1,6 @@
 # 星语StarWhisper
 
-🤖 <a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub项目</a>
+🤖 <a href="https://github.com/Yu-Yang-Li/StarWhisper4">GitHub项目</a>
 🥳 <a href="https://www.liblib.art/modelinfo/f188f72645024f82bd114344cf82474f">星语绘卷权重</a>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
@@ -8,7 +8,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Yu-Yang-Li/StarWhisper)](https://github.com/Yu-Yang-Li/StarWhisper/commits/main)
 
 
-在国家天文台人工智能工作组的支持下，我们开发了StarWhisper3天文大模型系列，包括语言模型、时序模型、多模态模型（7B-72B）。 
+在国家天文台-之江实验室的支持下，我们开发了StarWhisper4天文大模型系列，包括语言模型、时序模型、多模态模型（7B-72B）。 
 
 ## 版本更新：
 
@@ -16,12 +16,17 @@
 
 2.发布了[StarWhisper LC](https://arxiv.org/abs/2404.10757)的技术报告，一种SOTA的基于大模型的光变曲线数据处理方法。
 
-3.通过工具调用实现了多模态多任务框架、与望远镜控制系统进行对接。
+3.StarWhisper Pulsar的技术报告即将发布，一种SOTA的基于大模型的脉冲星检测方法。
 
-## 功能展示
+4.通过Visual Agent实现了多模态多任务框架、与望远镜控制系统进行对接。
 
-<div align=center><img src="example/StarWhisper3.png"/></div>
+## 效果展示
 
+<div align=center><img src="example/图片1.png"/></div>
+
+<div align=center><img src="example/图片2.png"/></div>
+
+<div align=center><img src="example/图片3.png"/></div>
 ## 快速使用
 
 下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
@@ -30,14 +35,14 @@
 from modelscope import AutoModelForCausalLM, AutoTokenizer
 from modelscope import GenerationConfig
 
-tokenizer = AutoTokenizer.from_pretrained("AstroYuYang/StarWhisper3", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("AstroYuYang/StarWhisper4", trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper3", device_map="auto", trust_remote_code=True).eval()
+model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper4", device_map="auto", trust_remote_code=True).eval()
 
 # 在cpu上推理
-# model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper", device_map="cpu", trust_remote_code=True).eval()
+# model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper4", device_map="cpu", trust_remote_code=True).eval()
 
-# model.generation_config = GenerationConfig.from_pretrained("AstroYuYang/StarWhisper", trust_remote_code=True) # 可指定不同超参
+# model.generation_config = GenerationConfig.from_pretrained("AstroYuYang/StarWhisper4", trust_remote_code=True) # 可指定不同超参
 
 # 1st
 response, history = model.chat(tokenizer, "你好", history=None)
@@ -72,8 +77,8 @@ print(response)
 
 ### 专业多模态（科研工具）
 
-- [ ]  开源在多模态微调权重[即将开源]。
-- [ ]  进一步探索多模态模型在天文图像生成与识别上应用的可能性。
+- 开源在多模态微调权重。
+- 进一步探索多模态模型在天文图像生成与识别上应用的可能性。
 
 
 ### 观测Agent（司天大脑）
