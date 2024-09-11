@@ -33,25 +33,68 @@
 下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
 
 ```python
-from modelscope import AutoModelForCausalLM, AutoTokenizer
-from modelscope import GenerationConfig
+from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
+from qwen_vl_utils import process_vision_info
+from modelscope import snapshot_download
+model_dir = snapshot_download("AstroYuYang/StarWhisper4")
 
-tokenizer = AutoTokenizer.from_pretrained("AstroYuYang/StarWhisper4", trust_remote_code=True)
+# default: Load the model on the available device(s)
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    model_dir, torch_dtype="auto", device_map="auto"
+)
 
-model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper4", device_map="auto", trust_remote_code=True).eval()
+# We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
+# model = Qwen2VLForConditionalGeneration.from_pretrained(
+#     model_dir,
+#     torch_dtype=torch.bfloat16,
+#     attn_implementation="flash_attention_2",
+#     device_map="auto",
+# )
 
-# 在cpu上推理
-# model = AutoModelForCausalLM.from_pretrained("AstroYuYang/StarWhisper4", device_map="cpu", trust_remote_code=True).eval()
+# default processer
+processor = AutoProcessor.from_pretrained(model_dir)
 
-# model.generation_config = GenerationConfig.from_pretrained("AstroYuYang/StarWhisper4", trust_remote_code=True) # 可指定不同超参
+# The default range for the number of visual tokens per image in the model is 4-16384. You can set min_pixels and max_pixels according to your needs, such as a token count range of 256-1280, to balance speed and memory usage.
+# min_pixels = 256*28*28
+# max_pixels = 1280*28*28
+# processor = AutoProcessor.from_pretrained(model_dir, min_pixels=min_pixels, max_pixels=max_pixels)
 
-# 1st
-response, history = model.chat(tokenizer, "你好", history=None)
-print(response)
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 
-# 2nd
-response, history = model.chat(tokenizer, "什么是黑洞？", history=history)
-print(response)
+# Preparation for inference
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
+image_inputs, video_inputs = process_vision_info(messages)
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to("cuda")
+
+# Inference: Generation of the output
+generated_ids = model.generate(**inputs, max_new_tokens=128)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
+print(output_text)
 
 ```
 
