@@ -12,13 +12,11 @@
 
 ## 版本更新：
 
-1.通过清洗订正科普、科研数据飞轮得到的数据，改进训练方法，进一步提升了模型的天文物理、代码与Agent能力。
+1.通过清洗订正科普、科研数据飞轮得到的数据，改进训练方法，进一步提升了模型的天文物理、代码与Agent能力，开源了星语3训练集于LLM_Data目录，开源了星语4多模态模型权重于魔搭平台。
 
-2.发布了[StarWhisper LC](https://arxiv.org/abs/2404.10757)的技术报告，一种SOTA的基于大模型的光变曲线数据处理方法。
+2.发布了[StarWhisper LC](https://arxiv.org/abs/2404.10757)的技术报告，一种SOTA的基于迁移学习、大模型的光变曲线分类方法，上传了论文相关测试代码。
 
-3.StarWhisper Pulsar的技术报告即将发布，一种SOTA的基于大模型的脉冲星检测方法。
-
-4.通过Visual Agent实现了多模态多任务框架、[望远镜控制系统进行对接](https://m.cnr.cn/tech/20240415/t20240415_526665674.html)。
+3.发布了[StarWhisper Telescope])(https://arxiv.org/pdf/2412.06412)的技术报告，一种基于大模型智能体的望远镜控制工作流，已应用于近邻星系巡天项目。
 
 ## 效果展示
 
@@ -30,7 +28,7 @@
 
 ## 快速使用
 
-下面是一个使用StarWhisper模型，进行多轮对话交互的样例：
+下面是一个使用StarWhisper4模型，进行多轮对话交互的样例：
 
 ```python
 from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
@@ -116,11 +114,10 @@ print(output_text)
 
 ### 大语言模型（科普方式）
 
-- [ ]  在相关材料上进行二次预训练，扩充天文知识。
 - 调整监督微调中，通用数据和专业数据的比例，缓解灾难性遗忘问题。
 - 通过人工反馈的强化学习，进一步提升模型性能。
 - 通过特定数据集微调，提升模型总结能力，进一步适配知识库。
-- 完成司天-变星知识图谱，与模型链接，进一步降低变星领域的幻觉现象。
+- 完成天文知识图谱，与模型链接，进一步降低天文领域的幻觉现象。
 
 ### 专业多模态（科研工具）
 
@@ -139,14 +136,14 @@ print(output_text)
 如果这篇工作对你有帮助，请引用：
 
 ```BibTeX
-@misc{li2024deeplearningllmbasedmethods,
-      title={Deep Learning and LLM-based Methods Applied to Stellar Lightcurve Classification}, 
-      author={Yu-Yang Li and Yu Bai and Cunshi Wang and Mengwei Qu and Ziteng Lu and Roberto Soria and Jifeng Liu},
+@misc{wang2024starwhispertelescopeagentbasedobservation,
+      title={StarWhisper Telescope: Agent-Based Observation Assistant System to Approach AI Astrophysicist}, 
+      author={Cunshi Wang and Xinjie Hu and Yu Zhang and Xunhao Chen and Pengliang Du and Yiming Mao and Rui Wang and Yuyang Li and Ying Wu and Hang Yang and Yansong Li and Beichuan Wang and Haiyang Mu and Zheng Wang and Jianfeng Tian and Liang Ge and Yongna Mao and Shengming Li and Xiaomeng Lu and Jinhang Zou and Yang Huang and Ningchen Sun and Jie Zheng and Min He and Yu Bai and Junjie Jin and Hong Wu and Chaohui Shang and Jifeng Liu},
       year={2024},
-      eprint={2404.10757},
+      eprint={2412.06412},
       archivePrefix={arXiv},
       primaryClass={astro-ph.IM},
-      url={https://arxiv.org/abs/2404.10757}, 
+      url={https://arxiv.org/abs/2412.06412}, 
 }
 ```
 ## Star History
