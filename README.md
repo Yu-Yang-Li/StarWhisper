@@ -14,7 +14,7 @@
 
 1.通过清洗订正科普、科研数据飞轮得到的数据，改进训练方法，进一步提升了模型的天文物理、代码与Agent能力，开源了星语3训练集于LLM_Data目录，开源了星语4多模态模型权重于魔搭平台。
 
-2.发布了[StarWhisper LC](https://arxiv.org/abs/2404.10757)的技术报告，一种SOTA的基于迁移学习、大模型的光变曲线分类方法，上传了论文相关测试代码。
+2.发布了[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)的技术报告，一种SOTA的基于迁移学习、大模型的光变曲线分类方法，上传了论文相关测试代码。
 
 3.发布了[StarWhisper Telescope](https://arxiv.org/pdf/2412.06412)的技术报告，一种基于大模型智能体的望远镜控制工作流，已应用于近邻星系巡天项目。
 
