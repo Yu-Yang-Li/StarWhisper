@@ -16,7 +16,7 @@
 
 2.发布了[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)的技术报告，一种SOTA的基于迁移学习、大模型的光变曲线分类方法，上传了论文相关测试代码。
 
-<div align=center><img src="example/Starwhisper LC.png"/></div>
+<div align=center><img src="example/StarWhisper LC.png"/></div>
 
 3.发布了[StarWhisper Telescope](https://arxiv.org/pdf/2412.06412)的技术报告，一种基于大模型智能体的望远镜控制工作流，已应用于近邻星系巡天项目。
 
