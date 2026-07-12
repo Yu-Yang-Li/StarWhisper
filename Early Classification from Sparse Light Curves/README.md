@@ -14,10 +14,11 @@ ZTF 光变曲线多分类：手工特征（XGB / Transformer）与端到端（E2
 
 | 路径 | 说明 |
 |------|------|
-| `train2/`、`train4/` | 原始光变 CSV |
-| `features/*.csv` | 手工特征表（可由下方脚本从原始 CSV 提取） |
-| `data/split/*/manifest.csv` | 运行 `python data/prepare_data_split.py` 生成 |
-| `data/e2e/`、`data/e2e_varlen/` | 运行 `prepare_e2e_data.py` / `prepare_e2e_varlen.py` |
+| 原始 ZTF 光变 CSV | 按类别分文件夹（`BYDra/`、`CEP/` 等），由 `create_sparse_segments.py --source-dir` 指定；也可从 [IPAC](https://doi.org/10.26131/irsa598) 获取 |
+| `train2/`、`train4/` | **切割后的稀疏片段**（非原始光变）：`train2/` 为 3–30 点变长，`train4/` 为 50 点固定长度；由步骤 0 生成或本地自备 |
+| `features/*.csv` | 手工特征表（从 `train2/`/`train4/` 片段提取；体积大，建议 Zenodo） |
+| `data/split/*/manifest.csv` | 运行 `python data/generate_manifests.py` 或 `prepare_data_split.py` 生成 |
+| `data/e2e/`、`data/e2e_varlen/` | 运行 `prepare_e2e_data.py` / `prepare_e2e_varlen.py`（输入为 `train4/` / `train2/` 片段 CSV） |
 | 各 `train_models/*/best_model.pth` 等 | 训练得到的权重 |
 
 ## 数据处理
@@ -25,15 +26,16 @@ ZTF 光变曲线多分类：手工特征（XGB / Transformer）与端到端（E2
 ```bash
 cd /path/to/shared-nvme
 
-# 0. 从原始 ZTF CSV 切分稀疏片段（需自备各类别文件夹，见 data/category_config.py）
-python data/create_sparse_segments.py --pool 50obs    # -> train4/，50 点
-python data/create_sparse_segments.py --pool varlen   # -> train2/，3–30 点
+# 0. 从原始 ZTF 光变 CSV 切分稀疏片段 -> train2/（3–30 点）或 train4/（50 点）
+#    输入：--source-dir 下各类别文件夹中的长光变 CSV（见 data/category_config.py）
+python data/create_sparse_segments.py --pool 50obs    # -> train4/
+python data/create_sparse_segments.py --pool varlen   # -> train2/
 
 # 1. 生成划分 manifest
 python data/generate_manifests.py
 python data/prepare_data_split.py
 
-# 2. 从 train2/train4 原始片段 CSV 提取手工特征
+# 2. 从 train2/train4 片段 CSV 提取手工特征（非原始 ZTF）
 python features/extract_featrures_train4.py   # 1117 特征集 -> features/*.csv
 python features/extract_features_1121.py      # 1121 特征集（可选）
 # 或增量补全：python data/build_handcrafted_features.py --set 1117
