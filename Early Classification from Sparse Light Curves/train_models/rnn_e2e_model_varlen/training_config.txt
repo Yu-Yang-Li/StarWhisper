@@ -1,0 +1,7 @@
+RNN LSTM E2E (3-30 obs, from scratch)
+data=/root/shared-nvme/data/e2e_varlen
+HIDDEN=128, BATCH_SIZE=128, LR=0.001
+PATIENCE=10, params_M=0.20
+best_val_acc=0.8469, best_epoch=98
+test_acc=0.8467
+test_macro_f1=0.8639
