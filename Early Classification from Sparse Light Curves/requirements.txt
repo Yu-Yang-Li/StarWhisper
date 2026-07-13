@@ -1,0 +1,16 @@
+# Python >=3.10 required 
+
+numpy>=1.26.4
+pandas>=2.3.0
+scipy>=1.13.0
+scikit-learn>=1.6.0
+matplotlib>=3.9.0
+seaborn>=0.13.0
+astropy>=6.0.0
+xgboost>=2.1.0
+optuna>=4.8.0
+joblib>=1.5.0
+tqdm>=4.67.0
+
+# PyTorch: install CPU or CUDA build from https://pytorch.org/get-started/locally/
+torch>=2.0.0

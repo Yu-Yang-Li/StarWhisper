@@ -1,86 +1,60 @@
-# light_curve_classifier
+# Early Classification from Sparse Light Curves
 
-ZTF 光变曲线多分类：手工特征（XGB / Transformer）与端到端（E2E Transformer / RNN）统一实验与对比。
+This repository implements the full benchmark pipeline: segmenting sparse ZTF/ATLAS light curves, extracting handcrafted features or end-to-end sequences, training eleven model configurations, and aggregating test-set metrics. The main **varlen** benchmark uses **3–30 observations** per segment, **seven merged variability classes**, and a **75 / 10 / 15** train/validation/test split (`random_state = 42`).
 
-## 仓库内容
+**Models compared**
 
-- `data/`：划分、E2E 预处理、手工特征构建脚本；`split/{varlen,50obs,1121}/` 含 **索引 npy** 与统计
-- `features/`：**特征提取 Python 脚本**（入库）；大型特征 CSV 需本地自备或从 Zenodo 获取
-- `train_models/`：训练、微调、评估与 benchmark 脚本；`results/` 为汇总图表与指标表
-- `paper_output/figures/`：论文用图的 PDF/PNG 及出图脚本
-- 各实验目录下 `results/test_metrics.json`、`metrics.txt`（**不含** 模型权重）
+| Group | Models |
+|-------|--------|
+| Handcrafted + XGBoost | Full (57 features), Reduced (39 non–Lomb-Scargle features) |
+| Handcrafted + Transformer | 50-obs pretrain → varlen finetune; varlen from scratch |
+| End-to-end Transformer | Lightweight (~11M) and matched-size (~227M); 50-obs pretrain → varlen finetune; matched scratch |
+| End-to-end LSTM | Varlen baseline |
 
-## 本地需自备（未入库）
+Experiment IDs, output paths, and metric files are defined in `train_models/experiment_registry.py`.
 
-| 路径 | 说明 |
-|------|------|
-| 原始 ZTF 光变 CSV | 按类别分文件夹（`BYDra/`、`CEP/` 等），由 `create_sparse_segments.py --source-dir` 指定；也可从 [IPAC](https://doi.org/10.26131/irsa598) 获取 |
-| `train2/`、`train4/` | **切割后的稀疏片段**（非原始光变）：`train2/` 为 3–30 点变长，`train4/` 为 50 点固定长度；由步骤 0 生成或本地自备 |
-| `features/*.csv` | 手工特征表（从 `train2/`/`train4/` 片段提取；体积大，建议 Zenodo） |
-| `data/split/*/manifest.csv` | 运行 `python data/generate_manifests.py` 或 `prepare_data_split.py` 生成 |
-| `data/e2e/`、`data/e2e_varlen/` | 运行 `prepare_e2e_data.py` / `prepare_e2e_varlen.py`（输入为 `train4/` / `train2/` 片段 CSV） |
-| 各 `train_models/*/best_model.pth` 等 | 训练得到的权重 |
+## Repository contents
 
-## 数据处理
+- `data/` — preprocessing scripts; stratified split indices under `data/split/{varlen,50obs,1121}/`
+- `features/` — feature extraction scripts (`extract_features_full.py`, `extract_features_reduced.py`); `legacy/` — historical scripts
+- `train_models/` — training, fine-tuning, evaluation, and inference-benchmark scripts
+- `train_models/results/` — aggregated comparison tables, feature-ablation outputs, inference-timing reports, and summary plots
+- `manuscript/figures/` — figures (`fig_*.pdf`) and regeneration scripts (`plot_*.py`)
+
+Per-run metrics and diagnostic plots (e.g. `test_metrics.json`, confusion matrices) are included under each model’s `results/` subdirectory where available.
+
+## Environment
+
+**Python ≥ 3.10** required.
 
 ```bash
-cd /path/to/shared-nvme
+pip install -r requirements.txt
+# GPU: install the matching PyTorch build from https://pytorch.org/get-started/locally/
+```
 
-# 0. 从原始 ZTF 光变 CSV 切分稀疏片段 -> train2/（3–30 点）或 train4/（50 点）
-#    输入：--source-dir 下各类别文件夹中的长光变 CSV（见 data/category_config.py）
-python data/create_sparse_segments.py --pool 50obs    # -> train4/
-python data/create_sparse_segments.py --pool varlen   # -> train2/
+## Reproduction
 
-# 1. 生成划分 manifest
-python data/generate_manifests.py
+Run from the repository root after installing dependencies:
+
+```bash
+# Segments & splits
+python data/create_sparse_segments.py --pool varlen
+python data/build_split_manifests.py
+python data/build_split_indices.py
 python data/prepare_data_split.py
 
-# 2. 从 train2/train4 片段 CSV 提取手工特征（非原始 ZTF）
-python features/extract_featrures_train4.py   # 1117 特征集 -> features/*.csv
-python features/extract_features_1121.py      # 1121 特征集（可选）
-# 或增量补全：python data/build_handcrafted_features.py --set 1117
+# Handcrafted features (57-feature set)
+python features/extract_features_full.py
+python data/build_handcrafted_features.py --set 1117
 
-# 3. E2E 预处理数组
-python data/prepare_e2e_data.py          # 50 点固定长度
-python data/prepare_e2e_varlen.py        # 3–30 点变长
+# End-to-end models (example: matched-size Transformer)
+python data/prepare_e2e_varlen.py
+python train_models/train_e2e_transformer_50obs_matched_pretrain.py
+python train_models/finetune_e2e_transformer_varlen_matched.py
+
+# Summarize & benchmark
+python train_models/summarize_model_comparison.py
+python train_models/run_benchmark_inference.py --device gpu --skip-legacy
 ```
 
-`features/` 目录说明：
-
-- **入库**：`extract_featrures_train4.py`（1117）、`extract_features_1121.py`、`balance_dataset.py` 等
-- **不入库**：`*.csv` 特征表（体积大，建议 Zenodo）
-
-
-## 训练与指标汇总
-
-```bash
-# XGBoost（Optuna 调参）
-python train_models/train_xgb_optuna_1117.py
-python train_models/train_xgb_optuna_1121.py
-
-# 汇总各模型 Accuracy / Macro-F1，生成 comparison.png
-python train_models/compare_models.py
-```
-
-`compare_models.py` 从各实验目录的 `test_metrics.json` 读取指标，实验清单见 `train_models/experiment_registry.py`。
-
-## 推理性能 benchmark
-| 脚本 | 作用 |
-|------|------|
-| `benchmark_inference_time.py` | 入口；测量 XGB / Transformer / E2E 推理与 LS 特征提取耗时 |
-| `benchmark_inference_unified.py` | 统一 benchmark 实现（由 time 脚本调用） |
-| `compare_models.py` | 汇总分类指标并可选叠加推理时间 |
-
-```bash
-# 部署向 GPU benchmark（需已训练权重；跳过 legacy 旧模型）
-conda run -n astro_classifier python train_models/benchmark_inference_time.py \
-    --device gpu --skip-legacy
-
-# 快速试跑（子集样本）
-conda run -n astro_classifier python train_models/benchmark_inference_time.py \
-    --device gpu --skip-legacy --max-samples 10000 --feature-samples 200
-```
-
-## 划分
-
-统一 **75/10/15**，`random_state=42`，分池：`varlen`（3–30 点）、`50obs`、`1121`。
+Other training scripts follow the same naming pattern as their output directories (see `experiment_registry.py`).
