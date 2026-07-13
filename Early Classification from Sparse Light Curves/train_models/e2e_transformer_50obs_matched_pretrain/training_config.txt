@@ -1,0 +1,11 @@
+E2E Matched Transformer (50 obs pretrain)
+aligned_with: train_transformer_classifier_1117_50obs.py
+d_model=1024, n_heads=16, n_layers=18, d_ff=4096, dropout=0.1
+params_M=227.40
+data=/root/shared-nvme/data/e2e
+BATCH_SIZE=128, N_EPOCHS=100
+LR=1e-05, WARMUP=20
+PATIENCE=5, MIN_DELTA=0.0001
+best_val_acc=0.9988, best_epoch=89
+test_acc=0.9986
+test_macro_f1=0.9987
