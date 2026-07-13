@@ -1,7 +1,0 @@
-{
-  "accuracy": 0.9214059020260571,
-  "macro_f1": 0.9298852131191399,
-  "pool": "1121",
-  "split_dir": "/root/shared-nvme/data/split/1121",
-  "n_test": 257742
-}

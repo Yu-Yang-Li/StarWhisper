@@ -1,9 +1,0 @@
-experiment,n_features,accuracy,macro_f1
-exp1_all_57,57,0.7366,0.7623
-exp2_39_no_ls,39,0.698,0.7255
-exp3_top15_from_1117,15,0.6824,0.7109
-exp4_top15_no_ls_plus_39,40,0.698,0.7258
-exp5_ls_only,10,0.518,0.5501
-exp6_missing_only,7,0.3261,0.0764
-exp7_39_plus_2_best_ls,41,0.7284,0.7545
-exp8_is_periodic_only,1,0.3255,0.0702

@@ -1,7 +1,0 @@
-E2E Matched Transformer finetune (3-30 obs) [regenerated]
-aligned_with: finetune_transformer_1117_50obs.py
-pretrained=/root/shared-nvme/train_models/transformer_e2e_model_50obs_matched
-data=/root/shared-nvme/data/e2e_varlen
-best_val_acc=0.9454, best_epoch=47
-test_acc=0.9458
-test_macro_f1=0.9497
