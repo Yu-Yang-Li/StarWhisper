@@ -1,0 +1,15 @@
+{
+  "experiment": "ablation_missing_indicators_only",
+  "n_features": 7,
+  "features": [
+    "skewness_is_missing",
+    "kurtosis_is_missing",
+    "ls_entropy_is_missing",
+    "ls_max_power_is_missing",
+    "ls_median_power_is_missing",
+    "ls_power_variance_is_missing",
+    "ls_fap_is_missing"
+  ],
+  "accuracy": 0.3261,
+  "macro_f1": 0.0764
+}

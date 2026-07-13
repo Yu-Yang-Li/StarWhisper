@@ -1,0 +1,9 @@
+{
+  "experiment": "ablation_is_periodic_only",
+  "n_features": 1,
+  "features": [
+    "is_periodic"
+  ],
+  "accuracy": 0.3255,
+  "macro_f1": 0.0702
+}

@@ -1,0 +1,18 @@
+{
+  "experiment": "ablation_ls_features_only",
+  "n_features": 10,
+  "features": [
+    "ls_power_to_median",
+    "ls_entropy",
+    "ls_harmonic_ratio",
+    "ls_significant_peaks",
+    "ls_peak_width",
+    "ls_max_power",
+    "ls_median_power",
+    "ls_power_variance",
+    "ls_dominant_period",
+    "ls_fap"
+  ],
+  "accuracy": 0.518,
+  "macro_f1": 0.5501
+}

@@ -1,0 +1,23 @@
+{
+  "experiment": "ablation_top15_by_importance",
+  "n_features": 15,
+  "features": [
+    "num_points",
+    "std_mag",
+    "skewness",
+    "min_mag",
+    "max_mag",
+    "percent_amplitude",
+    "autocorr_lag1",
+    "ls_peak_width",
+    "ls_dominant_period",
+    "ls_fap",
+    "excess_variance",
+    "w_std_mag",
+    "chi2_dof",
+    "ndethist",
+    "is_periodic"
+  ],
+  "accuracy": 0.6824,
+  "macro_f1": 0.7109
+}

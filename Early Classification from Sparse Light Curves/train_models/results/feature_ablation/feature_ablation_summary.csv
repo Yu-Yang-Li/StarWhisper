@@ -1,0 +1,9 @@
+experiment,n_features,accuracy,macro_f1
+ablation_all_57_features,57,0.7366,0.7623
+ablation_39_features_no_ls,39,0.698,0.7255
+ablation_top15_by_importance,15,0.6824,0.7109
+ablation_top15_plus_39_non_ls,40,0.698,0.7258
+ablation_ls_features_only,10,0.518,0.5501
+ablation_missing_indicators_only,7,0.3261,0.0764
+ablation_39_plus_2_ls,41,0.7284,0.7545
+ablation_is_periodic_only,1,0.3255,0.0702
