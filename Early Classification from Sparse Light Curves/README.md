@@ -23,6 +23,12 @@ Experiment IDs, output paths, and metric files are defined in `train_models/expe
 
 Per-run metrics and diagnostic plots (e.g. `test_metrics.json`, confusion matrices) are included under each model’s `results/` subdirectory where available.
 
+## Pre-trained weights
+
+The best model checkpoints for all configurations are available on Hugging Face Hub:
+**[castor0705/sparse-lc-early-classification](https://huggingface.co/castor0705/sparse-lc-early-classification)**.
+Use `hf download castor0705/sparse-lc-early-classification` to retrieve them locally.
+
 ## Environment
 
 **Python ≥ 3.10** required.
