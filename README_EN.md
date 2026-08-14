@@ -137,4 +137,4 @@ If this work is useful to you, please cite the latest published paper:
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
+![Star History Chart](https://star-history.dera.page/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)

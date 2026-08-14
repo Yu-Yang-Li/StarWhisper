@@ -137,4 +137,4 @@ PDF 中的 Virtual-GOTTA 把 StarWhisper Telescope 进一步推进为“具身�
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
+![Star History Chart](https://star-history.dera.page/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
