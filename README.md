@@ -13,7 +13,7 @@
   <img src="docs/assets/starwhisper-hero.jpg" alt="StarWhisper: AI astrophysicist workflow" width="820">
 </p>
 
-**StarWhisper** 是面向天文学的开源模型与智能体项目。它要解决的不是“大模型能不能聊天文”，而是：当科学目标、天气和设备状态同时变化时，智能体怎样做可解释、可回放、可拒绝的观测决策，并把文献、数据和写作接到同一条工作流里。
+**StarWhisper** 是面向天文学的开源模型与智能体项目。它要解决的不是“大模型能不能回答天文问题”，而是：当科学目标、天气和设备状态同时变化时，智能体怎样做可解释、可回放、可拒绝的观测决策，并把文献、数据和写作接到同一条工作流里。
 
 项目由国家天文台、之江实验室等单位支持，已经从语言模型、光变曲线模型和脉冲星模型，推进到 **StarWhisper Telescope** 和 **Virtual-GOTTA**。正式论文见 [Wang et al., *Communications Engineering* 4, 184 (2025)](https://doi.org/10.1038/s44172-025-00520-4)。
 
@@ -31,6 +31,20 @@
 <p align="center">
   <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
 </p>
+
+```mermaid
+flowchart TB
+  llm[Astronomy LLMs / StarWhisper 4.0]
+  mm[Time-series and multimodal: LC, Pulsar]
+  tel[StarWhisper Telescope / NGSS]
+  gotta[Virtual-GOTTA: alerts, weather, device, interlock]
+  skills[Astronomy research skills]
+  llm --> mm --> tel --> gotta
+  skills -.-> llm
+  skills -.-> mm
+  skills -.-> tel
+  skills -.-> gotta
+```
 
 | 层 | 现在能公开看到的 | 仓库位置 |
 | --- | --- | --- |
@@ -76,13 +90,19 @@
 | 确定性优先级 | 4.3289 | 61.11% | 49.81% | 0 | 0 |
 | 规则 Agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
 
+<p align="center">
+  <img src="docs/assets/goai-metrics-source.png" alt="Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor" width="640">
+</p>
+
+<p align="center"><sub>图 2. 预注册门槛下的策略权衡：规则 Agent 跟进率最高，但落在巡天完成度允许区左侧。</sub></p>
+
 规则 Agent 相对确定性优先级把跟进率提高了 23.52 个百分点，科学效用只提高约 1.6%，但巡天完成度下降 9.44 个百分点，超过预注册的 5 个百分点容忍线。这是**稳定负结果**：当前边际价值规则过度偏向短期响应。三个种子方向一致，双跑输出哈希一致。它不能写成“Agent 已经赢了”。
 
 <p align="center">
   <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
 </p>
 
-<p align="center"><sub>图 2. 先证明可复现，再校准现实，最后才进入只建议、不执行的硬件影子运行。</sub></p>
+<p align="center"><sub>图 3. 先证明可复现，再校准现实，最后才进入只建议、不执行的硬件影子运行。</sub></p>
 
 下一步按这条路走：补上 AstroQ / TJO 风格的约束调度 baseline，用脱敏日志校准扰动频率，再把同一决策接口接到观测时序模型、短时气象和控制模型。影子运行仍然是建议，不是放权。
 

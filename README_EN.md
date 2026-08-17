@@ -32,6 +32,20 @@ Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from langu
   <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
 </p>
 
+```mermaid
+flowchart TB
+  llm[Astronomy LLMs / StarWhisper 4.0]
+  mm[Time-series and multimodal: LC, Pulsar]
+  tel[StarWhisper Telescope / NGSS]
+  gotta[Virtual-GOTTA: alerts, weather, device, interlock]
+  skills[Astronomy research skills]
+  llm --> mm --> tel --> gotta
+  skills -.-> llm
+  skills -.-> mm
+  skills -.-> tel
+  skills -.-> gotta
+```
+
 | Layer | What is public | Where |
 | --- | --- | --- |
 | Astronomy LLMs | QA, code, observing knowledge | `LLM_Data` |
@@ -76,13 +90,19 @@ Current synthetic result (90 episodes / policy):
 | Deterministic priority | 4.3289 | 61.11% | 49.81% | 0 | 0 |
 | Rule agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
 
+<p align="center">
+  <img src="docs/assets/goai-metrics-source.png" alt="Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor" width="640">
+</p>
+
+<p align="center"><sub>Figure 2. Policy trade-off under the pre-registered completeness floor. The rule agent has the highest follow-up and sits left of the allowed zone.</sub></p>
+
 The rule agent raises follow-up by 23.52 percentage points over deterministic priority, with only ~1.6% more utility, but completeness falls 9.44 points — past the 5-point tolerance. That is a **stable negative result**: the current marginal-value rule overweights short-term response. The direction is the same on three seeds; a second run matched output hashes. It is not a win.
 
 <p align="center">
   <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
 </p>
 
-<p align="center"><sub>Figure 2. Reproduce first, calibrate against reality, then enter hardware shadow mode (suggest only).</sub></p>
+<p align="center"><sub>Figure 3. Reproduce first, calibrate against reality, then enter hardware shadow mode (suggest only).</sub></p>
 
 Next: an AstroQ / TJO-style constrained scheduler, de-identified logs to calibrate disturbance rates, then the same decision interface in front of timing, weather, and control models. Shadow mode remains advice, not authority.
 
