@@ -1,126 +1,187 @@
-# 星语 5.0 / StarWhisper
+# 星语 / StarWhisper
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
-[![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
+[![License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
+[![Paper](https://img.shields.io/badge/Paper-Communications%20Engineering-0B1B33)](https://doi.org/10.1038/s44172-025-00520-4)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Yu-Yang-Li/StarWhisper)](https://github.com/Yu-Yang-Li/StarWhisper/commits/main)
 
 <p align="center">
   中文 &nbsp;|&nbsp; <a href="README_EN.md">English</a>
 </p>
 
-**StarWhisper** 是面向天文学和 AI4S 的开源模型与智能体项目。在中国科学院国家天文台、之江实验室等单位支持下，项目从天文学语言模型、时序模型、多模态模型，推进到 **StarWhisper Telescope** 和 **Virtual-GOTTA**：让大模型不只回答天文问题，而是接入真实观测任务、台站信息、望远镜状态和实时响应流程，成为服务科教科研的 AI Astrophysicist 工作流。
+<p align="center">
+  <img src="docs/assets/starwhisper-hero.jpg" alt="StarWhisper: AI astrophysicist workflow" width="820">
+</p>
 
-本页已按《人工智能驱动科教科研》PDF 的主线更新：从“AI 科教科研”到“具身智能望远镜”，再到全球暂现源望远镜数据组网与早期超新星候选预警。
+**StarWhisper** 是面向天文学的开源模型与智能体项目。它要解决的不是“大模型能不能回答天文问题”，而是：当科学目标、天气和设备状态同时变化时，智能体怎样做可解释、可回放、可拒绝的观测决策，并把文献、数据和写作接到同一条工作流里。
 
-- [Virtual-GOTTA 交互式路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)
-- [PDF / PPT 来源说明](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-source.html)
-- [最新正式论文：StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)，*Communications Engineering* 4, 184 (2025)
+项目由国家天文台、之江实验室等单位支持，已经从语言模型、光变曲线模型和脉冲星模型，推进到 **StarWhisper Telescope** 和 **Virtual-GOTTA**。正式论文见 [Wang et al., *Communications Engineering* 4, 184 (2025)](https://doi.org/10.1038/s44172-025-00520-4)。
+
+| 入口 | 说明 |
+| --- | --- |
+| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 具身智能望远镜与暂现源组网的交互说明 |
+| [`NGSS/`](NGSS) | StarWhisper Telescope 近邻星系巡天落地代码 |
+| [`skills/`](skills/README.md) | 天文强化后的科研技能：检索、假设、写作、引用检查 |
+| [论文 DOI](https://doi.org/10.1038/s44172-025-00520-4) | 端到端观测自动化 agent 框架 |
 
 ---
 
-## 项目定位
+## 项目分层
 
-| 方向 | 当前定位 | 仓库对应内容 |
+<p align="center">
+  <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
+</p>
+
+```mermaid
+flowchart TB
+  llm[Astronomy LLMs / StarWhisper 4.0]
+  mm[Time-series and multimodal: LC, Pulsar]
+  tel[StarWhisper Telescope / NGSS]
+  gotta[Virtual-GOTTA: alerts, weather, device, interlock]
+  skills[Astronomy research skills]
+  llm --> mm --> tel --> gotta
+  skills -.-> llm
+  skills -.-> mm
+  skills -.-> tel
+  skills -.-> gotta
+```
+
+| 层 | 现在能公开看到的 | 仓库位置 |
 | --- | --- | --- |
-| 天文学大语言模型 | 面向科普、科研问答、代码与观测知识的领域模型 | `LLM_Data`、训练数据与模型说明 |
-| 时序与多模态模型 | 面向光变曲线、脉冲星识别、天文图像理解等任务 | StarWhisper LC、StarWhisper Pulsar、示例图像 |
-| StarWhisper Telescope | 面向端到端天文观测自动化的 agent 框架 | `NGSS` 近邻星系巡天项目代码 |
-| Virtual-GOTTA | 面向科学级望远镜的具身智能改造与观测工作流组网 | `docs/virtual-gotta-map.html`、路线图与来源说明 |
+| 天文学语言模型 | 科普与科研问答、代码、观测知识 | `LLM_Data` |
+| 时序 / 多模态 | 光变曲线分类、脉冲星识别 | StarWhisper LC、StarWhisper Pulsar |
+| StarWhisper Telescope | 真实巡天里的观测自动化 agent | `NGSS` |
+| Virtual-GOTTA | 科学级望远镜的具身改造与组网路线 | `docs/virtual-gotta-map.html` |
+| 天文科研技能 | 把文献—假设—数据合同—写作接到 agent 侧 | [`skills/`](skills/README.md) |
+| 开放探索环境 | 合成夜次上的可回放决策边界实验 | 下文 *StarWhisper-Explore* |
 
-StarWhisper 的核心目标不是单点模型展示，而是把天文学知识、数据处理、观测计划、望远镜控制和实时科学判断接到同一套可扩展智能体工作流里。
-
----
-
-## Virtual-GOTTA：AI 驱动的虚拟司天工程
-
-PDF 中的 Virtual-GOTTA 把 StarWhisper Telescope 进一步推进为“具身智能望远镜”方向：大模型作为人机交互和任务编排入口，连接警报发布、台站信息、望远镜状态、观测计划、数据回传和实时响应。
-
-核心工作流包括：
-
-1. **警报与科学目标接入**：对接暂现源、超新星早期候选、近邻星系巡天等科学任务。
-2. **台站与望远镜状态感知**：统一管理观测站信息、设备可用性、天气和观测窗口。
-3. **观测计划与执行闭环**：把模型决策转化为可执行观测计划，并在观测后回收数据和状态。
-4. **实时响应与候选筛选**：服务小于 1 天爆发早期候选预警，支持全球暂现源望远镜数据组网。
-5. **科教科研平台化**：把 AI 科研助手、虚拟科学家和真实望远镜任务结合，形成可教学、可演示、可复用的 AI4S 案例。
-
-[打开 Virtual-GOTTA 交互式路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)
+核心目标是把知识、数据处理、观测计划、设备约束和科学判断接到一套可扩展工作流里，而不是只展示单点模型分数。
 
 ---
 
-## 已开源与论文进展
+## 观测决策闭环
 
-1. **StarWhisper 4.0 数据与训练增强**  
-   清洗并扩展科普、科研数据集，改进训练方法，提升天文物理、代码和 agent 能力。StarWhisper 3 训练数据已在 `LLM_Data` 目录开源，4.0 权重将发布到 ModelScope。
+夜前计划几乎从不会原样执行。临时科学目标会插入，短时天气会关掉窗口，跟踪、调焦、相机或穹顶也可能突然异常。系统必须连续决定：继续、插入、延后、安全暂停，还是恢复后重规划。
+
+<p align="center">
+  <img src="docs/assets/starwhisper-observe-loop.jpg" alt="Scheduled plan, three disturbances, observation agent, constrained actions and feedback" width="820">
+</p>
+
+<p align="center"><sub>图 1. 既定计划、三类扰动、观测智能体与受约束行动。</sub></p>
+
+这个闭环在真实望远镜网络里已经有端到端自动观测基础（见论文与 `NGSS`）。下面的 Explore 切片回答的是另一件事：**在什么条件下这个判断值得信任，会稳定牺牲什么，何时必须拒绝。**
+
+---
+
+## StarWhisper-Explore：合成环境里的决策边界
+
+环境版本 `StarWhisper-Explore-v0.2`。固定台站 XingLong，单望远镜，一夜六个时隙；候选目标、暂现源到达、天气和设备扰动由种子生成，策略之间共享同一剧本。Agent 不得读取未来扰动，也不得改安全阈值。真实硬件联锁的优先级高于任何建议动作。
+
+这是**合成决策闭环**，用来研究策略，不是光学传播仿真，也不是真实硬件闭环。公开材料不包含望远镜凭据、FTP/MQTT 地址和未脱敏图像。
+
+比较对象预先固定为四类：无干预、随机、确定性优先级、规则 Agent。预注册的正向门槛要求：三个种子均无主动安全违规，无效动作率 ≤ 1%，巡天完成度下降不超过 5 个百分点，同时高价值暂现源跟进率相对提高至少 20%，或综合科学效用提高至少 5%。
+
+当前 90 episode / 策略的合成结果：
+
+| 策略 | 平均科学效用 | 巡天完成度 | 高价值暂现源跟进率 | 无效动作 | 被联锁拦截的危险尝试 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 无干预 | 3.9343 | 77.41% | 0.00% | 0 | 122 |
+| 随机 | 2.4027 | 30.19% | 30.37% | 18 | 72 |
+| 确定性优先级 | 4.3289 | 61.11% | 49.81% | 0 | 0 |
+| 规则 Agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
+
+<p align="center">
+  <img src="docs/assets/goai-metrics-source.png" alt="Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor" width="640">
+</p>
+
+<p align="center"><sub>图 2. 预注册门槛下的策略权衡：规则 Agent 跟进率最高，但落在巡天完成度允许区左侧。</sub></p>
+
+规则 Agent 相对确定性优先级把跟进率提高了 23.52 个百分点，科学效用只提高约 1.6%，但巡天完成度下降 9.44 个百分点，超过预注册的 5 个百分点容忍线。这是**稳定负结果**：当前边际价值规则过度偏向短期响应。三个种子方向一致，双跑输出哈希一致。它不能写成“Agent 已经赢了”。
+
+<p align="center">
+  <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
+</p>
+
+<p align="center"><sub>图 3. 先证明可复现，再校准现实，最后才进入只建议、不执行的硬件影子运行。</sub></p>
+
+下一步按这条路走：补上 AstroQ / TJO 风格的约束调度 baseline，用脱敏日志校准扰动频率，再把同一决策接口接到观测时序模型、短时气象和控制模型。影子运行仍然是建议，不是放权。
+
+---
+
+## 天文科研技能
+
+<p align="center">
+  <img src="docs/assets/starwhisper-skills-matrix.jpg" alt="Astronomy research skills matrix" width="820">
+</p>
+
+这些技能改编自 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills)，默认值改成了天文学：NASA ADS、arXiv `astro-ph`、AAS 引用、光变/光谱/FITS 数据合同、选择效应，以及“合成 / 回放 / 硬件”三条边界。完整表见 [`skills/README.md`](skills/README.md)。
+
+| 类 | 技能 |
+| --- | --- |
+| 文献证据 | 论文检索 · 深度研究 · 论文审查 |
+| 研究构思 | 假设生成 · 数据处理 · 实验设计 · 统计分析 |
+| 成果表达 | 文本润色 · 学术写作 · 科研绘图 · PPT |
+| 协作沉淀 | 引用合规 · 科研画像 |
+
+```powershell
+git clone https://github.com/Yu-Yang-Li/StarWhisper.git
+Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
+```
+
+没有 ADS / Giiisp 密钥时走 dry-run 或本地回退，不伪造检索命中。技能不能对望远镜下发指令。
+
+---
+
+## 已开源模块与论文
+
+1. **StarWhisper 4.0 数据与训练**  
+   StarWhisper 3 训练数据在 `LLM_Data`。4.0 权重计划发布到 ModelScope。
 
 2. **[StarWhisper Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)**  
-   面向脉冲星识别的多模态大模型技术报告。
+   脉冲星识别多模态模型技术报告。
 
 3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
-   基于迁移学习和大模型的光变曲线分类方法，论文相关测试代码已上传。
+   光变曲线分类。论文相关测试代码已上传。
 
-   <div align="center"><img src="example/StarWhisper LC.png" width="680"/></div>
+   <p align="center"><img src="example/StarWhisper LC.png" alt="StarWhisper LC" width="680"></p>
 
 4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
-   正式论文发表于 *Communications Engineering* 4, 184 (2025)。论文提出面向端到端天文观测自动化的 AI agent 框架，并在近邻星系巡天项目中落地。相关代码已在 `NGSS` 目录开源。
+   *Communications Engineering* 4, 184 (2025)。近邻星系巡天中的端到端观测自动化 agent。代码在 `NGSS`。
 
-   <div align="center"><img src="example/Starwhisper Telescope.png" width="680"/></div>
+   <p align="center"><img src="example/Starwhisper Telescope.png" alt="StarWhisper Telescope" width="680"></p>
 
 5. **Virtual-GOTTA / StarWhisper 5.0+**  
-   基于《人工智能驱动科教科研》PDF，StarWhisper 5.0+ 面向具身智能望远镜与科学级观测工作流：将大模型、台站网络、望远镜状态、实时观测和科学预警整合为可交互、可扩展的科研智能体系统。
+   把大模型接到警报、台站状态、观测计划和实时响应。路线图：[interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
 
----
-
-## 演示
-
-<div align="center"><img src="example/图片1.png" width="680"/></div>
-<div align="center"><img src="example/图片2.png" width="680"/></div>
+<p align="center">
+  <img src="example/图片1.png" alt="StarWhisper demonstration" width="680">
+  <img src="example/图片2.png" alt="StarWhisper telescope agent interface" width="680">
+</p>
 
 ---
 
 ## 司天工程
 
-**司天工程** 是中国天文学家提出的大型时域天文基础设施。一期计划在国内多个优秀观测站部署 54 台口径 1 米级大视场望远镜，组成多波段同时监测网络，每 30 分钟完成约 1 万平方度天区的高精度三色“凝视”巡天。
+**司天工程** 计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天，服务于极端爆发、引力波电磁对应体、系外行星和太阳系天体等问题。StarWhisper 是“司天大脑”的一条候选技术路径：把模型、技能和专业工具接到真实观测系统，而不是另做一套只存在于幻灯片上的平台。
 
-司天工程将用于发现极端高能爆发源、引力波电磁对应体、系外行星、太阳系天体等新天体和新现象，并服务暗物质、黑洞、宇宙起源、行星防御等科学问题。StarWhisper 作为“司天大脑”的候选技术路径，探索如何把大模型、智能体和天文专业工具接入真实观测系统。
-
-<div align="center"><img src="example/sitian.png" width="680"/></div>
+<p align="center"><img src="example/sitian.png" alt="SiTian / Sitian survey concept" width="680"></p>
 
 ---
 
-## 许可
+## 使用边界
 
-- 源代码遵循 **Apache-2.0 License**。
-- Qwen Chat 等基础模型权重遵循其各自许可协议。
+| 可以说 | 不可以说 |
+| --- | --- |
+| 论文描述的观测自动化框架已在 NGSS 落地 | 本仓库已经接管真实望远镜的安全联锁 |
+| Explore-v0.2 的合成夜次可复现、哈希一致 | 规则 Agent 已经通过正向发现门槛 |
+| 技能能辅助 ADS 检索、写作和引用检查 | 技能输出等于已发表结果或已发现暂现源 |
+| 影子运行可以给出建议 | 建议已被硬件执行 |
 
----
-
-## 下一步
-
-### 大语言模型：科学传播与科研助手
-
-- 优化通用数据与专业数据比例，缓解灾难性遗忘。
-- 引入人工反馈强化学习，提升模型稳定性与科研可用性。
-- 构建天文知识图谱，降低领域幻觉。
-- 强化摘要、代码生成、观测任务理解和论文辅助能力。
-
-### 多模态模型：科研工具
-
-- 开源更多多模态微调权重。
-- 探索天文图像生成、识别和质量控制任务。
-- 连接光变曲线、图像、光谱和文本证据。
-
-### 观测 Agent：司天大脑
-
-- 提升模型在天文领域的编程和工具调用能力。
-- 在 MiniSiTian / 司天样机上进行人机交互 agent 验证。
-- 接入 ASTROLABE、CASA 等专业工具。
-- 验证 StarWhisper 作为“司天大脑”候选方案的可行性。
+源代码：**Apache-2.0**。`skills/` 中改编自他山科研技能库的部分见 [`skills/NOTICE.md`](skills/NOTICE.md)，遵循 MIT。基础模型权重遵循各自许可证。
 
 ---
 
 ## 引用
-
-如果这项工作对你有帮助，请引用最新正式论文：
 
 ```BibTeX
 @article{wang2025starwhisper,
@@ -137,4 +198,4 @@ PDF 中的 Virtual-GOTTA 把 StarWhisper Telescope 进一步推进为“具身�
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)](https://star-history.com/#Yu-Yang-Li/StarWhisper&Date)

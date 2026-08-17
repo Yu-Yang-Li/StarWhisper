@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Deck Builder"
+  short_description: "Page-description-driven image PPT with QA evidence"
+  default_prompt: "Use $visual-deck-builder to create an image-first PPT deck from my topic or source materials with slide specs, page descriptions, visual style contract, full-slide images, QA evidence, and PPTX packaging."

@@ -1,0 +1,14 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-docx==0.8.11
+requests==2.31.0
+PyMuPDF>=1.24.0
+pymupdf4llm==0.0.11
+tenacity==8.2.3
+dashscope>=1.19.1
+langchain>=0.1.0
+langchain-community>=0.0.30
+langchain-openai>=0.1.0
+semanticscholar>=0.5.0
+crossref==0.1.2
+httpx>=0.25.0

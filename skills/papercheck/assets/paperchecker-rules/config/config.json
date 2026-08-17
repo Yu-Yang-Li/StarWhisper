@@ -1,0 +1,25 @@
+{
+  "model": "",
+  "model_name": "",
+  "api_key": "",
+  "api_url": "",
+  "semantic_scholar_api_key": "",
+  "crossref_api_key": "",
+  "download_timeout": 60,
+  "max_retries": 3,
+  "retry_delay_min": 4,
+  "retry_delay_max": 10,
+  "analysis_mode": "full",
+  "use_advanced_extraction": true,
+  "extraction_mode": "hybrid",
+  "optimize_citations_with_ai": false,
+  "map_citations_to_references": true,
+  "citation_format_type": "chinese_academy_of_sciences",
+  "mineru_config": {
+    "api_key": "",
+    "base_url": ""
+  },
+  "pdf_extractor_config": {
+    "academic_references_start_percentage": 0.7
+  }
+}

@@ -1,0 +1,258 @@
+/* ============================================================
+   他山 Tashan · Colors + Type foundations
+   Source: brand-spec/tokens/{base,themes}.css · v1.0 2026-04-15
+   Usage:
+     <link rel="stylesheet" href="colors_and_type.css">
+     <html data-theme="classic">    ← default, aquaHaze
+     <html data-theme="guofeng">    ← 墨山国风（砚黄+赭红）
+     <html data-theme="guofeng-night">  ← 夜览深色
+     <html data-theme="rose-feminine">
+     <html data-theme="real-energy" | "real-confetti" | "real-health" | "real-phylo">
+   ============================================================ */
+
+/* ---------- Webfonts (Google Fonts, matches brand-spec) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================================================
+   B · 字体系统
+   ============================================================ */
+:root {
+  /* Families */
+  --font-serif:  'Noto Serif SC', STSong, SimSun, serif;        /* 标题 · 品牌字 · 引用 */
+  --font-sans:   'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; /* 正文 · 表单 · 导航 */
+  --font-latin:  'Inter', system-ui, sans-serif;                /* 中英混排中的拉丁字 */
+  --font-mono:   'JetBrains Mono', 'SF Mono', Menlo, monospace; /* 代码 · 数字 · 时间戳 */
+
+  /* Scale · base 16 · minor third 1.25 */
+  --fs-h1: 3rem;        /* 48 */
+  --fs-h2: 2.25rem;     /* 36 */
+  --fs-h3: 1.75rem;     /* 28 */
+  --fs-h4: 1.375rem;    /* 22 */
+  --fs-h5: 1.125rem;    /* 18 */
+  --fs-h6: 1rem;        /* 16 */
+  --fs-body-l:  1.125rem;
+  --fs-body:    1rem;
+  --fs-body-s:  0.875rem;
+  --fs-caption: 0.75rem;
+
+  /* Weight — avoid 700 for headings; 600 is the default heading weight */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* Line height · CJK runs looser than Latin */
+  --lh-cjk-tight:  1.3;
+  --lh-cjk:        1.55;   /* 中文正文最佳 1.55–1.65 */
+  --lh-cjk-loose:  1.8;
+  --lh-latin-tight: 1.15;
+  --lh-latin:       1.5;
+  --lh-latin-loose: 1.7;
+
+  /* Letter spacing */
+  --ls-cjk-wide:    0.05em; /* 仅 h1/h2 大标题微增 */
+  --ls-latin-tight:-0.02em;
+  --ls-latin-wide:  0.02em;
+
+  /* ===== C · 尺度系统 ===== */
+  --sp-xs: 0.25rem;   --sp-sm: 0.5rem;    --sp-md: 0.75rem;
+  --sp-base: 1rem;    --sp-lg: 1.5rem;    --sp-xl: 2rem;
+  --sp-2xl: 3rem;     --sp-3xl: 4rem;     --sp-4xl: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;   /* default · button / card / input */
+  --radius-lg: 16px;   /* modal / dropdown / 缩略图 */
+  --radius-full: 9999px;
+
+  --bw-thin: 1px; --bw-medium: 2px; --bw-thick: 4px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-xl: 0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+
+  --z-base: 0; --z-raised: 10; --z-sticky: 50;
+  --z-header: 100; --z-dropdown: 1000; --z-modal: 5000;
+  --z-popover: 7000; --z-toast: 9000; --z-tooltip: 9500;
+
+  --bp-sm: 640px;  --bp-md: 768px;  --bp-lg: 1024px;
+  --bp-xl: 1280px; --bp-2xl: 1536px;
+
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+  --easing-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --easing-inOut:  cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   A · 颜色系统 · 8 主题
+   每套主题遵守 4 语义独立结构：brand / neutrals / 4 semantic / accent
+   在 <html data-theme="..."> 上切换
+   ============================================================ */
+
+/* ---------- 1. TopicLab 基线 (aquaHaze 雾霭) · DEFAULT ---------- */
+:root,
+[data-theme="classic"] {
+  --brand-primary: #2D4344; --brand-dark: #1A2A2B; --brand-light: #EDF5F4;
+  --accent-primary: #61797A;
+  --accent-success: #16A34A; --accent-warning: #D97706;
+  --accent-error: #DC2626;   --accent-info: #64748B;
+  --text-primary: #2A3838; --text-secondary: #5C6B6B; --text-tertiary: #90A6A7;
+  --text-disabled: #C8D1DB; --text-inverse: #FFFFFF; --text-brand: #2D4344;
+  --surface-base: #EDF5F4; --surface-raised: #FFFFFF; --surface-sunken: #E9F2F1;
+  --surface-overlay: #FFFFFF; --surface-inverse: #2D4344;
+  --border-subtle: #E6EEED; --border-default: #DCE5E4;
+  --border-strong: #B6D1CD; --border-focus: #2D4344;
+}
+
+/* ---------- 2. 墨山 · 夜览（深色） ---------- */
+[data-theme="guofeng-night"] {
+  --brand-primary: #7FC4AC; --brand-dark: #5FA893; --brand-light: #1F3E34;
+  --brand-secondary: #DFB764; --brand-tertiary: #E58268;
+  --accent-primary: #7FC4AC; --accent-highlight: #DFB764;
+  --accent-success: #5FC78A; --accent-warning: #DFB764;
+  --accent-error: #E58268;   --accent-info: #7AB4CC;
+  --text-primary: #E8DCCE; --text-secondary: #B5C4BB; --text-tertiary: #7E938A;
+  --text-disabled: #4A5A52; --text-inverse: #0D1A16; --text-brand: #DFB764;
+  --surface-base: #0D1A16; --surface-raised: #152B24; --surface-sunken: #1C3328;
+  --surface-overlay: #1F3A32; --surface-inverse: #FAF9F3;
+  --border-subtle: #1F3A32; --border-default: #2C3D36;
+  --border-strong: #465A51; --border-focus: #DFB764;
+}
+
+/* ---------- 3. 墨山 · 国风（砚黄 + 赭红） ---------- */
+[data-theme="guofeng"] {
+  --brand-primary: #2C5F52; --brand-dark: #1A3D35; --brand-light: #E8F0EC;
+  --brand-secondary: #C6A04E; --brand-tertiary: #C96442;
+  --accent-primary: #2C5F52; --accent-highlight: #C6A04E;
+  --accent-success: #3D8B5C; --accent-warning: #C6A04E;
+  --accent-error: #C96442;   --accent-info: #4A7A8C;
+  --text-primary: #1F2D28; --text-secondary: #4A5D54; --text-tertiary: #8C9B92;
+  --text-disabled: #BFC8C2; --text-inverse: #FAF9F3; --text-brand: #2C5F52;
+  --surface-base: #FAF9F3; --surface-raised: #FFFFFF; --surface-sunken: #F2EFE5;
+  --surface-overlay: #FFFFFF; --surface-inverse: #1A3D35;
+  --border-subtle: #F0ECDD; --border-default: #E0DACB;
+  --border-strong: #B8B09A; --border-focus: #2C5F52;
+}
+
+/* ---------- 4. 玫瑰 · 女性 ---------- */
+[data-theme="rose-feminine"] {
+  --brand-primary: #C06070; --brand-dark: #8A3A4F; --brand-light: #F5DDE0;
+  --brand-secondary: #D4A36F;
+  --accent-primary: #C06070; --accent-highlight: #D4A36F;
+  --accent-success: #4C9A6A; --accent-warning: #E4A94F;
+  --accent-error: #D14F4F;   --accent-info: #4A84B8;
+  --text-primary: #2B2023; --text-secondary: #5A4A50; --text-tertiary: #9A8A90;
+  --text-disabled: #CFC3C7; --text-inverse: #FDFAF9; --text-brand: #C06070;
+  --surface-base: #FDFAF9; --surface-raised: #FFFFFF; --surface-sunken: #F8F2EF;
+  --surface-overlay: #FFFFFF; --surface-inverse: #3A2329;
+  --border-subtle: #F2E6E8; --border-default: #E8DCDF;
+  --border-strong: #BDA9B0; --border-focus: #C06070;
+}
+
+/* ---------- 5. 实刊 · 土地能源 ---------- */
+[data-theme="real-energy"] {
+  --brand-primary: #72B063; --brand-dark: #4A5F7E; --brand-light: #D8EBD3;
+  --brand-secondary: #4A5F7E;
+  --accent-primary: #72B063;
+  --accent-success: #72B063; --accent-warning: #E29135;
+  --accent-error: #C85A40;   --accent-info: #4A5F7E;
+  --text-primary: #2D3A2F; --text-secondary: #4F5E51; --text-tertiary: #8A9582;
+  --text-disabled: #C4CBBE; --text-inverse: #FFFFFF; --text-brand: #4A5F7E;
+  --surface-base: #F7F9F5; --surface-raised: #FFFFFF; --surface-sunken: #EEF3EB;
+  --surface-overlay: #FFFFFF; --surface-inverse: #2F3D50;
+  --border-subtle: #E8EEE4; --border-default: #DDE4D6;
+  --border-strong: #A8B49E; --border-focus: #72B063;
+}
+
+/* ---------- 6. 实刊 · 血液 Confetti ---------- */
+[data-theme="real-confetti"] {
+  --brand-primary: #257D8B; --brand-dark: #184B58; --brand-light: #BFDFD2;
+  --brand-secondary: #EAA558;
+  --accent-primary: #257D8B;
+  --accent-success: #68BED9; --accent-warning: #EAA558;
+  --accent-error: #ED8D5A;   --accent-info: #257D8B;
+  --text-primary: #102E35; --text-secondary: #3D5962; --text-tertiary: #7D9099;
+  --text-disabled: #BECBCF; --text-inverse: #FFFFFF; --text-brand: #257D8B;
+  --surface-base: #F5FAFA; --surface-raised: #FFFFFF; --surface-sunken: #E8F3F3;
+  --surface-overlay: #FFFFFF; --surface-inverse: #184B58;
+  --border-subtle: #DCECEC; --border-default: #D5E1E2;
+  --border-strong: #9CB0B5; --border-focus: #257D8B;
+}
+
+/* ---------- 7. 实刊 · 健康地球 ---------- */
+[data-theme="real-health"] {
+  --brand-primary: #C69287; --brand-dark: #8A6458; --brand-light: #F3E0D6;
+  --brand-secondary: #E4CD87;
+  --accent-primary: #C69287;
+  --accent-success: #A8BFA0; --accent-warning: #E4CD87;
+  --accent-error: #E79A90;   --accent-info: #7AA5B8;
+  --text-primary: #3D2E27; --text-secondary: #6B5247; --text-tertiary: #9D8B80;
+  --text-disabled: #D0C5BC; --text-inverse: #FDFBF6; --text-brand: #C69287;
+  --surface-base: #FDFBF6; --surface-raised: #FFFFFF; --surface-sunken: #F7F2E8;
+  --surface-overlay: #FFFFFF; --surface-inverse: #6B5247;
+  --border-subtle: #F0E8DC; --border-default: #E8DDD0;
+  --border-strong: #BCAB9D; --border-focus: #C69287;
+}
+
+/* ---------- 8. 实刊 · 系统发育 ★ ---------- */
+[data-theme="real-phylo"] {
+  --brand-primary: #6F8A91; --brand-dark: #4F6870; --brand-light: #C9D4D8;
+  --brand-secondary: #DEAA87;
+  --accent-primary: #6F8A91;
+  --accent-success: #93AC93; --accent-warning: #DEAA87;
+  --accent-error: #B8715E;   --accent-info: #7AB4CC;
+  --text-primary: #2C3A40; --text-secondary: #4F6870; --text-tertiary: #8A9AA0;
+  --text-disabled: #BFC8CC; --text-inverse: #FAF7EF; --text-brand: #6F8A91;
+  --surface-base: #FAF7EF; --surface-raised: #FFFFFF; --surface-sunken: #F2EADF;
+  --surface-overlay: #FFFFFF; --surface-inverse: #3E4F56;
+  --border-subtle: #EAE3CE; --border-default: #DDD4BF;
+  --border-strong: #B0A98E; --border-focus: #6F8A91;
+}
+
+/* prefers-color-scheme: dark → 墨山夜览 as the auto-dark */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --brand-primary: #7FC4AC; --brand-dark: #5FA893; --brand-light: #1F3E34;
+    --brand-secondary: #DFB764; --brand-tertiary: #E58268;
+    --accent-primary: #7FC4AC; --accent-success: #5FC78A;
+    --accent-warning: #DFB764; --accent-error: #E58268; --accent-info: #7AB4CC;
+    --text-primary: #E8DCCE; --text-secondary: #B5C4BB; --text-tertiary: #7E938A;
+    --text-disabled: #4A5A52; --text-inverse: #0D1A16; --text-brand: #DFB764;
+    --surface-base: #0D1A16; --surface-raised: #152B24; --surface-sunken: #1C3328;
+    --surface-overlay: #1F3A32; --surface-inverse: #FAF9F3;
+    --border-subtle: #1F3A32; --border-default: #2C3D36;
+    --border-strong: #465A51; --border-focus: #DFB764;
+  }
+}
+
+/* ============================================================
+   Semantic element defaults
+   ============================================================ */
+html { font-family: var(--font-sans); font-size: 16px; line-height: var(--lh-cjk); color: var(--text-primary); background: var(--surface-base); }
+body { margin: 0; font-family: var(--font-sans); color: var(--text-primary); background: var(--surface-base); -webkit-font-smoothing: antialiased; }
+:lang(en) { font-family: var(--font-latin); }
+
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-serif); font-weight: var(--fw-semibold); color: var(--text-primary); margin: 0 0 var(--sp-md); }
+h1 { font-size: var(--fs-h1); line-height: var(--lh-cjk-tight); letter-spacing: var(--ls-cjk-wide); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-cjk-tight); letter-spacing: var(--ls-cjk-wide); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-cjk-tight); }
+h4 { font-size: var(--fs-h4); line-height: var(--lh-cjk); }
+h5 { font-size: var(--fs-h5); line-height: var(--lh-cjk); }
+h6 { font-size: var(--fs-h6); line-height: var(--lh-cjk); }
+p  { font-size: var(--fs-body); line-height: var(--lh-cjk); color: var(--text-primary); margin: 0 0 var(--sp-base); }
+small, .text-caption { font-size: var(--fs-caption); color: var(--text-tertiary); }
+code, pre, kbd, samp { font-family: var(--font-mono); }
+a { color: var(--text-brand); text-decoration: none; }
+a:hover { opacity: 0.85; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

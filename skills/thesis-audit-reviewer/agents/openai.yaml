@@ -1,0 +1,8 @@
+interface:
+  display_name: "Thesis Audit Reviewer"
+  short_description: "含事实复核与方法前提审计的学位论文审阅"
+  brand_color: "#2563EB"
+  default_prompt: "Use $thesis-audit-reviewer to run a matrix-first thesis audit with DOCX/PDF integrity checks, verifiable-claim ledgers, method-premise review, and a standardized reviewer-style report."
+
+policy:
+  allow_implicit_invocation: true

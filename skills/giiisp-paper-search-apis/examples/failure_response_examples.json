@@ -1,0 +1,37 @@
+{
+  "schema": "giiisp_paper_search_failure_examples_v1",
+  "examples": [
+    {
+      "case": "auth_required",
+      "http_status": 403,
+      "content_type": "application/json",
+      "message": "Authentication required or session expired.",
+      "verification_status": "接口受限",
+      "next_step": "改用开放源回退，或等用户明确提供可用登录态后再真实调用。"
+    },
+    {
+      "case": "rate_limited",
+      "http_status": 429,
+      "content_type": "application/json",
+      "message": "Too many requests.",
+      "verification_status": "接口受限",
+      "next_step": "停止并发请求，稍后降频重试。"
+    },
+    {
+      "case": "html_login_page",
+      "http_status": 200,
+      "content_type": "text/html",
+      "message": "Returned an HTML login or verification page instead of JSON.",
+      "verification_status": "接口受限",
+      "next_step": "不要解析为论文命中；记录页面摘要并走开放源回退。"
+    },
+    {
+      "case": "network_timeout",
+      "http_status": null,
+      "content_type": null,
+      "message": "Network timeout or DNS/TLS failure.",
+      "verification_status": "接口受限",
+      "next_step": "记录网络状态，输出开放源回退计划。"
+    }
+  ]
+}

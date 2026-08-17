@@ -1,0 +1,11 @@
+请分析以下文献引用的相关性，仅基于提供的标题信息进行判断：
+【任务类型】{task_type}相关性判断
+【引用文献标题】{document_title}
+【对比内容】{target_content}
+请按以下JSON格式回答（请只输出JSON内容，不要其他文字）：
+{
+  "relevance_score": 数字评分(0-10),
+  "is_suitable_for_citation": true或false,
+  "brief_basis": "不超过50字的简要依据"
+}
+注意：由于仅基于标题判断，不要臆测文献内容。

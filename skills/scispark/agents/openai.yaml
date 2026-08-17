@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scispark"
+  short_description: "Generate research ideas through an arXiv-based staged workflow."
+  default_prompt: "Use Scispark to turn this research keyword into an evidence-tracked research idea."

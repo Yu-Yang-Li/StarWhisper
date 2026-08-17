@@ -1,0 +1,8 @@
+interface:
+  display_name: "集思谱论文检索"
+  short_description: "构造论文检索请求并做引用审计"
+  brand_color: "#2563EB"
+  default_prompt: "Use $giiisp-paper-search-apis to build a dry-run literature search and citation audit table for this research question."
+
+policy:
+  allow_implicit_invocation: true

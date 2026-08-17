@@ -1,0 +1,30 @@
+{
+  "query": "large language model scientific discovery",
+  "source_api": "/first/paper/searchArxivByTitle",
+  "normalized_results": [
+    {
+      "title": "Example Paper Title",
+      "authors": ["First Author", "Second Author"],
+      "year": 2025,
+      "venue": "arXiv",
+      "abstract": "Short abstract text from the source response.",
+      "doi": null,
+      "arxiv_id": "2501.01234",
+      "url": "https://arxiv.org/abs/2501.01234",
+      "pdf_url": "https://arxiv.org/pdf/2501.01234",
+      "source_api": "/first/paper/searchArxivByTitle",
+      "match_reason": "Title contains the requested method phrase.",
+      "verification_status": "待核验"
+    }
+  ],
+  "citation_audit_row": {
+    "原文主张": "需要支撑的具体句子",
+    "引用/占位符": "[?]",
+    "检索词": "large language model scientific discovery",
+    "候选论文": "Example Paper Title; First Author, Second Author; 2025; arXiv",
+    "证据字段": "title/abstract/arxiv_id",
+    "链接": "https://arxiv.org/abs/2501.01234",
+    "状态": "待核验",
+    "处理意见": "核对 DOI、arXiv 编号或来源页后再引用。"
+  }
+}

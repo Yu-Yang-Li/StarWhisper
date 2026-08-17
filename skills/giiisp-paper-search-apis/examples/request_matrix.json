@@ -1,0 +1,60 @@
+[
+  {
+    "mode": "oa",
+    "query": "test query",
+    "pageNum": 1,
+    "pageSize": 10,
+    "expected_url": "https://giiisp.com/first/oaPaper/searchArticlesByQuery1",
+    "expected_body": {
+      "titleAndAbs": ["test query"]
+    }
+  },
+  {
+    "mode": "arxiv-abstract",
+    "query": "test query",
+    "pageNum": 1,
+    "pageSize": 10,
+    "expected_url": "https://giiisp.com/first/paper/searchArxivByAbstract",
+    "expected_body": {
+      "key": "test query",
+      "pageNum": 1,
+      "pageSize": 10
+    }
+  },
+  {
+    "mode": "arxiv-no",
+    "query": "test query",
+    "pageNum": 1,
+    "pageSize": 10,
+    "expected_url": "https://giiisp.com/first/paper/searchArxivByArxivNo1",
+    "expected_body": {
+      "key": "test query",
+      "pageNum": 1,
+      "pageSize": 10
+    }
+  },
+  {
+    "mode": "arxiv",
+    "query": "test query",
+    "pageNum": 1,
+    "pageSize": 10,
+    "expected_url": "https://giiisp.com/first/paper/searchArxiv",
+    "expected_body": {
+      "key": "test query",
+      "pageNum": 1,
+      "pageSize": 10
+    }
+  },
+  {
+    "mode": "arxiv-title",
+    "query": "test query",
+    "pageNum": 1,
+    "pageSize": 10,
+    "expected_url": "https://giiisp.com/first/paper/searchArxivByTitle",
+    "expected_body": {
+      "key": "test query",
+      "pageNum": 1,
+      "pageSize": 10
+    }
+  }
+]
