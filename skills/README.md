@@ -12,9 +12,11 @@ Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\sk
 
 来源与许可证见 [`NOTICE.md`](NOTICE.md)。上游仓库是 MIT；StarWhisper 主仓库代码仍是 Apache-2.0。
 
-<p align="center">
-  <img src="../docs/assets/starwhisper-skills-matrix.jpg" alt="StarWhisper astronomy research skills" width="720">
-</p>
+<div align="center">
+
+![StarWhisper astronomy research skills](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-skills-matrix.jpg)
+
+</div>
 
 ## 文献证据
 
