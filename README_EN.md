@@ -9,9 +9,11 @@
   <a href="README.md">中文</a> &nbsp;|&nbsp; English
 </p>
 
-<p align="center">
-  <img src="docs/assets/starwhisper-hero.jpg" alt="StarWhisper: AI astrophysicist workflow" width="820">
-</p>
+<div align="center">
+
+![StarWhisper: AI astrophysicist workflow](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-hero.jpg)
+
+</div>
 
 **StarWhisper** is an open-source astronomy model-and-agent project. The question is not whether a language model can talk about the sky. It is how an agent should make explainable, replayable, and refusible observing decisions when science targets, weather, and device state change together — and how literature, data, and writing join the same workflow.
 
@@ -28,9 +30,11 @@ Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from langu
 
 ## Layers
 
-<p align="center">
-  <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
-</p>
+<div align="center">
+
+![StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-architecture.jpg)
+
+</div>
 
 ```mermaid
 flowchart TB
@@ -63,9 +67,11 @@ The point is one extensible workflow, not a single model score.
 
 A night plan rarely survives contact with the sky. Targets of opportunity arrive, weather closes windows, and tracking, focus, cameras, or the dome can fail. The system has to choose, repeatedly: continue, insert, defer, pause safely, or recover and replan.
 
-<p align="center">
-  <img src="docs/assets/starwhisper-observe-loop.jpg" alt="Scheduled plan, three disturbances, observation agent, constrained actions and feedback" width="820">
-</p>
+<div align="center">
+
+![Scheduled plan, three disturbances, observation agent, constrained actions and feedback](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-observe-loop.jpg)
+
+</div>
 
 <p align="center"><sub>Figure 1. Scheduled plan, three disturbances, observation agent, and constrained actions.</sub></p>
 
@@ -90,17 +96,21 @@ Current synthetic result (90 episodes / policy):
 | Deterministic priority | 4.3289 | 61.11% | 49.81% | 0 | 0 |
 | Rule agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
 
-<p align="center">
-  <img src="docs/assets/goai-metrics-source.png" alt="Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor" width="640">
-</p>
+<div align="center">
+
+![Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/goai-metrics-source.png)
+
+</div>
 
 <p align="center"><sub>Figure 2. Policy trade-off under the pre-registered completeness floor. The rule agent has the highest follow-up and sits left of the allowed zone.</sub></p>
 
 The rule agent raises follow-up by 23.52 percentage points over deterministic priority, with only ~1.6% more utility, but completeness falls 9.44 points — past the 5-point tolerance. That is a **stable negative result**: the current marginal-value rule overweights short-term response. The direction is the same on three seeds; a second run matched output hashes. It is not a win.
 
-<p align="center">
-  <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
-</p>
+<div align="center">
+
+![Synthetic environment, de-identified log replay, hardware shadow mode](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-verification.jpg)
+
+</div>
 
 <p align="center"><sub>Figure 3. Reproduce first, calibrate against reality, then enter hardware shadow mode (suggest only).</sub></p>
 
@@ -110,9 +120,11 @@ Next: an AstroQ / TJO-style constrained scheduler, de-identified logs to calibra
 
 ## Astronomy research skills
 
-<p align="center">
-  <img src="docs/assets/starwhisper-skills-matrix.jpg" alt="Astronomy research skills matrix" width="820">
-</p>
+<div align="center">
+
+![Astronomy research skills matrix](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-skills-matrix.jpg)
+
+</div>
 
 Thirteen skills adapted from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills). Defaults are astronomical: NASA ADS, arXiv `astro-ph`, AAS citations, light-curve / spectrum / FITS contracts, selection effects, and a hard split between synthetic, replay, and hardware. Full matrix: [`skills/README.md`](skills/README.md).
 
@@ -143,20 +155,34 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
    Light-curve classification. Test code from the paper is in the repo.
 
-   <p align="center"><img src="example/StarWhisper LC.png" alt="StarWhisper LC" width="680"></p>
+   <div align="center">
+
+![StarWhisper LC](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/StarWhisper%20LC.png)
+
+</div>
 
 4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
    *Communications Engineering* 4, 184 (2025). End-to-end observing automation on the nearby-galaxy survey. Code: `NGSS`.
 
-   <p align="center"><img src="example/Starwhisper Telescope.png" alt="StarWhisper Telescope" width="680"></p>
+   <div align="center">
+
+![StarWhisper Telescope](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/Starwhisper%20Telescope.png)
+
+</div>
 
 5. **Virtual-GOTTA / StarWhisper 5.0+**  
    Models connected to alerts, station state, plans, and real-time response. [Interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
 
-<p align="center">
-  <img src="example/图片1.png" alt="StarWhisper demonstration" width="680">
-  <img src="example/图片2.png" alt="StarWhisper telescope agent interface" width="680">
-</p>
+<div align="center">
+
+![StarWhisper demonstration](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%871.png)
+
+</div>
+<div align="center">
+
+![StarWhisper telescope agent interface](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%872.png)
+
+</div>
 
 ---
 
@@ -164,7 +190,11 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
 **Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. Science targets include extreme bursts, gravitational-wave counterparts, exoplanets, and solar-system bodies. StarWhisper is one candidate path for a “Sitian brain”: models, skills, and domain tools on a real observing system — not a slide-only platform.
 
-<p align="center"><img src="example/sitian.png" alt="Sitian survey concept" width="680"></p>
+<div align="center">
+
+![Sitian survey concept](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/sitian.png)
+
+</div>
 
 ---
 

@@ -9,9 +9,11 @@
   中文 &nbsp;|&nbsp; <a href="README_EN.md">English</a>
 </p>
 
-<p align="center">
-  <img src="docs/assets/starwhisper-hero.jpg" alt="StarWhisper: AI astrophysicist workflow" width="820">
-</p>
+<div align="center">
+
+![StarWhisper: AI astrophysicist workflow](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-hero.jpg)
+
+</div>
 
 **StarWhisper** 是面向天文学的开源模型与智能体项目。它要解决的不是“大模型能不能回答天文问题”，而是：当科学目标、天气和设备状态同时变化时，智能体怎样做可解释、可回放、可拒绝的观测决策，并把文献、数据和写作接到同一条工作流里。
 
@@ -28,9 +30,11 @@
 
 ## 项目分层
 
-<p align="center">
-  <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
-</p>
+<div align="center">
+
+![StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-architecture.jpg)
+
+</div>
 
 ```mermaid
 flowchart TB
@@ -63,9 +67,11 @@ flowchart TB
 
 夜前计划几乎从不会原样执行。临时科学目标会插入，短时天气会关掉窗口，跟踪、调焦、相机或穹顶也可能突然异常。系统必须连续决定：继续、插入、延后、安全暂停，还是恢复后重规划。
 
-<p align="center">
-  <img src="docs/assets/starwhisper-observe-loop.jpg" alt="Scheduled plan, three disturbances, observation agent, constrained actions and feedback" width="820">
-</p>
+<div align="center">
+
+![Scheduled plan, three disturbances, observation agent, constrained actions and feedback](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-observe-loop.jpg)
+
+</div>
 
 <p align="center"><sub>图 1. 既定计划、三类扰动、观测智能体与受约束行动。</sub></p>
 
@@ -90,17 +96,21 @@ flowchart TB
 | 确定性优先级 | 4.3289 | 61.11% | 49.81% | 0 | 0 |
 | 规则 Agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
 
-<p align="center">
-  <img src="docs/assets/goai-metrics-source.png" alt="Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor" width="640">
-</p>
+<div align="center">
+
+![Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/goai-metrics-source.png)
+
+</div>
 
 <p align="center"><sub>图 2. 预注册门槛下的策略权衡：规则 Agent 跟进率最高，但落在巡天完成度允许区左侧。</sub></p>
 
 规则 Agent 相对确定性优先级把跟进率提高了 23.52 个百分点，科学效用只提高约 1.6%，但巡天完成度下降 9.44 个百分点，超过预注册的 5 个百分点容忍线。这是**稳定负结果**：当前边际价值规则过度偏向短期响应。三个种子方向一致，双跑输出哈希一致。它不能写成“Agent 已经赢了”。
 
-<p align="center">
-  <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
-</p>
+<div align="center">
+
+![Synthetic environment, de-identified log replay, hardware shadow mode](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-verification.jpg)
+
+</div>
 
 <p align="center"><sub>图 3. 先证明可复现，再校准现实，最后才进入只建议、不执行的硬件影子运行。</sub></p>
 
@@ -110,9 +120,11 @@ flowchart TB
 
 ## 天文科研技能
 
-<p align="center">
-  <img src="docs/assets/starwhisper-skills-matrix.jpg" alt="Astronomy research skills matrix" width="820">
-</p>
+<div align="center">
+
+![Astronomy research skills matrix](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-skills-matrix.jpg)
+
+</div>
 
 这些技能改编自 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills)，默认值改成了天文学：NASA ADS、arXiv `astro-ph`、AAS 引用、光变/光谱/FITS 数据合同、选择效应，以及“合成 / 回放 / 硬件”三条边界。完整表见 [`skills/README.md`](skills/README.md)。
 
@@ -143,20 +155,34 @@ Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFI
 3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
    光变曲线分类。论文相关测试代码已上传。
 
-   <p align="center"><img src="example/StarWhisper LC.png" alt="StarWhisper LC" width="680"></p>
+   <div align="center">
+
+![StarWhisper LC](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/StarWhisper%20LC.png)
+
+</div>
 
 4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
    *Communications Engineering* 4, 184 (2025)。近邻星系巡天中的端到端观测自动化 agent。代码在 `NGSS`。
 
-   <p align="center"><img src="example/Starwhisper Telescope.png" alt="StarWhisper Telescope" width="680"></p>
+   <div align="center">
+
+![StarWhisper Telescope](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/Starwhisper%20Telescope.png)
+
+</div>
 
 5. **Virtual-GOTTA / StarWhisper 5.0+**  
    把大模型接到警报、台站状态、观测计划和实时响应。路线图：[interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
 
-<p align="center">
-  <img src="example/图片1.png" alt="StarWhisper demonstration" width="680">
-  <img src="example/图片2.png" alt="StarWhisper telescope agent interface" width="680">
-</p>
+<div align="center">
+
+![StarWhisper demonstration](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%871.png)
+
+</div>
+<div align="center">
+
+![StarWhisper telescope agent interface](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%872.png)
+
+</div>
 
 ---
 
@@ -164,7 +190,11 @@ Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFI
 
 **司天工程** 计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天，服务于极端爆发、引力波电磁对应体、系外行星和太阳系天体等问题。StarWhisper 是“司天大脑”的一条候选技术路径：把模型、技能和专业工具接到真实观测系统，而不是另做一套只存在于幻灯片上的平台。
 
-<p align="center"><img src="example/sitian.png" alt="SiTian / Sitian survey concept" width="680"></p>
+<div align="center">
+
+![SiTian / Sitian survey concept](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/sitian.png)
+
+</div>
 
 ---
 
