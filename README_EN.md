@@ -11,7 +11,7 @@
 
 <div align="center">
 
-![StarWhisper: AI astrophysicist workflow](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-hero.jpg)
+![StarWhisper: AI astrophysicist workflow](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-hero.jpg)
 
 </div>
 
@@ -32,7 +32,7 @@ Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from langu
 
 <div align="center">
 
-![StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-architecture.jpg)
+![StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-architecture.jpg)
 
 </div>
 
@@ -69,7 +69,7 @@ A night plan rarely survives contact with the sky. Targets of opportunity arrive
 
 <div align="center">
 
-![Scheduled plan, three disturbances, observation agent, constrained actions and feedback](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-observe-loop.jpg)
+![Scheduled plan, three disturbances, observation agent, constrained actions and feedback](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-observe-loop.jpg)
 
 </div>
 
@@ -98,7 +98,7 @@ Current synthetic result (90 episodes / policy):
 
 <div align="center">
 
-![Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/goai-metrics-source.png)
+![Pre-registered trade-off: rule agent raises follow-up but misses the survey-completeness floor](https://yu-yang-li.github.io/StarWhisper/assets/goai-metrics-source.png)
 
 </div>
 
@@ -108,7 +108,7 @@ The rule agent raises follow-up by 23.52 percentage points over deterministic pr
 
 <div align="center">
 
-![Synthetic environment, de-identified log replay, hardware shadow mode](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-verification.jpg)
+![Synthetic environment, de-identified log replay, hardware shadow mode](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-verification.jpg)
 
 </div>
 
@@ -122,7 +122,7 @@ Next: an AstroQ / TJO-style constrained scheduler, de-identified logs to calibra
 
 <div align="center">
 
-![Astronomy research skills matrix](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-skills-matrix.jpg)
+![Astronomy research skills matrix](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
 
 </div>
 
@@ -157,7 +157,7 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
    <div align="center">
 
-![StarWhisper LC](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/StarWhisper%20LC.png)
+![StarWhisper LC](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-lc.png)
 
 </div>
 
@@ -166,7 +166,7 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
    <div align="center">
 
-![StarWhisper Telescope](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/Starwhisper%20Telescope.png)
+![StarWhisper Telescope](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-telescope.png)
 
 </div>
 
@@ -175,12 +175,12 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
 <div align="center">
 
-![StarWhisper demonstration](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%871.png)
+![StarWhisper demonstration](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
 
 </div>
 <div align="center">
 
-![StarWhisper telescope agent interface](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/%E5%9B%BE%E7%89%872.png)
+![StarWhisper telescope agent interface](https://yu-yang-li.github.io/StarWhisper/assets/demo-2.png)
 
 </div>
 
@@ -192,7 +192,7 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
 <div align="center">
 
-![Sitian survey concept](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/example/sitian.png)
+![Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
 
 </div>
 

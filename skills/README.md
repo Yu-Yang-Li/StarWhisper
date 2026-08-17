@@ -14,7 +14,7 @@ Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\sk
 
 <div align="center">
 
-![StarWhisper astronomy research skills](https://cdn.jsdelivr.net/gh/Yu-Yang-Li/StarWhisper@main/docs/assets/starwhisper-skills-matrix.jpg)
+![StarWhisper astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
 
 </div>
 
