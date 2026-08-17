@@ -15,20 +15,41 @@
 
 </div>
 
-**StarWhisper** is an open-source astronomy model-and-agent project. The question is not whether a language model can talk about the sky. It is how an agent should make explainable, replayable, and refusible observing decisions when science targets, weather, and device state change together — and how literature, data, and writing join the same workflow.
+**StarWhisper** started as an astronomy language model, then moved through light curves and pulsar candidates into live telescope observing, and now into replayable decision-boundary experiments. Supported by NAOC, Zhejiang Lab, and collaborators. The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025).
 
-Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from language, light-curve, and pulsar models to **StarWhisper Telescope** and **Virtual-GOTTA**. The peer-reviewed paper is [Wang et al., *Communications Engineering* 4, 184 (2025)](https://doi.org/10.1038/s44172-025-00520-4).
-
-| Start here | What it is |
+| Start here | Era |
 | --- | --- |
-| [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | Embodied-telescope and transient-network roadmap |
-| [`NGSS/`](NGSS) | StarWhisper Telescope code from the nearby-galaxy survey |
-| [`skills/`](skills/README.md) | Astronomy-adapted research skills |
-| [Paper DOI](https://doi.org/10.1038/s44172-025-00520-4) | End-to-end observing-automation agent |
+| [`LLM_Data/`](LLM_Data) | 2023–2024 language models |
+| [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar report](https://openreview.net/pdf?id=8SKgWpZiDL) | 2024–2025 time-series and multimodal |
+| [`NGSS/`](NGSS) · [Telescope paper](https://doi.org/10.1038/s44172-025-00520-4) | 2025 observing automation |
+| [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2025– embodied telescopes / Sitian |
+| Explore below · [`skills/`](skills/README.md) | 2026 decision boundaries and research skills |
 
 ---
 
-## Layers
+## Timeline
+
+```mermaid
+timeline
+    title StarWhisper
+    2023 : repository created : astronomy LLM
+    2024 : LC preprint : Pulsar NeurIPS workshop : Telescope preprint
+    2025 : LC published : Telescope published : Virtual-GOTTA
+    2026 : Explore synthetic decision boundary : astronomy research skills
+```
+
+| When | Stage | What is public |
+| --- | --- | --- |
+| 2023.07 | Repository | GitHub `Yu-Yang-Li/StarWhisper` |
+| 2023–2024 | Astronomy LLMs | `LLM_Data` (StarWhisper 3 training data); 4.0 weights planned for ModelScope |
+| 2024.04 | Light curves | [arXiv:2404.10757](https://arxiv.org/abs/2404.10757) |
+| 2024.12 | Pulsar candidates | NeurIPS 2024 FM4Science: [StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) |
+| 2024.12 | Observing-automation preprint | [arXiv:2412.06412](https://arxiv.org/abs/2412.06412) |
+| 2025.02 | Light curves published | [Intelligent Computing](https://spj.science.org/doi/10.34133/icomputing.0110) |
+| 2025.11 | Telescope agent published | [Communications Engineering 4, 184](https://doi.org/10.1038/s44172-025-00520-4); code in `NGSS` |
+| 2025– | Embodied telescopes / Sitian | [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
+| 2026 | Decision boundary | StarWhisper-Explore-v0.2 (synthetic; stable negative result) |
+| 2026.08 | Research skills | [`skills/`](skills/README.md), astronomy defaults (ADS / astro-ph / AAS) |
 
 <div align="center">
 
@@ -36,36 +57,45 @@ Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from langu
 
 </div>
 
-```mermaid
-flowchart TB
-  llm[Astronomy LLMs / StarWhisper 4.0]
-  mm[Time-series and multimodal: LC, Pulsar]
-  tel[StarWhisper Telescope / NGSS]
-  gotta[Virtual-GOTTA: alerts, weather, device, interlock]
-  skills[Astronomy research skills]
-  llm --> mm --> tel --> gotta
-  skills -.-> llm
-  skills -.-> mm
-  skills -.-> tel
-  skills -.-> gotta
-```
-
-| Layer | What is public | Where |
-| --- | --- | --- |
-| Astronomy LLMs | QA, code, observing knowledge | `LLM_Data` |
-| Time-series / multimodal | Light-curve classification, pulsar identification | StarWhisper LC, StarWhisper Pulsar |
-| StarWhisper Telescope | Observing-automation agent on a real survey | `NGSS` |
-| Virtual-GOTTA | Embodied upgrade path for scientific telescopes | `docs/virtual-gotta-map.html` |
-| Research skills | Literature, hypotheses, data contracts, writing | [`skills/`](skills/README.md) |
-| Open exploration | Replayable decision-boundary experiments | *StarWhisper-Explore* below |
-
-The point is one extensible workflow, not a single model score.
+<p align="center"><sub>The current surface: models, the telescope agent, Virtual-GOTTA, and research skills on one line — not four disconnected demos.</sub></p>
 
 ---
 
-## Observing loop
+## 2023–2024 · Astronomy language models
+
+The first problem was whether a model could answer astronomy questions, write code, and use observing knowledge. StarWhisper 3 training data is in `LLM_Data`. Version 4.0 continues that data work; weights are planned for ModelScope.
+
+This stage is “does the model know astronomy”. It does not yet talk to a telescope.
+
+---
+
+## 2024–2025 · Light curves and pulsars
+
+The next step was time-series and multimodal data, not only chat.
+
+**April 2024**: [StarWhisper LC](https://arxiv.org/abs/2404.10757) preprint. **26 February 2025**: published in *Intelligent Computing*. Variable-star classification on Kepler / K2 light curves, including LLM / multimodal / audio variants that need less hand-built features. Test code is in the repo.
+
+<div align="center">
+
+![StarWhisper LC](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-lc.png)
+
+</div>
+
+**December 2024**: [StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) at the NeurIPS 2024 FM4Science workshop — pulsar-candidate classification with multimodal large models.
+
+---
+
+## 2025 · StarWhisper Telescope
+
+Preprint in **December 2024**; published **6 November 2025** in *Communications Engineering*. The [paper](https://doi.org/10.1038/s44172-025-00520-4) describes an end-to-end observing-automation agent on the Nearby Galaxy Supernovae Survey. Code: [`NGSS/`](NGSS).
 
 A night plan rarely survives contact with the sky. Targets of opportunity arrive, weather closes windows, and tracking, focus, cameras, or the dome can fail. The system has to choose, repeatedly: continue, insert, defer, pause safely, or recover and replan.
+
+<div align="center">
+
+![StarWhisper Telescope](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-telescope.png)
+
+</div>
 
 <div align="center">
 
@@ -75,11 +105,38 @@ A night plan rarely survives contact with the sky. Targets of opportunity arrive
 
 <p align="center"><sub>Figure 1. Scheduled plan, three disturbances, observation agent, and constrained actions.</sub></p>
 
-The published telescope stack already demonstrates end-to-end automated observing (paper + `NGSS`). Explore asks a different question: **when is that judgement trustworthy, what does it stably sacrifice, and when must it refuse.**
+<div align="center">
+
+![StarWhisper demonstration](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
+
+</div>
+<div align="center">
+
+![StarWhisper telescope agent interface](https://yu-yang-li.github.io/StarWhisper/assets/demo-2.png)
+
+</div>
+
+This stage shows that an agent can sit on a real survey workflow. It does not yet say when that judgement is trustworthy.
 
 ---
 
-## StarWhisper-Explore: decision boundaries in a synthetic environment
+## 2025– · Virtual-GOTTA and Sitian
+
+After Telescope, the line is an embodied-intelligence telescope: the model as orchestrator for alerts, station state, plans, data return, and real-time response. See the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
+
+**Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”, not a slide-only platform.
+
+<div align="center">
+
+![Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
+
+</div>
+
+---
+
+## 2026 · Decision boundary (StarWhisper-Explore)
+
+The published stack can already run automated observing. Explore asks the next question: **when is that judgement trustworthy, what does it stably sacrifice, and when must it refuse.**
 
 Environment `StarWhisper-Explore-v0.2`. Fixed site XingLong, one telescope, six slots per night. Targets, transient arrivals, weather, and device faults are generated from seeds and shared across policies. The agent cannot read future disturbances or edit safety thresholds. Hardware interlocks outrank any suggested action.
 
@@ -118,15 +175,15 @@ Next: an AstroQ / TJO-style constrained scheduler, de-identified logs to calibra
 
 ---
 
-## Astronomy research skills
+## 2026 · Astronomy research skills
+
+In August 2026, thirteen skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy and placed in [`skills/`](skills/README.md). Defaults are NASA ADS, arXiv `astro-ph`, AAS citations, light-curve / spectrum / FITS contracts, and a hard split between synthetic, replay, and hardware.
 
 <div align="center">
 
 ![Astronomy research skills matrix](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
 
 </div>
-
-Thirteen skills adapted from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills). Defaults are astronomical: NASA ADS, arXiv `astro-ph`, AAS citations, light-curve / spectrum / FITS contracts, selection effects, and a hard split between synthetic, replay, and hardware. Full matrix: [`skills/README.md`](skills/README.md).
 
 | Group | Skills |
 | --- | --- |
@@ -144,65 +201,11 @@ With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills n
 
 ---
 
-## Open modules and papers
-
-1. **StarWhisper 4.0 data and training**  
-   StarWhisper 3 training data lives in `LLM_Data`. 4.0 weights are planned for ModelScope.
-
-2. **[StarWhisper Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)**  
-   Multimodal pulsar identification.
-
-3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
-   Light-curve classification. Test code from the paper is in the repo.
-
-   <div align="center">
-
-![StarWhisper LC](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-lc.png)
-
-</div>
-
-4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
-   *Communications Engineering* 4, 184 (2025). End-to-end observing automation on the nearby-galaxy survey. Code: `NGSS`.
-
-   <div align="center">
-
-![StarWhisper Telescope](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-telescope.png)
-
-</div>
-
-5. **Virtual-GOTTA / StarWhisper 5.0+**  
-   Models connected to alerts, station state, plans, and real-time response. [Interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
-
-<div align="center">
-
-![StarWhisper demonstration](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
-
-</div>
-<div align="center">
-
-![StarWhisper telescope agent interface](https://yu-yang-li.github.io/StarWhisper/assets/demo-2.png)
-
-</div>
-
----
-
-## Sitian
-
-**Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. Science targets include extreme bursts, gravitational-wave counterparts, exoplanets, and solar-system bodies. StarWhisper is one candidate path for a “Sitian brain”: models, skills, and domain tools on a real observing system — not a slide-only platform.
-
-<div align="center">
-
-![Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
-
-</div>
-
----
-
 ## Boundaries
 
 | Fair to say | Not fair to say |
 | --- | --- |
-| The published observing-automation frame is implemented in NGSS | This repo already owns live hardware interlocks |
+| The 2025 observing-automation frame is implemented in NGSS | This repo already owns live hardware interlocks |
 | Explore-v0.2 synthetic nights are replayable and hash-stable | The rule agent passed the positive-finding bar |
 | Skills can help with ADS search, writing, and citation checks | Skill output is a published result or a discovery |
 | Shadow mode may suggest | Suggestions were executed on hardware |
@@ -212,6 +215,8 @@ Source code: **Apache-2.0**. Astronomy-adapted skills under [`skills/`](skills/N
 ---
 
 ## Citation
+
+If this work is useful, cite the Telescope paper:
 
 ```BibTeX
 @article{wang2025starwhisper,

@@ -15,20 +15,41 @@
 
 </div>
 
-**StarWhisper** 是面向天文学的开源模型与智能体项目。它要解决的不是“大模型能不能回答天文问题”，而是：当科学目标、天气和设备状态同时变化时，智能体怎样做可解释、可回放、可拒绝的观测决策，并把文献、数据和写作接到同一条工作流里。
+**StarWhisper** 从天文学语言模型做起，再接到光变曲线、脉冲星候选、真实望远镜观测，再到可回放的决策边界实验。项目由国家天文台、之江实验室等单位支持。最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
 
-项目由国家天文台、之江实验室等单位支持，已经从语言模型、光变曲线模型和脉冲星模型，推进到 **StarWhisper Telescope** 和 **Virtual-GOTTA**。正式论文见 [Wang et al., *Communications Engineering* 4, 184 (2025)](https://doi.org/10.1038/s44172-025-00520-4)。
-
-| 入口 | 说明 |
+| 现在从哪进 | 对应阶段 |
 | --- | --- |
-| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 具身智能望远镜与暂现源组网的交互说明 |
-| [`NGSS/`](NGSS) | StarWhisper Telescope 近邻星系巡天落地代码 |
-| [`skills/`](skills/README.md) | 天文强化后的科研技能：检索、假设、写作、引用检查 |
-| [论文 DOI](https://doi.org/10.1038/s44172-025-00520-4) | 端到端观测自动化 agent 框架 |
+| [`LLM_Data/`](LLM_Data) | 2023–2024 语言模型数据 |
+| [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar 报告](https://openreview.net/pdf?id=8SKgWpZiDL) | 2024–2025 时序与多模态 |
+| [`NGSS/`](NGSS) · [Telescope 论文](https://doi.org/10.1038/s44172-025-00520-4) | 2025 观测自动化 |
+| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2025– 具身智能与司天 |
+| 下文 Explore · [`skills/`](skills/README.md) | 2026 决策边界与科研技能 |
 
 ---
 
-## 项目分层
+## 时间线
+
+```mermaid
+timeline
+    title StarWhisper
+    2023 : 仓库建立 : 天文学 LLM
+    2024 : LC 预印本 : Pulsar NeurIPS workshop : Telescope 预印本
+    2025 : LC 正式发表 : Telescope 正式发表 : Virtual-GOTTA
+    2026 : Explore 合成决策边界 : 天文科研技能上线
+```
+
+| 时间 | 阶段 | 公开产物 |
+| --- | --- | --- |
+| 2023.07 | 仓库建立 | GitHub `Yu-Yang-Li/StarWhisper` |
+| 2023–2024 | 天文学语言模型 | `LLM_Data`（StarWhisper 3 训练数据）；4.0 权重计划发 ModelScope |
+| 2024.04 | 光变曲线 | [arXiv:2404.10757](https://arxiv.org/abs/2404.10757) |
+| 2024.12 | 脉冲星候选 | NeurIPS 2024 FM4Science：[StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) |
+| 2024.12 | 观测自动化预印本 | [arXiv:2412.06412](https://arxiv.org/abs/2412.06412) |
+| 2025.02 | 光变曲线正式发表 | [Intelligent Computing](https://spj.science.org/doi/10.34133/icomputing.0110) |
+| 2025.11 | 望远镜 agent 正式发表 | [Communications Engineering 4, 184](https://doi.org/10.1038/s44172-025-00520-4)；代码 `NGSS` |
+| 2025– | 具身智能 / 司天 | [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
+| 2026 | 决策边界 | StarWhisper-Explore-v0.2（合成环境，稳定负结果） |
+| 2026.08 | 科研技能 | [`skills/`](skills/README.md)，天文默认值（ADS / astro-ph / AAS） |
 
 <div align="center">
 
@@ -36,36 +57,45 @@
 
 </div>
 
-```mermaid
-flowchart TB
-  llm[Astronomy LLMs / StarWhisper 4.0]
-  mm[Time-series and multimodal: LC, Pulsar]
-  tel[StarWhisper Telescope / NGSS]
-  gotta[Virtual-GOTTA: alerts, weather, device, interlock]
-  skills[Astronomy research skills]
-  llm --> mm --> tel --> gotta
-  skills -.-> llm
-  skills -.-> mm
-  skills -.-> tel
-  skills -.-> gotta
-```
-
-| 层 | 现在能公开看到的 | 仓库位置 |
-| --- | --- | --- |
-| 天文学语言模型 | 科普与科研问答、代码、观测知识 | `LLM_Data` |
-| 时序 / 多模态 | 光变曲线分类、脉冲星识别 | StarWhisper LC、StarWhisper Pulsar |
-| StarWhisper Telescope | 真实巡天里的观测自动化 agent | `NGSS` |
-| Virtual-GOTTA | 科学级望远镜的具身改造与组网路线 | `docs/virtual-gotta-map.html` |
-| 天文科研技能 | 把文献—假设—数据合同—写作接到 agent 侧 | [`skills/`](skills/README.md) |
-| 开放探索环境 | 合成夜次上的可回放决策边界实验 | 下文 *StarWhisper-Explore* |
-
-核心目标是把知识、数据处理、观测计划、设备约束和科学判断接到一套可扩展工作流里，而不是只展示单点模型分数。
+<p align="center"><sub>现在的工作面：模型、望远镜 agent、Virtual-GOTTA 与科研技能叠在同一条线上，不是四套互不相干的 demo。</sub></p>
 
 ---
 
-## 观测决策闭环
+## 2023–2024 · 天文学语言模型
+
+先做能回答天文问题、写代码、读观测知识的领域模型。StarWhisper 3 的训练数据在 `LLM_Data`。4.0 继续清洗科普与科研数据，权重计划发布到 ModelScope。
+
+这一阶段解决的是“模型懂不懂天文”，还没有接到望远镜控制。
+
+---
+
+## 2024–2025 · 光变曲线与脉冲星
+
+把模型从问答推到时序和多模态数据。
+
+**2024 年 4 月**，[StarWhisper LC](https://arxiv.org/abs/2404.10757) 预印本上线；**2025 年 2 月 26 日**正式发表于 *Intelligent Computing*。用 Kepler / K2 光变曲线做变星分类，并给出一组少做手工特征的 LLM / 多模态 / 音频模型。测试代码在仓库里。
+
+<div align="center">
+
+![StarWhisper LC](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-lc.png)
+
+</div>
+
+**2024 年 12 月**，[StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) 在 NeurIPS 2024 FM4Science workshop 报告：用多模态大模型做脉冲星候选分类。
+
+---
+
+## 2025 · StarWhisper Telescope
+
+**2024 年 12 月**预印本，**2025 年 11 月 6 日**发表于 *Communications Engineering*。[论文](https://doi.org/10.1038/s44172-025-00520-4)给出端到端观测自动化 agent，并在近邻星系巡天（NGSS）网络落地。代码在 [`NGSS/`](NGSS)。
 
 夜前计划几乎从不会原样执行。临时科学目标会插入，短时天气会关掉窗口，跟踪、调焦、相机或穹顶也可能突然异常。系统必须连续决定：继续、插入、延后、安全暂停，还是恢复后重规划。
+
+<div align="center">
+
+![StarWhisper Telescope](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-telescope.png)
+
+</div>
 
 <div align="center">
 
@@ -75,11 +105,38 @@ flowchart TB
 
 <p align="center"><sub>图 1. 既定计划、三类扰动、观测智能体与受约束行动。</sub></p>
 
-这个闭环在真实望远镜网络里已经有端到端自动观测基础（见论文与 `NGSS`）。下面的 Explore 切片回答的是另一件事：**在什么条件下这个判断值得信任，会稳定牺牲什么，何时必须拒绝。**
+<div align="center">
+
+![StarWhisper demonstration](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
+
+</div>
+<div align="center">
+
+![StarWhisper telescope agent interface](https://yu-yang-li.github.io/StarWhisper/assets/demo-2.png)
+
+</div>
+
+这一阶段证明的是：agent 可以接到真实巡天流程。它还没有回答“判断在什么条件下值得信任”。
 
 ---
 
-## StarWhisper-Explore：合成环境里的决策边界
+## 2025– · Virtual-GOTTA 与司天
+
+Telescope 之后的方向是具身智能望远镜：大模型作为编排入口，连接警报、台站状态、观测计划、数据回传和实时响应。交互说明见 [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
+
+**司天工程**计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天。StarWhisper 是“司天大脑”的一条候选技术路径，不是另做一套只存在于幻灯片上的平台。
+
+<div align="center">
+
+![SiTian / Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
+
+</div>
+
+---
+
+## 2026 · 决策边界（StarWhisper-Explore）
+
+真实栈已经能跑自动观测。Explore 问的是下一句：**在什么条件下这个判断值得信任，会稳定牺牲什么，何时必须拒绝。**
 
 环境版本 `StarWhisper-Explore-v0.2`。固定台站 XingLong，单望远镜，一夜六个时隙；候选目标、暂现源到达、天气和设备扰动由种子生成，策略之间共享同一剧本。Agent 不得读取未来扰动，也不得改安全阈值。真实硬件联锁的优先级高于任何建议动作。
 
@@ -114,19 +171,19 @@ flowchart TB
 
 <p align="center"><sub>图 3. 先证明可复现，再校准现实，最后才进入只建议、不执行的硬件影子运行。</sub></p>
 
-下一步按这条路走：补上 AstroQ / TJO 风格的约束调度 baseline，用脱敏日志校准扰动频率，再把同一决策接口接到观测时序模型、短时气象和控制模型。影子运行仍然是建议，不是放权。
+下一步：补上 AstroQ / TJO 风格的约束调度 baseline，用脱敏日志校准扰动频率，再把同一决策接口接到观测时序模型、短时气象和控制模型。影子运行仍然是建议，不是放权。
 
 ---
 
-## 天文科研技能
+## 2026 · 天文科研技能
+
+2026 年 8 月，从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 选出 13 个技能做天文适配后放进 [`skills/`](skills/README.md)。默认值改成 NASA ADS、arXiv `astro-ph`、AAS 引用、光变/光谱/FITS 数据合同，以及“合成 / 回放 / 硬件”三条边界。
 
 <div align="center">
 
 ![Astronomy research skills matrix](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
 
 </div>
-
-这些技能改编自 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills)，默认值改成了天文学：NASA ADS、arXiv `astro-ph`、AAS 引用、光变/光谱/FITS 数据合同、选择效应，以及“合成 / 回放 / 硬件”三条边界。完整表见 [`skills/README.md`](skills/README.md)。
 
 | 类 | 技能 |
 | --- | --- |
@@ -144,65 +201,11 @@ Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFI
 
 ---
 
-## 已开源模块与论文
-
-1. **StarWhisper 4.0 数据与训练**  
-   StarWhisper 3 训练数据在 `LLM_Data`。4.0 权重计划发布到 ModelScope。
-
-2. **[StarWhisper Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)**  
-   脉冲星识别多模态模型技术报告。
-
-3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
-   光变曲线分类。论文相关测试代码已上传。
-
-   <div align="center">
-
-![StarWhisper LC](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-lc.png)
-
-</div>
-
-4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
-   *Communications Engineering* 4, 184 (2025)。近邻星系巡天中的端到端观测自动化 agent。代码在 `NGSS`。
-
-   <div align="center">
-
-![StarWhisper Telescope](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-telescope.png)
-
-</div>
-
-5. **Virtual-GOTTA / StarWhisper 5.0+**  
-   把大模型接到警报、台站状态、观测计划和实时响应。路线图：[interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
-
-<div align="center">
-
-![StarWhisper demonstration](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
-
-</div>
-<div align="center">
-
-![StarWhisper telescope agent interface](https://yu-yang-li.github.io/StarWhisper/assets/demo-2.png)
-
-</div>
-
----
-
-## 司天工程
-
-**司天工程** 计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天，服务于极端爆发、引力波电磁对应体、系外行星和太阳系天体等问题。StarWhisper 是“司天大脑”的一条候选技术路径：把模型、技能和专业工具接到真实观测系统，而不是另做一套只存在于幻灯片上的平台。
-
-<div align="center">
-
-![SiTian / Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
-
-</div>
-
----
-
 ## 使用边界
 
 | 可以说 | 不可以说 |
 | --- | --- |
-| 论文描述的观测自动化框架已在 NGSS 落地 | 本仓库已经接管真实望远镜的安全联锁 |
+| 2025 年论文描述的观测自动化框架已在 NGSS 落地 | 本仓库已经接管真实望远镜的安全联锁 |
 | Explore-v0.2 的合成夜次可复现、哈希一致 | 规则 Agent 已经通过正向发现门槛 |
 | 技能能辅助 ADS 检索、写作和引用检查 | 技能输出等于已发表结果或已发现暂现源 |
 | 影子运行可以给出建议 | 建议已被硬件执行 |
@@ -212,6 +215,8 @@ Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFI
 ---
 
 ## 引用
+
+如果这项工作对你有帮助，请引用 Telescope 正式论文：
 
 ```BibTeX
 @article{wang2025starwhisper,
