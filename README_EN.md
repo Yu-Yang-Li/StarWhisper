@@ -15,14 +15,14 @@
 
 </div>
 
-**StarWhisper** started as an astronomy language model, then moved through light curves and pulsar candidates into live telescope observing, and now into replayable decision-boundary experiments. Supported by NAOC, Zhejiang Lab, and collaborators. The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025).
+**StarWhisper** started as an astronomy language model, then moved through light curves and pulsar candidates into live telescope observing, and in 2026 into Virtual Sitian (SN Clock) and replayable decision-boundary experiments. Supported by NAOC, Zhejiang Lab, and collaborators. The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025).
 
 | Start here | Era |
 | --- | --- |
 | [`LLM_Data/`](LLM_Data) | 2023–2024 language models |
 | [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar report](https://openreview.net/pdf?id=8SKgWpZiDL) | 2024–2025 time-series and multimodal |
 | [`NGSS/`](NGSS) · [Telescope paper](https://doi.org/10.1038/s44172-025-00520-4) | 2025 observing automation |
-| [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2025– embodied telescopes / Sitian |
+| [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2026 Virtual Sitian / SN Clock |
 | Explore below · [`skills/`](skills/README.md) | 2026 decision boundaries and research skills |
 
 ---
@@ -34,8 +34,8 @@ timeline
     title StarWhisper
     2023 : repository created : astronomy LLM
     2024 : LC preprint : Pulsar NeurIPS workshop : Telescope preprint
-    2025 : LC published : Telescope published : Virtual-GOTTA
-    2026 : Explore synthetic decision boundary : astronomy research skills
+    2025 : LC published : Telescope published
+    2026 : Virtual Sitian / SN Clock : Explore synthetic decision boundary : astronomy research skills
 ```
 
 | When | Stage | What is public |
@@ -47,7 +47,7 @@ timeline
 | 2024.12 | Observing-automation preprint | [arXiv:2412.06412](https://arxiv.org/abs/2412.06412) |
 | 2025.02 | Light curves published | [Intelligent Computing](https://spj.science.org/doi/10.34133/icomputing.0110) |
 | 2025.11 | Telescope agent published | [Communications Engineering 4, 184](https://doi.org/10.1038/s44172-025-00520-4); code in `NGSS` |
-| 2025– | Embodied telescopes / Sitian | [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
+| 2026 | Virtual Sitian / SN Clock | Work lives in the snclock repo; public map: [Virtual-GOTTA](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
 | 2026 | Decision boundary | StarWhisper-Explore-v0.2 (synthetic; stable negative result) |
 | 2026.08 | Research skills | [`skills/`](skills/README.md), astronomy defaults (ADS / astro-ph / AAS) |
 
@@ -120,11 +120,11 @@ This stage shows that an agent can sit on a real survey workflow. It does not ye
 
 ---
 
-## 2025– · Virtual-GOTTA and Sitian
+## 2026 · Virtual Sitian (SN Clock)
 
-After Telescope, the line is an embodied-intelligence telescope: the model as orchestrator for alerts, station state, plans, data return, and real-time response. See the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
+The runnable virtual-Sitian system is 2026 work. The code lives in the **snclock** (SN Clock) repository: the model orchestrates alerts, station state, observing plans, and data return. The early science application is the supernova clock — explosion-epoch estimates and young-SN candidates. The public sketch in this repo is the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
 
-**Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”, not a slide-only platform.
+**Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”. The 2025 Telescope paper is a live-survey observing agent; Virtual Sitian / SN Clock is the following year’s work, not the same milestone.
 
 <div align="center">
 

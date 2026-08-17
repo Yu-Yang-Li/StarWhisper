@@ -15,14 +15,14 @@
 
 </div>
 
-**StarWhisper** 从天文学语言模型做起，再接到光变曲线、脉冲星候选、真实望远镜观测，再到可回放的决策边界实验。项目由国家天文台、之江实验室等单位支持。最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
+**StarWhisper** 从天文学语言模型做起，再接到光变曲线、脉冲星候选、真实望远镜观测，再到 2026 年的虚拟司天（SN Clock）和可回放决策边界。项目由国家天文台、之江实验室等单位支持。最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
 
 | 现在从哪进 | 对应阶段 |
 | --- | --- |
 | [`LLM_Data/`](LLM_Data) | 2023–2024 语言模型数据 |
 | [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar 报告](https://openreview.net/pdf?id=8SKgWpZiDL) | 2024–2025 时序与多模态 |
 | [`NGSS/`](NGSS) · [Telescope 论文](https://doi.org/10.1038/s44172-025-00520-4) | 2025 观测自动化 |
-| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2025– 具身智能与司天 |
+| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2026 虚拟司天 / SN Clock |
 | 下文 Explore · [`skills/`](skills/README.md) | 2026 决策边界与科研技能 |
 
 ---
@@ -34,8 +34,8 @@ timeline
     title StarWhisper
     2023 : 仓库建立 : 天文学 LLM
     2024 : LC 预印本 : Pulsar NeurIPS workshop : Telescope 预印本
-    2025 : LC 正式发表 : Telescope 正式发表 : Virtual-GOTTA
-    2026 : Explore 合成决策边界 : 天文科研技能上线
+    2025 : LC 正式发表 : Telescope 正式发表
+    2026 : 虚拟司天 / SN Clock : Explore 合成决策边界 : 天文科研技能上线
 ```
 
 | 时间 | 阶段 | 公开产物 |
@@ -47,7 +47,7 @@ timeline
 | 2024.12 | 观测自动化预印本 | [arXiv:2412.06412](https://arxiv.org/abs/2412.06412) |
 | 2025.02 | 光变曲线正式发表 | [Intelligent Computing](https://spj.science.org/doi/10.34133/icomputing.0110) |
 | 2025.11 | 望远镜 agent 正式发表 | [Communications Engineering 4, 184](https://doi.org/10.1038/s44172-025-00520-4)；代码 `NGSS` |
-| 2025– | 具身智能 / 司天 | [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
+| 2026 | 虚拟司天 / SN Clock | 工作在 snclock 仓库；公开地图见 [Virtual-GOTTA](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
 | 2026 | 决策边界 | StarWhisper-Explore-v0.2（合成环境，稳定负结果） |
 | 2026.08 | 科研技能 | [`skills/`](skills/README.md)，天文默认值（ADS / astro-ph / AAS） |
 
@@ -120,11 +120,11 @@ timeline
 
 ---
 
-## 2025– · Virtual-GOTTA 与司天
+## 2026 · 虚拟司天（SN Clock）
 
-Telescope 之后的方向是具身智能望远镜：大模型作为编排入口，连接警报、台站状态、观测计划、数据回传和实时响应。交互说明见 [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
+2026 年才把司天做成可运行的虚拟系统。这条线的代码在 **snclock**（SN Clock）仓库：用大模型编排警报、台站状态、观测计划和数据回传，早期科学应用是超新星时钟——估计爆发时刻、筛年轻超新星候选。本仓库里的公开说明是 [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
 
-**司天工程**计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天。StarWhisper 是“司天大脑”的一条候选技术路径，不是另做一套只存在于幻灯片上的平台。
+**司天工程**计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天。StarWhisper 是“司天大脑”的一条候选路径。2025 年 Telescope 论文证明的是真实巡天里的观测 agent；虚拟司天 / SN Clock 是次年的工作，不要写成同一年已经做完。
 
 <div align="center">
 
