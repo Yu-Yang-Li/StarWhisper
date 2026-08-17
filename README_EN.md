@@ -1,126 +1,167 @@
-# StarWhisper 5.0
+# StarWhisper
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/Yu-Yang-Li/StarWhisper?style=social)](https://github.com/Yu-Yang-Li/StarWhisper/stargazers)
-[![GitHub Code License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
+[![License](https://img.shields.io/github/license/Yu-Yang-Li/StarWhisper)](LICENSE)
+[![Paper](https://img.shields.io/badge/Paper-Communications%20Engineering-0B1B33)](https://doi.org/10.1038/s44172-025-00520-4)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Yu-Yang-Li/StarWhisper)](https://github.com/Yu-Yang-Li/StarWhisper/commits/main)
 
 <p align="center">
   <a href="README.md">中文</a> &nbsp;|&nbsp; English
 </p>
 
-**StarWhisper** is an open-source astronomy and AI4S model-and-agent project. Supported by NAOC, ZheJiang Lab, and collaborators, it has evolved from astronomical language, time-series, and multimodal models into **StarWhisper Telescope** and **Virtual-GOTTA**: a workflow where large models connect to real observing tasks, station information, telescope status, and real-time scientific response.
+<p align="center">
+  <img src="docs/assets/starwhisper-hero.jpg" alt="StarWhisper: AI astrophysicist workflow" width="820">
+</p>
 
-This README has been reorganized around the presentation *AI-driven science education and research*: from AI for scientific research, to embodied-intelligence telescopes, to a global transient-source telescope data network and early supernova candidate alerts.
+**StarWhisper** is an open-source astronomy model-and-agent project. The question is not whether a language model can talk about the sky. It is how an agent should make explainable, replayable, and refusible observing decisions when science targets, weather, and device state change together — and how literature, data, and writing join the same workflow.
 
-- [Virtual-GOTTA interactive roadmap](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)
-- [PDF / PPT source notes](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-source.html)
-- [Latest published paper: StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4), *Communications Engineering* 4, 184 (2025)
+Supported by NAOC, Zhejiang Lab, and collaborators, the project moved from language, light-curve, and pulsar models to **StarWhisper Telescope** and **Virtual-GOTTA**. The peer-reviewed paper is [Wang et al., *Communications Engineering* 4, 184 (2025)](https://doi.org/10.1038/s44172-025-00520-4).
+
+| Start here | What it is |
+| --- | --- |
+| [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | Embodied-telescope and transient-network roadmap |
+| [`NGSS/`](NGSS) | StarWhisper Telescope code from the nearby-galaxy survey |
+| [`skills/`](skills/README.md) | Astronomy-adapted research skills |
+| [Paper DOI](https://doi.org/10.1038/s44172-025-00520-4) | End-to-end observing-automation agent |
 
 ---
 
-## Project Positioning
+## Layers
 
-| Direction | Current role | Repository content |
+<p align="center">
+  <img src="docs/assets/starwhisper-architecture.jpg" alt="StarWhisper architecture: models, telescope agent, Virtual-GOTTA, research skills" width="820">
+</p>
+
+| Layer | What is public | Where |
 | --- | --- | --- |
-| Astronomy large language models | Domain models for science communication, research QA, coding, and observing knowledge | `LLM_Data`, training data, model notes |
-| Time-series and multimodal models | Light-curve classification, pulsar identification, and astronomical image understanding | StarWhisper LC, StarWhisper Pulsar, examples |
-| StarWhisper Telescope | Agent framework for end-to-end astronomical-observation automation | `NGSS` nearby-galaxy survey code |
-| Virtual-GOTTA | Embodied-intelligence transformation for scientific telescopes and observing workflows | `docs/virtual-gotta-map.html`, roadmap and source notes |
+| Astronomy LLMs | QA, code, observing knowledge | `LLM_Data` |
+| Time-series / multimodal | Light-curve classification, pulsar identification | StarWhisper LC, StarWhisper Pulsar |
+| StarWhisper Telescope | Observing-automation agent on a real survey | `NGSS` |
+| Virtual-GOTTA | Embodied upgrade path for scientific telescopes | `docs/virtual-gotta-map.html` |
+| Research skills | Literature, hypotheses, data contracts, writing | [`skills/`](skills/README.md) |
+| Open exploration | Replayable decision-boundary experiments | *StarWhisper-Explore* below |
 
-StarWhisper is not only a single model demo. Its goal is to connect astronomical knowledge, data processing, observing plans, telescope control, and real-time scientific judgement into one extensible agent workflow.
-
----
-
-## Virtual-GOTTA: AI-driven Virtual Sitian Project
-
-The Virtual-GOTTA presentation pushes StarWhisper Telescope toward an embodied-intelligence telescope system. Large models act as the interaction and orchestration layer connecting alerts, station information, telescope status, observing plans, data return, and real-time response.
-
-Core workflow:
-
-1. **Alert and science-target intake**: transient sources, early supernova candidates, and nearby-galaxy survey tasks.
-2. **Station and telescope state awareness**: site information, device availability, weather, and observing windows.
-3. **Planning and execution loop**: model decisions are translated into executable observing plans and then linked back to returned data and status.
-4. **Real-time response and candidate filtering**: support early alerts for candidates within one day of explosion and a global transient-source telescope data network.
-5. **Science education and research platform**: combine AI research assistants, virtual scientists, and real telescope tasks into a reusable AI4S case study.
-
-[Open the Virtual-GOTTA interactive roadmap](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)
+The point is one extensible workflow, not a single model score.
 
 ---
 
-## Open Modules and Papers
+## Observing loop
 
-1. **StarWhisper 4.0 data and training enhancements**  
-   Refined astronomical physics, coding, and agent capabilities through cleaned scientific and popular-science datasets. The StarWhisper 3 training data is open-sourced under `LLM_Data`; StarWhisper 4.0 weights will be released on ModelScope.
+A night plan rarely survives contact with the sky. Targets of opportunity arrive, weather closes windows, and tracking, focus, cameras, or the dome can fail. The system has to choose, repeatedly: continue, insert, defer, pause safely, or recover and replan.
+
+<p align="center">
+  <img src="docs/assets/starwhisper-observe-loop.jpg" alt="Scheduled plan, three disturbances, observation agent, constrained actions and feedback" width="820">
+</p>
+
+<p align="center"><sub>Figure 1. Scheduled plan, three disturbances, observation agent, and constrained actions.</sub></p>
+
+The published telescope stack already demonstrates end-to-end automated observing (paper + `NGSS`). Explore asks a different question: **when is that judgement trustworthy, what does it stably sacrifice, and when must it refuse.**
+
+---
+
+## StarWhisper-Explore: decision boundaries in a synthetic environment
+
+Environment `StarWhisper-Explore-v0.2`. Fixed site XingLong, one telescope, six slots per night. Targets, transient arrivals, weather, and device faults are generated from seeds and shared across policies. The agent cannot read future disturbances or edit safety thresholds. Hardware interlocks outrank any suggested action.
+
+This is a **synthetic decision loop**. It is not optical-propagation physics and not a live hardware loop. Credentials, FTP/MQTT endpoints, and raw images stay private.
+
+Four pre-registered comparators: no-intervention, random, deterministic priority, and a rule agent. A positive finding requires, on all three seeds: no active safety violations, invalid-action rate ≤ 1%, survey-completeness drop ≤ 5 percentage points, and either ≥ 20% relative gain in high-value transient follow-up or ≥ 5% gain in scientific utility.
+
+Current synthetic result (90 episodes / policy):
+
+| Policy | Mean utility | Survey completeness | High-value follow-up | Invalid actions | Unsafe attempts blocked |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| No intervention | 3.9343 | 77.41% | 0.00% | 0 | 122 |
+| Random | 2.4027 | 30.19% | 30.37% | 18 | 72 |
+| Deterministic priority | 4.3289 | 61.11% | 49.81% | 0 | 0 |
+| Rule agent | 4.3996 | 51.67% | 73.33% | 0 | 0 |
+
+The rule agent raises follow-up by 23.52 percentage points over deterministic priority, with only ~1.6% more utility, but completeness falls 9.44 points — past the 5-point tolerance. That is a **stable negative result**: the current marginal-value rule overweights short-term response. The direction is the same on three seeds; a second run matched output hashes. It is not a win.
+
+<p align="center">
+  <img src="docs/assets/starwhisper-verification.jpg" alt="Synthetic environment, de-identified log replay, hardware shadow mode" width="820">
+</p>
+
+<p align="center"><sub>Figure 2. Reproduce first, calibrate against reality, then enter hardware shadow mode (suggest only).</sub></p>
+
+Next: an AstroQ / TJO-style constrained scheduler, de-identified logs to calibrate disturbance rates, then the same decision interface in front of timing, weather, and control models. Shadow mode remains advice, not authority.
+
+---
+
+## Astronomy research skills
+
+<p align="center">
+  <img src="docs/assets/starwhisper-skills-matrix.jpg" alt="Astronomy research skills matrix" width="820">
+</p>
+
+Thirteen skills adapted from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills). Defaults are astronomical: NASA ADS, arXiv `astro-ph`, AAS citations, light-curve / spectrum / FITS contracts, selection effects, and a hard split between synthetic, replay, and hardware. Full matrix: [`skills/README.md`](skills/README.md).
+
+| Group | Skills |
+| --- | --- |
+| Literature | paper search, deep research, thesis audit |
+| Research design | hypothesis generation, baseline builder, experiment design, statistics |
+| Communication | humanization, academic writing, scientific figures, decks |
+| Collaboration | citation check, research persona |
+
+```powershell
+git clone https://github.com/Yu-Yang-Li/StarWhisper.git
+Copy-Item -Recurse .\StarWhisper\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
+```
+
+With no ADS / Giiisp token the skill must dry-run or fall back locally. Skills never command a telescope.
+
+---
+
+## Open modules and papers
+
+1. **StarWhisper 4.0 data and training**  
+   StarWhisper 3 training data lives in `LLM_Data`. 4.0 weights are planned for ModelScope.
 
 2. **[StarWhisper Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)**  
-   A technical report on a SOTA multimodal large model for pulsar identification.
+   Multimodal pulsar identification.
 
 3. **[StarWhisper LC](https://spj.science.org/doi/epdf/10.34133/icomputing.0110)**  
-   A light-curve classification method based on transfer learning and large models. Test code related to the paper is uploaded.
+   Light-curve classification. Test code from the paper is in the repo.
 
-   <div align="center"><img src="example/StarWhisper LC.png" width="680"/></div>
+   <p align="center"><img src="example/StarWhisper LC.png" alt="StarWhisper LC" width="680"></p>
 
 4. **[StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)**  
-   Published in *Communications Engineering* 4, 184 (2025). The paper introduces an AI agent framework for end-to-end astronomical-observation automation and demonstrates it in the Near-Neighbor Galaxy Survey System. Code is open-sourced in the `NGSS` directory.
+   *Communications Engineering* 4, 184 (2025). End-to-end observing automation on the nearby-galaxy survey. Code: `NGSS`.
 
-   <div align="center"><img src="example/Starwhisper Telescope.png" width="680"/></div>
+   <p align="center"><img src="example/Starwhisper Telescope.png" alt="StarWhisper Telescope" width="680"></p>
 
 5. **Virtual-GOTTA / StarWhisper 5.0+**  
-   Based on the presentation *AI-driven science education and research*, StarWhisper 5.0+ targets embodied intelligence for scientific telescopes by integrating large models, station networks, telescope status, real-time observing, and scientific alerts.
+   Models connected to alerts, station state, plans, and real-time response. [Interactive map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
+
+<p align="center">
+  <img src="example/图片1.png" alt="StarWhisper demonstration" width="680">
+  <img src="example/图片2.png" alt="StarWhisper telescope agent interface" width="680">
+</p>
 
 ---
 
-## Demonstration
+## Sitian
 
-<div align="center"><img src="example/图片1.png" width="680"/></div>
-<div align="center"><img src="example/图片2.png" width="680"/></div>
+**Sitian** plans 54 one-meter-class wide-field telescopes across Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. Science targets include extreme bursts, gravitational-wave counterparts, exoplanets, and solar-system bodies. StarWhisper is one candidate path for a “Sitian brain”: models, skills, and domain tools on a real observing system — not a slide-only platform.
 
----
-
-## Sitian Project
-
-**Sitian** is a major time-domain astronomical infrastructure proposed by Chinese astronomers. Phase I plans to deploy 54 wide-field 1-meter telescopes across multiple observing sites in China, forming a multi-band monitoring network that can complete high-precision three-color surveys of about 10,000 square degrees every 30 minutes.
-
-Sitian aims to discover new celestial objects and phenomena including extreme energy bursts, gravitational-wave electromagnetic counterparts, exoplanets, and solar-system bodies. StarWhisper explores how large models, agents, and astronomical tools can become the AI core of this observing network.
-
-<div align="center"><img src="example/sitian.png" width="680"/></div>
+<p align="center"><img src="example/sitian.png" alt="Sitian survey concept" width="680"></p>
 
 ---
 
-## License
+## Boundaries
 
-- Source code: **Apache-2.0 License**.
-- Qwen Chat model weights and other base models follow their respective licenses.
+| Fair to say | Not fair to say |
+| --- | --- |
+| The published observing-automation frame is implemented in NGSS | This repo already owns live hardware interlocks |
+| Explore-v0.2 synthetic nights are replayable and hash-stable | The rule agent passed the positive-finding bar |
+| Skills can help with ADS search, writing, and citation checks | Skill output is a published result or a discovery |
+| Shadow mode may suggest | Suggestions were executed on hardware |
 
----
-
-## Roadmap
-
-### Large Language Models: Science Communication and Research Assistance
-
-- Optimize the ratio between general and domain-specific data during SFT to mitigate catastrophic forgetting.
-- Improve performance through reinforcement learning with human feedback.
-- Build an astronomical knowledge graph to reduce hallucinations.
-- Strengthen summarization, code generation, observing-task understanding, and paper-assistance capabilities.
-
-### Multimodal Models: Research Tools
-
-- Release more multimodal fine-tuning weights.
-- Explore astronomical image generation, recognition, and quality-control tasks.
-- Link evidence from light curves, images, spectra, and text.
-
-### Observation Agents: Sitian Brain
-
-- Boost coding and tool-use capabilities in astronomy.
-- Validate human-machine interaction agents on MiniSiTian / Sitian prototypes.
-- Integrate professional tools such as ASTROLABE and CASA.
-- Validate StarWhisper as a candidate technical path for the Sitian Brain.
+Source code: **Apache-2.0**. Astronomy-adapted skills under [`skills/`](skills/NOTICE.md) keep the upstream MIT license. Base-model weights follow their own licenses.
 
 ---
 
 ## Citation
-
-If this work is useful to you, please cite the latest published paper:
 
 ```BibTeX
 @article{wang2025starwhisper,
@@ -137,4 +178,4 @@ If this work is useful to you, please cite the latest published paper:
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Yu-Yang-Li/StarWhisper&type=Date)](https://star-history.com/#Yu-Yang-Li/StarWhisper&Date)

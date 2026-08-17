@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="guofeng">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>他山·引用合规检查</title>
+  <link rel="stylesheet" href="assets/colors_and_type.css" />
+  <style>
+    /* ── Layout ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 var(--sp-lg);
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    .site-header {
+      background: var(--surface-inverse);
+      padding: var(--sp-lg) 0;
+      border-bottom: var(--bw-thin) solid rgba(255,255,255,.08);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-lg);
+    }
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h4);
+      font-weight: var(--fw-semibold);
+      color: var(--text-inverse);
+      letter-spacing: 0.04em;
+    }
+    .brand-sub {
+      font-size: var(--fs-caption);
+      color: rgba(250,249,243,.55);
+      margin-top: 2px;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-base);
+    }
+    .header-nav a {
+      font-size: var(--fs-body-s);
+      color: rgba(250,249,243,.7);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .header-nav a:hover { color: var(--text-inverse); }
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: var(--sp-xs) var(--sp-md);
+      background: rgba(250,249,243,.1);
+      border: var(--bw-thin) solid rgba(250,249,243,.2);
+      border-radius: var(--radius-full);
+      font-size: var(--fs-body-s) !important;
+      color: var(--text-inverse) !important;
+      transition: background var(--transition-fast);
+    }
+    .btn-github:hover { background: rgba(250,249,243,.18) !important; }
+    .btn-github svg { flex-shrink: 0; }
+
+    /* ── Main content area ──────────────────────────────────── */
+    main { padding: var(--sp-2xl) 0 var(--sp-3xl); }
+
+    /* ── Upload card ─────────────────────────────────────────── */
+    .upload-card {
+      background: var(--surface-raised);
+      border: var(--bw-thin) solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-2xl);
+      box-shadow: var(--shadow-md);
+    }
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h4);
+      color: var(--text-primary);
+      margin-bottom: var(--sp-xs);
+    }
+    .card-desc {
+      font-size: var(--fs-body-s);
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-xl);
+    }
+
+    .dropzone {
+      border: 2px dashed var(--border-default);
+      border-radius: var(--radius-md);
+      padding: var(--sp-2xl) var(--sp-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--transition-normal), background var(--transition-normal);
+    }
+    .dropzone:hover, .dropzone.drag-over {
+      border-color: var(--brand-primary);
+      background: var(--brand-light);
+    }
+    .dropzone-icon {
+      width: 48px; height: 48px;
+      margin: 0 auto var(--sp-base);
+      color: var(--text-tertiary);
+    }
+    .dropzone-text {
+      font-size: var(--fs-body);
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-xs);
+    }
+    .dropzone-hint {
+      font-size: var(--fs-caption);
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
+      padding: var(--sp-md) var(--sp-base);
+      background: var(--surface-sunken);
+      border-radius: var(--radius-md);
+      margin-top: var(--sp-base);
+    }
+    .file-info-icon { color: var(--brand-primary); flex-shrink: 0; }
+    .file-info-name {
+      font-size: var(--fs-body-s);
+      font-weight: var(--fw-medium);
+      color: var(--text-primary);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-info-size { font-size: var(--fs-caption); color: var(--text-tertiary); }
+    .file-remove {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-tertiary); padding: 2px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition-fast);
+    }
+    .file-remove:hover { color: var(--accent-error); }
+
+    /* ── Options ────────────────────────────────────────────── */
+    .options-row {
+      display: flex;
+      gap: var(--sp-xl);
+      margin-top: var(--sp-xl);
+      flex-wrap: wrap;
+    }
+    .option-group { flex: 1; min-width: 200px; }
+    .option-label {
+      font-size: var(--fs-body-s);
+      font-weight: var(--fw-medium);
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: var(--sp-sm);
+    }
+    .toggle-group {
+      display: flex;
+      border: var(--bw-thin) solid var(--border-default);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .toggle-btn {
+      flex: 1;
+      padding: var(--sp-sm) var(--sp-md);
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: var(--fs-body-s);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+    .toggle-btn + .toggle-btn {
+      border-left: var(--bw-thin) solid var(--border-default);
+    }
+    .toggle-btn.active {
+      background: var(--brand-primary);
+      color: var(--text-inverse);
+      font-weight: var(--fw-medium);
+    }
+    .toggle-btn:not(.active):hover { background: var(--surface-sunken); }
+
+    /* ── Submit button ───────────────────────────────────────── */
+    .submit-row { margin-top: var(--sp-xl); }
+    .btn-primary {
+      width: 100%;
+      padding: var(--sp-md) var(--sp-lg);
+      background: var(--brand-primary);
+      color: var(--text-inverse);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-medium);
+      cursor: pointer;
+      transition: background var(--transition-fast), opacity var(--transition-fast);
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--brand-dark); }
+    .btn-primary:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── Loading ─────────────────────────────────────────────── */
+    .loading-card {
+      background: var(--surface-raised);
+      border: var(--bw-thin) solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-3xl) var(--sp-2xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border-default);
+      border-top-color: var(--brand-primary);
+      border-radius: 50%;
+      margin: 0 auto var(--sp-lg);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: var(--fs-body);
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-xs);
+    }
+    .loading-hint { font-size: var(--fs-caption); color: var(--text-tertiary); margin: 0; }
+
+    /* ── Results ─────────────────────────────────────────────── */
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-xl);
+      flex-wrap: wrap;
+      gap: var(--sp-md);
+    }
+    .results-title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h4);
+      color: var(--text-primary);
+    }
+    .results-meta {
+      font-size: var(--fs-caption);
+      color: var(--text-tertiary);
+      display: flex;
+      gap: var(--sp-md);
+    }
+    .btn-secondary {
+      padding: var(--sp-xs) var(--sp-base);
+      background: none;
+      border: var(--bw-thin) solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: var(--fs-body-s);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-sunken);
+      border-color: var(--border-strong);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--sp-base);
+      margin-bottom: var(--sp-xl);
+    }
+    .stat-card {
+      background: var(--surface-raised);
+      border: var(--bw-thin) solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--sp-base) var(--sp-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-label {
+      font-size: var(--fs-caption);
+      color: var(--text-tertiary);
+      margin-bottom: var(--sp-xs);
+    }
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: var(--fs-h3);
+      font-weight: var(--fw-semibold);
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .stat-value.highlight { color: var(--brand-primary); }
+    .stat-value.warn { color: var(--accent-warning); }
+    .stat-value.error { color: var(--accent-error); }
+    .stat-value.success { color: var(--accent-success); }
+
+    /* ── Issue tabs ──────────────────────────────────────────── */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: var(--bw-thin) solid var(--border-default);
+      margin-bottom: var(--sp-lg);
+      overflow-x: auto;
+    }
+    .tab-btn {
+      padding: var(--sp-sm) var(--sp-lg);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: var(--font-sans);
+      font-size: var(--fs-body-s);
+      color: var(--text-tertiary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color var(--transition-fast);
+      margin-bottom: -1px;
+    }
+    .tab-btn.active {
+      color: var(--brand-primary);
+      border-bottom-color: var(--brand-primary);
+      font-weight: var(--fw-medium);
+    }
+    .tab-btn:hover:not(.active) { color: var(--text-secondary); }
+    .tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px; height: 18px;
+      padding: 0 5px;
+      background: var(--surface-sunken);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      margin-left: 5px;
+    }
+    .tab-btn.active .tab-count { background: var(--brand-light); color: var(--brand-primary); }
+
+    .issue-list { display: flex; flex-direction: column; gap: var(--sp-md); }
+    .empty-state {
+      text-align: center;
+      padding: var(--sp-2xl);
+      color: var(--text-tertiary);
+      font-size: var(--fs-body-s);
+    }
+    .empty-state .icon { font-size: 2rem; margin-bottom: var(--sp-sm); }
+
+    .issue-card {
+      background: var(--surface-raised);
+      border: var(--bw-thin) solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--sp-base) var(--sp-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .issue-card.sev-high { border-left: 3px solid var(--accent-error); }
+    .issue-card.sev-medium { border-left: 3px solid var(--accent-warning); }
+    .issue-card.sev-low { border-left: 3px solid var(--accent-info); }
+
+    .issue-top {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-md);
+      margin-bottom: var(--sp-sm);
+    }
+    .issue-badges { display: flex; gap: var(--sp-xs); flex-wrap: wrap; flex-shrink: 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: var(--fw-medium);
+      white-space: nowrap;
+    }
+    .badge-error { background: #FEE2E2; color: var(--accent-error); }
+    .badge-warning { background: #FEF3C7; color: #92400E; }
+    .badge-info { background: #E0F2FE; color: #075985; }
+    .badge-neutral { background: var(--surface-sunken); color: var(--text-secondary); }
+    .badge-success { background: #DCFCE7; color: #166534; }
+
+    .issue-title {
+      font-size: var(--fs-body-s);
+      font-weight: var(--fw-medium);
+      color: var(--text-primary);
+      flex: 1;
+    }
+    .issue-desc {
+      font-size: var(--fs-body-s);
+      color: var(--text-secondary);
+      line-height: var(--lh-cjk);
+      margin: 0;
+    }
+    .issue-detail {
+      margin-top: var(--sp-sm);
+      padding: var(--sp-sm) var(--sp-md);
+      background: var(--surface-sunken);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: var(--fs-caption);
+      color: var(--text-tertiary);
+      word-break: break-all;
+    }
+    .issue-expand {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      font-size: var(--fs-caption);
+      cursor: pointer;
+      padding: 0;
+      margin-top: var(--sp-xs);
+      text-decoration: underline;
+    }
+    .issue-expand:hover { color: var(--brand-primary); }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .site-footer {
+      border-top: var(--bw-thin) solid var(--border-subtle);
+      padding: var(--sp-lg) 0;
+      margin-top: var(--sp-3xl);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-md);
+    }
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: var(--fs-body-s);
+      color: var(--text-tertiary);
+    }
+    .footer-links {
+      display: flex;
+      gap: var(--sp-lg);
+    }
+    .footer-links a {
+      font-size: var(--fs-caption);
+      color: var(--text-tertiary);
+    }
+    .footer-links a:hover { color: var(--brand-primary); }
+
+    /* ── Utility ─────────────────────────────────────────────── */
+    .hidden { display: none !important; }
+    .text-right { text-align: right; }
+    .mt-base { margin-top: var(--sp-base); }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div>
+        <div class="brand-name">他山·引用合规检查</div>
+        <div class="brand-sub">GB/T 7714 · UCAS 学位论文规范</div>
+      </div>
+      <nav class="header-nav">
+        <a href="https://paper.tashan.chat" target="_blank" rel="noopener">PaperCheck（AI版）</a>
+        <a href="https://github.com/TashanGKD/TaShan-PaperChecker" target="_blank" rel="noopener" class="btn-github">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ── Main ───────────────────────────────────────────── -->
+<main>
+  <div class="container">
+
+    <!-- Upload section -->
+    <section id="uploadSection">
+      <div class="upload-card">
+        <h2 class="card-title">上传论文</h2>
+        <p class="card-desc">检查论文正文引用与参考文献的格式合规性，支持 GB/T 7714 及 UCAS 学位论文规范</p>
+
+        <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="点击或拖拽上传文件">
+          <div class="dropzone-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="var(--brand-light)"/>
+              <path d="M24 14v14M18 20l6-6 6 6" stroke="var(--brand-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 34h20" stroke="var(--border-strong)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="dropzone-text">拖拽论文文件到此处，或点击选择</p>
+          <p class="dropzone-hint">支持 .docx · .doc · .pdf · 最大 50 MB</p>
+          <input type="file" id="fileInput" accept=".docx,.doc,.pdf" style="display:none" aria-hidden="true" />
+        </div>
+
+        <div id="fileInfo" class="file-info hidden">
+          <span class="file-info-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </span>
+          <span id="fileName" class="file-info-name"></span>
+          <span id="fileSize" class="file-info-size"></span>
+          <button id="removeFile" class="file-remove" title="移除文件" aria-label="移除文件">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="options-row">
+          <div class="option-group">
+            <span class="option-label">著者格式</span>
+            <div class="toggle-group" id="authorFormat" role="group" aria-label="著者格式">
+              <button class="toggle-btn active" data-value="full">著者-出版年制</button>
+              <button class="toggle-btn" data-value="abbrev">顺序编码制</button>
+            </div>
+          </div>
+          <div class="option-group">
+            <span class="option-label">检查标准</span>
+            <div class="toggle-group" id="citationStandard" role="group" aria-label="检查标准">
+              <button class="toggle-btn active" data-value="legacy">通用格式</button>
+              <button class="toggle-btn" data-value="ucas">UCAS 规范</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button id="submitBtn" class="btn-primary" disabled>开始检查</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading section -->
+    <section id="loadingSection" class="hidden">
+      <div class="loading-card">
+        <div class="spinner" role="status" aria-label="正在分析"></div>
+        <p class="loading-text">正在分析论文引用合规性</p>
+        <p class="loading-hint">通常需要 5–30 秒，请耐心等待</p>
+      </div>
+    </section>
+
+    <!-- Error section -->
+    <section id="errorSection" class="hidden">
+      <div class="upload-card" style="border-color: var(--accent-error);">
+        <div style="display:flex;align-items:flex-start;gap:var(--sp-md)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-error)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <div>
+            <div style="font-weight:var(--fw-medium);color:var(--text-primary);margin-bottom:var(--sp-xs)">检查失败</div>
+            <p id="errorMsg" style="font-size:var(--fs-body-s);color:var(--text-secondary);margin:0"></p>
+          </div>
+        </div>
+        <div class="submit-row">
+          <button id="retryBtn" class="btn-secondary" style="width:100%">重新上传</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results section -->
+    <section id="resultsSection" class="hidden">
+      <div class="results-header">
+        <div>
+          <h2 class="results-title">检查结果</h2>
+          <div class="results-meta" id="resultsMeta"></div>
+        </div>
+        <button id="newCheckBtn" class="btn-secondary">新建检查</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <!-- Issue tabs -->
+      <div class="tab-bar" id="tabBar" role="tablist"></div>
+      <div id="issuePanel"></div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-brand">他山 · TaShan</span>
+      <div class="footer-links">
+        <a href="https://github.com/TashanGKD/TaShan-PaperChecker" target="_blank" rel="noopener">TaShan-PaperChecker（规则版）</a>
+        <a href="https://github.com/TashanGKD/PaperCheck" target="_blank" rel="noopener">PaperCheck（AI版）</a>
+        <a href="https://paper.tashan.chat" target="_blank" rel="noopener">paper.tashan.chat</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── State ─────────────────────────────────────────── */
+  const state = {
+    file: null,
+    authorFormat: 'full',
+    citationStandard: 'legacy',
+    activeTab: 0,
+  }
+
+  /* ── Element refs ──────────────────────────────────── */
+  const $ = id => document.getElementById(id)
+  const dropzone = $('dropzone')
+  const fileInput = $('fileInput')
+  const fileInfo = $('fileInfo')
+  const fileName = $('fileName')
+  const fileSize = $('fileSize')
+  const removeFile = $('removeFile')
+  const submitBtn = $('submitBtn')
+
+  const uploadSection  = $('uploadSection')
+  const loadingSection = $('loadingSection')
+  const errorSection   = $('errorSection')
+  const resultsSection = $('resultsSection')
+
+  /* ── File handling ─────────────────────────────────── */
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B'
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
+  }
+
+  function setFile(f) {
+    if (!f) { clearFile(); return }
+    const ALLOWED = ['application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                     'application/msword', 'application/pdf']
+    const ext = f.name.split('.').pop().toLowerCase()
+    if (!['docx','doc','pdf'].includes(ext)) {
+      alert('不支持的文件格式，请上传 .docx、.doc 或 .pdf 文件')
+      return
+    }
+    if (f.size <= 0) {
+      alert('文件是 0 字节，可能下载或保存失败。请先在本地打开确认内容正常，再重新上传。')
+      return
+    }
+    if (f.size > 50 * 1024 * 1024) {
+      alert('文件超过 50 MB 上限')
+      return
+    }
+    state.file = f
+    fileName.textContent = f.name
+    fileSize.textContent = formatBytes(f.size)
+    fileInfo.classList.remove('hidden')
+    dropzone.style.display = 'none'
+    submitBtn.disabled = false
+  }
+
+  function clearFile() {
+    state.file = null
+    fileInput.value = ''
+    fileInfo.classList.add('hidden')
+    dropzone.style.display = ''
+    submitBtn.disabled = true
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click())
+  dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click() })
+  fileInput.addEventListener('change', e => setFile(e.target.files[0]))
+  removeFile.addEventListener('click', clearFile)
+
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over') })
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'))
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault()
+    dropzone.classList.remove('drag-over')
+    setFile(e.dataTransfer.files[0])
+  })
+
+  /* ── Toggle buttons ────────────────────────────────── */
+  function initToggleGroup(groupId, stateKey) {
+    const group = $(groupId)
+    group.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+        state[stateKey] = btn.dataset.value
+      })
+    })
+  }
+  initToggleGroup('authorFormat', 'authorFormat')
+  initToggleGroup('citationStandard', 'citationStandard')
+
+  /* ── Sections ──────────────────────────────────────── */
+  function showSection(name) {
+    for (const s of [uploadSection, loadingSection, errorSection, resultsSection])
+      s.classList.add('hidden')
+    $(`${name}Section`).classList.remove('hidden')
+  }
+
+  /* ── Submit ────────────────────────────────────────── */
+  submitBtn.addEventListener('click', doCheck)
+  $('newCheckBtn').addEventListener('click', () => { clearFile(); showSection('upload') })
+  $('retryBtn').addEventListener('click', () => showSection('upload'))
+
+  async function doCheck() {
+    if (!state.file) return
+    if (state.file.size <= 0) {
+      $('errorMsg').textContent = '文件是 0 字节，可能下载或保存失败。请先在本地打开确认内容正常，再重新上传。'
+      showSection('error')
+      return
+    }
+
+    showSection('loading')
+
+    const fd = new FormData()
+    fd.append('file', state.file)
+    fd.append('author_format', state.authorFormat)
+    fd.append('citation_standard', state.citationStandard)
+
+    const t0 = Date.now()
+    try {
+      const res = await fetch('/api/v2/analysis/report', { method: 'POST', body: fd })
+      if (!res.ok) {
+        const txt = await res.text()
+        throw new Error(`服务器返回 ${res.status}：${txt.slice(0, 200)}`)
+      }
+      const data = await res.json()
+      const elapsed = Date.now() - t0
+      renderResults(data, elapsed)
+      showSection('results')
+    } catch (err) {
+      $('errorMsg').textContent = err.message || '未知错误'
+      showSection('error')
+    }
+  }
+
+  /* ── Render results ────────────────────────────────── */
+  function renderResults(data, elapsedMs) {
+    const s = data.summary || {}
+    const issues = data.issues || {}
+    const run = data.run || {}
+
+    /* meta line */
+    const style = s.citation_style || run.metadata?.author_format || '—'
+    const standard = s.citation_standard || run.metadata?.citation_standard || '—'
+    const dur = elapsedMs ? `${(elapsedMs/1000).toFixed(1)}s` : '—'
+    $('resultsMeta').innerHTML =
+      `<span>耗时 ${dur}</span><span>引用格式：${style}</span><span>标准：${standard}</span>`
+
+    /* stats */
+    const totalIssues = (s.reference_format_issue_count || 0) + (s.citation_style_issue_count || 0)
+    $('statsGrid').innerHTML = `
+      ${statCard('总引用数', s.total_citations ?? '—', '')}
+      ${statCard('参考文献', s.total_references ?? '—', '')}
+      ${statCard('匹配率', s.match_rate || '—', 'highlight')}
+      ${statCard('高置信问题', s.high_confidence_issue_count ?? 0, s.high_confidence_issue_count > 0 ? 'error' : 'success')}
+    `
+
+    /* tab definitions */
+    const tabs = [
+      { label: '参考文献格式', key: 'reference_format_issues' },
+      { label: '引用风格问题', key: 'citation_style_issues' },
+      { label: '需更正', key: 'corrections_needed' },
+      { label: '未使用文献', key: 'unused_references' },
+      { label: '未匹配引用', key: 'unmatched_citations' },
+    ].filter(t => (issues[t.key] || []).length > 0)
+
+    if (tabs.length === 0) {
+      $('tabBar').innerHTML = ''
+      $('issuePanel').innerHTML = `
+        <div class="empty-state">
+          <div class="icon">✓</div>
+          <p>未发现格式问题，论文引用格式合规</p>
+        </div>`
+      return
+    }
+
+    state.activeTab = 0
+    renderTabs(tabs, issues)
+  }
+
+  function statCard(label, value, cls) {
+    return `<div class="stat-card">
+      <div class="stat-label">${label}</div>
+      <div class="stat-value ${cls}">${value}</div>
+    </div>`
+  }
+
+  function renderTabs(tabs, issues) {
+    const tabBar = $('tabBar')
+    tabBar.innerHTML = tabs.map((t, i) => {
+      const count = (issues[t.key] || []).length
+      return `<button class="tab-btn ${i === state.activeTab ? 'active' : ''}" data-idx="${i}" role="tab" aria-selected="${i === state.activeTab}">
+        ${t.label}<span class="tab-count">${count}</span>
+      </button>`
+    }).join('')
+
+    tabBar.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activeTab = parseInt(btn.dataset.idx)
+        tabBar.querySelectorAll('.tab-btn').forEach((b, i) => {
+          b.classList.toggle('active', i === state.activeTab)
+          b.setAttribute('aria-selected', i === state.activeTab)
+        })
+        renderIssuePanel(tabs[state.activeTab].key, issues[tabs[state.activeTab].key] || [])
+      })
+    })
+
+    renderIssuePanel(tabs[0].key, issues[tabs[0].key] || [])
+  }
+
+  function renderIssuePanel(key, items) {
+    if (!items.length) {
+      $('issuePanel').innerHTML = '<div class="empty-state"><p>此类别无问题</p></div>'
+      return
+    }
+    $('issuePanel').innerHTML = `<div class="issue-list">${items.map(renderIssueCard).join('')}</div>`
+  }
+
+  function renderIssueCard(issue) {
+    const sev = severityClass(issue)
+    const confBadge = confBadgeHtml(issue.confidence_tier)
+    const ruleBadge = ruleBadgeHtml(issue.rule_strength)
+
+    const typeLabel = issue.issue_type || issue.type || ''
+    const desc = issue.description || issue.message || issue.reason || ''
+    const loc = issue.location || issue.citation_text || issue.reference_text || issue.text || ''
+    const extra = issue.suggestion || issue.expected || ''
+
+    const detailParts = [loc && `位置：${loc}`, extra && `建议：${extra}`].filter(Boolean).join('\n')
+
+    return `<div class="issue-card ${sev}">
+      <div class="issue-top">
+        <div class="issue-title">${escHtml(typeLabel) || '格式问题'}</div>
+        <div class="issue-badges">${confBadge}${ruleBadge}</div>
+      </div>
+      ${desc ? `<p class="issue-desc">${escHtml(desc)}</p>` : ''}
+      ${detailParts ? `<pre class="issue-detail">${escHtml(detailParts)}</pre>` : ''}
+    </div>`
+  }
+
+  function severityClass(issue) {
+    const conf = issue.confidence_tier || ''
+    const rule = issue.rule_strength || ''
+    if (rule === 'strong_rule' && conf === 'high') return 'sev-high'
+    if (rule === 'strong_rule' || conf === 'medium') return 'sev-medium'
+    return 'sev-low'
+  }
+
+  function confBadgeHtml(tier) {
+    const map = { high: ['badge-error', '高置信'], medium: ['badge-warning', '中置信'], low: ['badge-neutral', '低置信'] }
+    const [cls, label] = map[tier] || ['badge-neutral', tier || '']
+    return label ? `<span class="badge ${cls}">${label}</span>` : ''
+  }
+
+  function ruleBadgeHtml(strength) {
+    const map = { strong_rule: ['badge-error', '强规则'], heuristic_rule: ['badge-warning', '启发规则'] }
+    const [cls, label] = map[strength] || ['badge-neutral', strength || '']
+    return label ? `<span class="badge ${cls}">${label}</span>` : ''
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Baseline Builder"
+  short_description: "Turn science questions into baselines."
+  default_prompt: "Turn this scientific question into a data task and baseline SOP."

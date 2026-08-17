@@ -1,53 +1,19 @@
-# 科研助理技能包
+# 科研助理技能包（历史打包）
 
-为科研工作提供文献查证、研究设计、材料撰写和成果展示支持
+当前可安装、带天文适配的技能已经改放到仓库根目录的 [`skills/`](../skills/README.md)。
 
-本技能包面向科研场景，支持用户完成文献查证、研究设计、材料撰写、成果呈现与协作沉淀等常见任务，帮助用户把分散的科研工作整理成更顺畅、可复用的工作流程。
+本目录只保留较早的 zip 打包，方便已经按 zip 上传的工作流。新安装请直接复制 `skills/<name>/`，不要再以这些 zip 为准。
 
-## 文件说明
+对应关系：
 
-- 根目录 `README.md`：技能包说明、四类能力和各子技能 zip 对应关系。
-- 子技能 zip：可按需要单独上传或组合打包。
-
-## 文献证据
-
-**核心功能**：基于 1.8 亿文献库和开放论文数据源，快速查找候选文献；结合深度研究能力拆解关键词、召回证据、梳理引用，并标出结论的证据边界。
-
-**专业价值**：帮助用户从海量论文中快速定位可核验的研究线索，避免停留在泛泛搜索结果，提升选题、综述、调研和论文依据整理的质量。
-
-**包含技能**：
-- 论文检索（`giiisp-paper-search-apis.zip`）：基于 1.8 亿文献库和开放论文数据源，快速查找候选文献，并整理可核验的论文列表。
-- 深度研究（`deep-research-api.zip`）：围绕研究问题拆关键词、找证据、梳理引用，并标出结论的证据边界。
-
-## 研究构思
-
-**核心功能**：基于关键词、论文集合或初步问题生成研究假设、机制线索和初步方案；同时把科研问题拆成可处理的数据任务，明确输入、输出、baseline 和评估指标。
-
-**专业价值**：把“我想研究什么”进一步转化为可执行的研究路线，帮助用户更快形成假设、实验思路、数据方案和初步研究方案。
-
-**包含技能**：
-- 假设生成（`scispark.zip`）：基于关键词或论文集合生成研究假设、机制线索和初步方案。
-- 数据处理（`research-baseline-builder.zip`）：把科研问题拆成可处理的数据任务，明确输入、输出、baseline 和评估指标。
-
-## 成果表达
-
-**核心功能**：支持论文、基金、答辩和讲稿润色；可把研究主题、机制原理到实验流程、论文段落转成科研图像、PPT 和讲解视频。
-
-**专业价值**：让科研成果不只停留在文字草稿中，而是进一步变成结构清晰、视觉完整、便于汇报、答辩、投稿和传播的材料。
-
-**包含技能**：
-- 文本润色（`scientific-humanization.zip`）：优化论文、基金、答辩和讲稿表达，让文字更自然，同时保留事实边界。
-- 科研绘图（`giiisp-scientific-image-generation.zip`）：把论文段落、机制描述或实验流程转成科研图像生成任务。
-- PPT制作（`visual-deck-builder.zip`）：把主题、论文或报告整理成结构清晰、视觉完整的演示文稿。
-- 讲解视频（`manim-agent.zip`）：生成数学、公式或技术概念的讲解动画，可按需要加入配音。
-
-## 协作沉淀
-
-**核心功能**：检查论文引文、参考文献、格式和上下文支撑关系；记录研究偏好、表达习惯和协作边界；接入他山世界获取前沿信息、参与科研社交、公众科学和更多科研技能发现。
-
-**专业价值**：减少引用错配和证据断裂，让长期科研辅助逐渐理解用户的研究方向、表达习惯和协作需求，把一次性任务沉淀成持续可复用的科研工作流。
-
-**包含技能**：
-- 引用合规（`papercheck.zip`）：检查论文引文、参考文献、格式和上下文支撑关系。
-- 科研画像（`cognitive-profile.zip`）：记录研究偏好、表达习惯和协作边界，让长期辅助更贴合个人风格。
-- 他山世界（`tashan-world.zip`）：接入他山世界，支持前沿信息获取、科研社交、公众科学和更多科研技能发现。
+| 旧 zip | 新目录 |
+| --- | --- |
+| `giiisp-paper-search-apis.zip` | [`skills/giiisp-paper-search-apis`](../skills/giiisp-paper-search-apis/SKILL.md) |
+| `deep-research-api.zip` | [`skills/sci-employee-deep-research`](../skills/sci-employee-deep-research/SKILL.md) |
+| `scispark.zip` | [`skills/scispark`](../skills/scispark/SKILL.md) |
+| `research-baseline-builder.zip` | [`skills/research-baseline-builder`](../skills/research-baseline-builder/SKILL.md) |
+| `scientific-humanization.zip` | [`skills/scientific-humanization`](../skills/scientific-humanization/SKILL.md) |
+| `giiisp-scientific-image-generation.zip` | [`skills/giiisp-scientific-image-generation`](../skills/giiisp-scientific-image-generation/SKILL.md) |
+| `visual-deck-builder.zip` | [`skills/visual-deck-builder`](../skills/visual-deck-builder/SKILL.md) |
+| `papercheck.zip` | [`skills/papercheck`](../skills/papercheck/SKILL.md) |
+| `cognitive-profile.zip` | [`skills/cognitive-profile`](../skills/cognitive-profile/SKILL.md) |

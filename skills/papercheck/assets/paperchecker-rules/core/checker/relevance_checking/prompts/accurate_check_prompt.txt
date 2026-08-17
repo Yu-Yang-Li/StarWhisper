@@ -1,0 +1,12 @@
+请全面分析以下文献引用的相关性，基于提供的完整文献内容和对比内容：
+【任务类型】{task_type}相关性判断
+【引用文献】{full_content}
+【对比内容】{target_content}
+请按以下JSON格式回答（请只输出JSON内容，不要其他文字）：
+{
+  "relevance_score": 数字评分(0-10),
+  "reasoning": "评分理由",
+  "is_suitable_for_citation": true或false,
+  "brief_basis": "不超过50字的简要依据"
+}
+注意：请严格基于文献内容分析，避免超出文本的推断。

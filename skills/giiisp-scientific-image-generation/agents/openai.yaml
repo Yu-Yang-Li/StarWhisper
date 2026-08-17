@@ -1,0 +1,8 @@
+interface:
+  display_name: "集思谱科研图像生成"
+  short_description: "生成、续改、择优并归档科研配图"
+  brand_color: "#0F766E"
+  default_prompt: "Use $giiisp-scientific-image-generation to generate a journal-ready scientific figure with a structured figure_spec, traceable run manifest, quality check, and optional variant selection."
+
+policy:
+  allow_implicit_invocation: true

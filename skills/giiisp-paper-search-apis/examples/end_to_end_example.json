@@ -1,0 +1,34 @@
+{
+  "user_question": "Find arXiv papers about large language model scientific discovery.",
+  "routing": {
+    "selected_mode": "arxiv-title",
+    "selected_api": "/first/paper/searchArxivByTitle",
+    "reason": "The user is asking for papers around a method/topic phrase, so the dry run starts with the arXiv title endpoint and can be expanded to abstract or multi-field search if needed."
+  },
+  "dry_run_request": {
+    "method": "POST",
+    "url": "https://giiisp.com/first/paper/searchArxivByTitle",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "key": "large language model scientific discovery",
+      "pageNum": 1,
+      "pageSize": 10
+    }
+  },
+  "output_table": [
+    {
+      "检索目标": "large language model scientific discovery",
+      "实际检索词": "large language model scientific discovery",
+      "接口": "/first/paper/searchArxivByTitle",
+      "论文": "Example Paper Title for End-to-End Dry Run; First Author, Second Author; 2025; arXiv",
+      "链接": "https://arxiv.org/abs/2501.01234",
+      "摘要依据": "Simulated title or abstract evidence matching the supplied query.",
+      "状态": "待核验",
+      "下一步": "Use DOI, arXiv ID, or source page metadata for a second verification pass before citing."
+    }
+  ],
+  "safety": "Static example only; no request was sent and no authenticated API was called."
+}

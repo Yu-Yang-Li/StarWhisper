@@ -1,0 +1,3 @@
+# experiment-design 脚本依赖
+# power.py 需要 statsmodels；randomization.py / doe_designs.py 仅用标准库，无需额外安装。
+statsmodels>=0.14

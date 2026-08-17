@@ -1,0 +1,4 @@
+requests>=2.31
+PyMuPDF>=1.23
+pymupdf4llm>=0.0.17
+reportlab>=4.0

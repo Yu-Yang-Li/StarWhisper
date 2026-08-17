@@ -1,0 +1,4 @@
+interface:
+  display_name: "PaperCheck"
+  short_description: "Run no-key citation compliance and reference audits."
+  default_prompt: "Use PaperCheck to audit this .docx paper with local rules, extracted citation evidence, and current-model review."

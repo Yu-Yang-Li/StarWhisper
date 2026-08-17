@@ -1,0 +1,128 @@
+{
+  "name": "paperchecker-vscode",
+  "displayName": "PaperChecker 插件",
+  "description": "在 VS Code 内直接调用 PaperChecker 后端并生成 Markdown 报告。",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:paperchecker.startServer",
+    "onCommand:paperchecker.stopServer",
+    "onCommand:paperchecker.analyzeDocument",
+    "onCommand:paperchecker.convertJsonToMarkdown",
+    "onView:paperchecker.explorer"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "paperchecker-explorer",
+          "title": "PaperChecker",
+          "icon": "media/paperchecker-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "paperchecker-explorer": [
+        {
+          "id": "paperchecker.explorer",
+          "name": "PaperChecker 控制台"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "paperchecker.startServer",
+        "title": "启动后端",
+        "category": "PaperChecker"
+      },
+      {
+        "command": "paperchecker.stopServer",
+        "title": "停止后端",
+        "category": "PaperChecker"
+      },
+      {
+        "command": "paperchecker.analyzeDocument",
+        "title": "分析报告",
+        "category": "PaperChecker"
+      },
+      {
+        "command": "paperchecker.openWebInterface",
+        "title": "打开网页界面",
+        "category": "PaperChecker"
+      },
+      {
+        "command": "paperchecker.convertJsonToMarkdown",
+        "title": "PaperChecker: 将 JSON 报告转为 Markdown"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "paperchecker.startServer",
+          "when": "view == paperchecker.explorer && viewItem == server-not-running",
+          "group": "inline"
+        },
+        {
+          "command": "paperchecker.stopServer",
+          "when": "view == paperchecker.explorer && viewItem == server-running",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "paperchecker.startServer",
+          "when": "view == paperchecker.explorer",
+          "group": "navigation"
+        },
+        {
+          "command": "paperchecker.stopServer",
+          "when": "view == paperchecker.explorer",
+          "group": "navigation"
+        },
+        {
+          "command": "paperchecker.analyzeDocument",
+          "when": "view == paperchecker.explorer",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PaperChecker 配置",
+      "properties": {
+        "paperchecker.serverUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "PaperChecker 后端服务地址"
+        },
+        "paperchecker.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "执行插件脚本时使用的 Python 解释器"
+        },
+        "paperchecker.jsonOutputDir": {
+          "type": "string",
+          "default": "reports",
+          "description": "分析结果 JSON 文件输出目录（相对工作区）"
+        },
+        "paperchecker.markdownOutputDir": {
+          "type": "string",
+          "default": "reports_md",
+          "description": "Markdown 报告输出目录（相对工作区）"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "echo \"No lint configured\""
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
+
