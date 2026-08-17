@@ -19,11 +19,25 @@
 
 | 现在从哪进 | 对应阶段 |
 | --- | --- |
-| [`LLM_Data/`](LLM_Data) | 2023–2024 语言模型数据 |
-| [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar 报告](https://openreview.net/pdf?id=8SKgWpZiDL) | 2024–2025 时序与多模态 |
+| [`LLM_Data/`](LLM_Data) · [ModelScope AstroYuYang](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) | 2023–2024 语言模型 |
+| [`StarWhisper_LC/`](StarWhisper_LC) · [Pulsar 代码](https://github.com/ACMISLab/StarWhisper-Pulsar) | 2024–2025 时序与多模态 |
 | [`NGSS/`](NGSS) · [Telescope 论文](https://doi.org/10.1038/s44172-025-00520-4) | 2025 观测自动化 |
-| [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) | 2026 虚拟司天 / SN Clock |
+| [Virtual-GOTTA](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) · [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 2026 虚拟司天 / SN Clock |
+| [`AllSky-Camera-XL/`](AllSky-Camera-XL) · [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) | 2026 全天相机与光谱 |
 | 下文 Explore · [`skills/`](skills/README.md) | 2026 决策边界与科研技能 |
+
+Yu-Yang-Li 账号下其它天文仓库（本页是总入口）：
+
+| 仓库 | 可见性 | 年份 | 做什么 |
+| --- | --- | --- | --- |
+| 本仓库 `StarWhisper` | 公开 | 2023– | 模型、Telescope、路线图与技能 |
+| [ACMISLab/StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) | 公开 | 2024 | 脉冲星候选分类代码与实验 |
+| [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) | 公开 | 2023– | 星语 3 权重（魔搭） |
+| `tns_project` | 私有 | 2025.07 | TNS / ATLAS / ZTF 暂现源监测 |
+| [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 公开 | 2026.03 | 把 SN Clock 工作流装成可安装技能 |
+| [Jared-web03/Low-SNR-Stellar-Spectra-as-Language](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) | 公开 | 2026.04 | 低信噪比恒星光谱；本仓有副本 |
+| snclock | 见该仓库 | 2026 | 虚拟司天 / SN Clock 主代码 |
+| `xinglong-cloud-nowcasting-research` | 私有 | 2026.07–08 | 兴隆全天相机 × 葵花 AHI 临近预报，主线已收口 |
 
 ---
 
@@ -35,21 +49,27 @@ timeline
     2023 : 仓库建立 : 天文学 LLM
     2024 : LC 预印本 : Pulsar NeurIPS workshop : Telescope 预印本
     2025 : LC 正式发表 : Telescope 正式发表
-    2026 : 虚拟司天 / SN Clock : Explore 合成决策边界 : 天文科研技能上线
+    2026 : 虚拟司天 / SN Clock : 兴隆全天相机 : Explore : 科研技能
 ```
 
 | 时间 | 阶段 | 公开产物 |
 | --- | --- | --- |
 | 2023.07 | 仓库建立 | GitHub `Yu-Yang-Li/StarWhisper` |
-| 2023–2024 | 天文学语言模型 | `LLM_Data`（StarWhisper 3 训练数据）；4.0 权重计划发 ModelScope |
-| 2024.04 | 光变曲线 | [arXiv:2404.10757](https://arxiv.org/abs/2404.10757) |
-| 2024.12 | 脉冲星候选 | NeurIPS 2024 FM4Science：[StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) |
+| 2023–2024 | 天文学语言模型 | `LLM_Data`；权重 [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
+| 2024.04 | 光变曲线 | [arXiv:2404.10757](https://arxiv.org/abs/2404.10757)；代码 `StarWhisper_LC` |
+| 2024.12 | 脉冲星候选 | [报告](https://openreview.net/pdf?id=8SKgWpZiDL)；代码 [ACMISLab/StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2024.12 | 观测自动化预印本 | [arXiv:2412.06412](https://arxiv.org/abs/2412.06412) |
 | 2025.02 | 光变曲线正式发表 | [Intelligent Computing](https://spj.science.org/doi/10.34133/icomputing.0110) |
+| 2025.07 | TNS 监测 | 私有仓库 `tns_project`（TNS / ATLAS / ZTF） |
 | 2025.11 | 望远镜 agent 正式发表 | [Communications Engineering 4, 184](https://doi.org/10.1038/s44172-025-00520-4)；代码 `NGSS` |
-| 2026 | 虚拟司天 / SN Clock | 工作在 snclock 仓库；公开地图见 [Virtual-GOTTA](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
+| 2026.03 | SN Clock 技能包 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
+| 2026.04 | 低信噪比光谱 | [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) |
+| 2026.06 | 全天相机重规划 · GOTTA 样机 | [`AllSky-Camera-XL/`](AllSky-Camera-XL)、[`GOTTA_Prototype/`](GOTTA_Prototype) |
+| 2026.07 | 稀疏光变早期分类 | [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves) |
+| 2026.07–08 | 兴隆云量临近预报 | 私有仓库 `xinglong-cloud-nowcasting-research`（主线已收口） |
+| 2026 | 虚拟司天 / SN Clock | snclock 仓库；公开地图 [Virtual-GOTTA](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
 | 2026 | 决策边界 | StarWhisper-Explore-v0.2（合成环境，稳定负结果） |
-| 2026.08 | 科研技能 | [`skills/`](skills/README.md)，天文默认值（ADS / astro-ph / AAS） |
+| 2026.08 | 科研技能 | [`skills/`](skills/README.md) |
 
 <div align="center">
 
@@ -63,7 +83,7 @@ timeline
 
 ## 2023–2024 · 天文学语言模型
 
-先做能回答天文问题、写代码、读观测知识的领域模型。StarWhisper 3 的训练数据在 `LLM_Data`。4.0 继续清洗科普与科研数据，权重计划发布到 ModelScope。
+先做能回答天文问题、写代码、读观测知识的领域模型。StarWhisper 3 的训练数据在 `LLM_Data`，权重在魔搭 [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3)。4.0 继续清洗科普与科研数据。
 
 这一阶段解决的是“模型懂不懂天文”，还没有接到望远镜控制。
 
@@ -81,7 +101,7 @@ timeline
 
 </div>
 
-**2024 年 12 月**，[StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) 在 NeurIPS 2024 FM4Science workshop 报告：用多模态大模型做脉冲星候选分类。
+**2024 年 12 月**，[StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL) 在 NeurIPS 2024 FM4Science workshop 报告：用多模态大模型做脉冲星候选分类。代码与实验在 [ACMISLab/StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar)，不在本仓根目录。
 
 ---
 
@@ -116,13 +136,15 @@ timeline
 
 </div>
 
+同一年 7 月，账号下还有私有仓库 `tns_project`：从 TNS 拉暂现源，接 ATLAS / ZTF 测光。这是后来 SN Clock 的数据入口，不是 Telescope 论文的一部分。
+
 这一阶段证明的是：agent 可以接到真实巡天流程。它还没有回答“判断在什么条件下值得信任”。
 
 ---
 
 ## 2026 · 虚拟司天（SN Clock）
 
-2026 年才把司天做成可运行的虚拟系统。这条线的代码在 **snclock**（SN Clock）仓库：用大模型编排警报、台站状态、观测计划和数据回传，早期科学应用是超新星时钟——估计爆发时刻、筛年轻超新星候选。本仓库里的公开说明是 [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
+2026 年才把司天做成可运行的虚拟系统。主代码在 **snclock**（SN Clock）：编排警报、台站状态、观测计划和数据回传，早期科学应用是超新星时钟。本仓库里的公开说明是 [Virtual-GOTTA 路线图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。可安装的工作流技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)（2026 年 3 月）。真假源样机在 [`GOTTA_Prototype/`](GOTTA_Prototype)。
 
 **司天工程**计划在国内多个台站部署 54 台 1 米级大视场望远镜，约每 30 分钟完成 1 万平方度的三色巡天。StarWhisper 是“司天大脑”的一条候选路径。2025 年 Telescope 论文证明的是真实巡天里的观测 agent；虚拟司天 / SN Clock 是次年的工作，不要写成同一年已经做完。
 
@@ -131,6 +153,19 @@ timeline
 ![SiTian / Sitian survey concept](https://yu-yang-li.github.io/StarWhisper/assets/sitian.png)
 
 </div>
+
+---
+
+## 2026 · 全天相机、光谱与稀疏光变
+
+同一年里，账号下还有几条不走 Telescope 论文主线、但同属天文的工作：
+
+| 时间 | 入口 | 做什么 |
+| --- | --- | --- |
+| 2026.04 | [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) | 把低信噪比恒星光谱当语言来建模；独立仓库 [Jared-web03/…](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) |
+| 2026.06 | [`AllSky-Camera-XL/`](AllSky-Camera-XL) | 兴隆全天相机：原图 → 掩码 → 重排观测序列 |
+| 2026.07 | [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves) | 稀疏 ZTF/ATLAS 光变的早期分类基准 |
+| 2026.07–08 | `xinglong-cloud-nowcasting-research`（私有） | 兴隆全天相机 × 葵花 AHI 临近预报。主线 2026-08-17 收口：在 2022–2025 历史夜次上，稳定增强未来 180/360 分钟的相机预测；新夜 prospective 复制被观测站数据源挡住，不要写成已经上线业务预报 |
 
 ---
 
