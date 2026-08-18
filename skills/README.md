@@ -4,11 +4,12 @@
 
 每个技能仍以 `SKILL.md` 为入口。先读同目录的 `astronomy.md`，再执行原来的脚本和模板。论文检索额外提供 `scripts/ads_first_search.py`：无密钥 dry-run，有 `ADS_API_TOKEN` 查 ADS，否则查 arXiv `astro-ph`，不编文献。
 
-安装示例（Codex / Cursor / Claude Code 均可）：
+安装示例：
 
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "StarWhisper Telescope" --dry-run
 Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
+Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.cursor\skills\giiisp-paper-search-apis"
 ```
 
 来源与许可证见 [`NOTICE.md`](NOTICE.md)。上游仓库是 MIT；StarWhisper 主仓库代码仍是 Apache-2.0。

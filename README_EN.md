@@ -43,7 +43,7 @@ flowchart LR
 | Light-curve tests | [`StarWhisper_LC/`](StarWhisper_LC) | Test code, not a full training reproduction |
 | Research skills | [`skills/`](skills/README.md) | Install into Codex / Cursor; dry-run without keys |
 | Virtual Sitian | [map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html), [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | The runnable system is not at this repo root |
-| Explore numbers | this page | Synthetic environment; that code is not in this repo yet |
+| Explore numbers | [`explore/`](explore/README.md) | Spec and checked table; environment code is not in this repo yet |
 
 ---
 
@@ -114,7 +114,7 @@ Also from 2026, but not the Virtual Sitian main line:
 
 Telescope can already observe automatically on a survey. Explore asks when that judgement holds, what it gives up, and when it has to stop.
 
-`StarWhisper-Explore-v0.2` is synthetic: Xinglong, one telescope, six slots per night. Targets, transients, weather, and device faults come from seeds and are shared across policies. The agent cannot see future disturbances or edit safety thresholds. This is not optical-propagation physics, it is not wired to live hardware, and **the environment code is not in this repository yet**. What follows is the pre-registered bar plus one double-run with matching hashes.
+The spec, action set, and checked table are in [`explore/`](explore/README.md). `StarWhisper-Explore-v0.2` is synthetic: Xinglong, one telescope, six slots per night. The agent cannot see future disturbances or edit safety thresholds. This is not optical-propagation physics, it is not wired to live hardware, and **the environment code is not in this repository yet**.
 
 The comparators were fixed in advance: no intervention, random, deterministic priority, and a rule agent. A positive finding needs all three seeds to pass: no active safety violations, invalid-action rate ≤ 1%, survey-completeness drop ≤ 5 percentage points, and either ≥ 20% relative gain in high-value transient follow-up or ≥ 5% gain in scientific utility.
 
@@ -155,7 +155,7 @@ Thirteen skills from [tashan-research-skills](https://github.com/TashanGKD/tasha
 
 </div>
 
-With no token they dry-run. They do not invent papers or command a telescope. The older `skill/*.zip` files are only for workflows that already upload zips; new installs should copy `skills/<name>/`.
+With no token they dry-run. They do not invent papers or command a telescope. New installs should copy `skills/<name>/`.
 
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run

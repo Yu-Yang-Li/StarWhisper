@@ -7,11 +7,11 @@ description: Translate astronomy questions into data contracts over light curves
 
 ## StarWhisper astronomy overlay
 
-This copy is adapted for astronomy research and telescope-agent work.
-**Read [`astronomy.md`](astronomy.md) before following generic biomedical / clinical defaults in the rest of this file.**
+Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
 
-Default literature route: NASA ADS, then arXiv `astro-ph.*`, then the original skill's search backend if credentials exist.
-Do not claim a real hardware observing loop, a discovery, or a referee-ready result unless the user supplied that evidence.
+Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
+A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
+This skill does not send telescope commands.
 
 
 > **ℹ️ Skill 形态说明**：本 skill **不是空骨架**，而是"模板生成器 + LLM 引导 + 可运行代码模板"工作流：

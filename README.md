@@ -43,7 +43,7 @@ flowchart LR
 | 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC) | 测试代码，不是完整训练复现 |
 | 天文科研技能 | [`skills/`](skills/README.md) | 可装进 Codex / Cursor；无密钥 dry-run |
 | 虚拟司天 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 可运行系统不在本仓库根目录 |
-| Explore 数字 | 本页 | 合成环境；环境代码尚未放进本仓库 |
+| Explore 数字 | [`explore/`](explore/README.md) | 合成环境规格和已核对结果；环境代码尚未入库 |
 
 ---
 
@@ -114,7 +114,7 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什么时候靠得住、会牺牲什么、什么时候必须停。
 
-`StarWhisper-Explore-v0.2` 是合成环境：兴隆、单镜、一夜六个时隙。候选目标、暂现源、天气和设备故障由种子生成，各策略共用同一份剧本。Agent 看不到未来扰动，也不能改安全阈值。这不是光学仿真，没有接到真实望远镜上，**环境代码也还没有放进本仓库**；下面只公开预注册门槛和一次双跑一致的结果。
+规格、动作集合和已核对表在 [`explore/`](explore/README.md)。`StarWhisper-Explore-v0.2` 是合成环境：兴隆、单镜、一夜六个时隙。Agent 看不到未来扰动，也不能改安全阈值。这不是光学仿真，没有接到真实望远镜上，**环境代码也还没有放进本仓库**。
 
 预先比较无干预、随机、确定性优先级和规则 Agent。算正向结果，三个种子都要过：没有主动安全违规，无效动作率 ≤ 1%，巡天完成度掉不超过 5 个百分点，并且高价值暂现源跟进率相对提高至少 20%，或科学效用提高至少 5%。
 
@@ -155,7 +155,7 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 </div>
 
-没有密钥就 dry-run。不编文献，也不给望远镜下指令。旧的 `skill/*.zip` 只保留给已经按 zip 上传的工作流，新安装请复制 `skills/<name>/`。
+没有密钥就 dry-run。不编文献，也不给望远镜下指令。新安装请复制 `skills/<name>/`。
 
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run

@@ -7,11 +7,11 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 
 ## StarWhisper astronomy overlay
 
-This copy is adapted for astronomy research and telescope-agent work.
-**Read [`astronomy.md`](astronomy.md) before following generic biomedical / clinical defaults in the rest of this file.**
+Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
 
-Default literature route: NASA ADS, then arXiv `astro-ph.*`, then the original skill's search backend if credentials exist.
-Do not claim a real hardware observing loop, a discovery, or a referee-ready result unless the user supplied that evidence.
+Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
+A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
+This skill does not send telescope commands.
 
 
 把科研文本改得像人写、像人讲，但不改坏科学事实。目标不是同义词替换，也不是追求“更高级”的词，而是让读者更容易看懂作者到底做了什么、证据支持到哪里、还有什么不能说满。

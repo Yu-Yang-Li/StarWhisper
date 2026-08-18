@@ -8,11 +8,11 @@ license: MIT
 
 ## StarWhisper astronomy overlay
 
-This copy is adapted for astronomy research and telescope-agent work.
-**Read [`astronomy.md`](astronomy.md) before following generic biomedical / clinical defaults in the rest of this file.**
+Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
 
-Default literature route: NASA ADS, then arXiv `astro-ph.*`, then the original skill's search backend if credentials exist.
-Do not claim a real hardware observing loop, a discovery, or a referee-ready result unless the user supplied that evidence.
+Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
+A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
+This skill does not send telescope commands.
 
 
 把一份研究成果从草稿推进到"可投、可评、可辩、可资助"。覆盖论文写作、同行评审、回稿修订、

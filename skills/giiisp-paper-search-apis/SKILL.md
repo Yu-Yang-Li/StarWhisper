@@ -7,11 +7,11 @@ description: Search astronomy papers via NASA ADS and arXiv astro-ph, with optio
 
 ## StarWhisper astronomy overlay
 
-This copy is adapted for astronomy research and telescope-agent work.
-**Read [`astronomy.md`](astronomy.md) before following generic biomedical / clinical defaults in the rest of this file.**
+Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
 
-Default literature route: NASA ADS, then arXiv `astro-ph.*`, then the original skill's search backend if credentials exist.
-Do not claim a real hardware observing loop, a discovery, or a referee-ready result unless the user supplied that evidence.
+Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
+A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
+This skill does not send telescope commands.
 
 天文检索先跑这个脚本，不要一上来调 Giiisp：
 
