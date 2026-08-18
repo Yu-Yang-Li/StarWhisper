@@ -2,11 +2,12 @@
 
 从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 选出 13 个科研技能，按天文学默认值做了强化：文献走 NASA ADS / arXiv `astro-ph`，数据合同按光变曲线、光谱、FITS 和观测决策日志来写，统计补上选择效应，写作默认 AAS / MNRAS 而不是临床 RCT。
 
-每个技能仍以 `SKILL.md` 为入口。先读同目录的 `astronomy.md`，再执行原来的脚本和模板。
+每个技能仍以 `SKILL.md` 为入口。先读同目录的 `astronomy.md`，再执行原来的脚本和模板。论文检索额外提供 `scripts/ads_first_search.py`：无密钥 dry-run，有 `ADS_API_TOKEN` 查 ADS，否则查 arXiv `astro-ph`，不编文献。
 
 安装示例（Codex / Cursor / Claude Code 均可）：
 
 ```powershell
+python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "StarWhisper Telescope" --dry-run
 Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
 ```
 
@@ -50,6 +51,14 @@ Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\sk
 | --- | --- | --- |
 | 引用合规 | [`papercheck`](papercheck/SKILL.md) | 核正文引用、参考文献和 ADS 可解析性；英文天文稿默认 AAS 格式。 |
 | 科研画像 | [`cognitive-profile`](cognitive-profile/SKILL.md) | 记录子领域、常用星表和表述边界。不存望远镜账号、FTP 或未公开目标表。 |
+
+## 环境变量
+
+| 变量 | 用在 | 没有时 |
+| --- | --- | --- |
+| `ADS_API_TOKEN` | 论文检索（NASA ADS） | dry-run，或改走 arXiv `astro-ph` |
+| `GIIISP_AUTH_TOKEN` | 论文检索补充、科研绘图、PPT | 构造请求，不假装已经查到 |
+| `MINERU_API_TOKEN` | 论文审查 PDF 解析 | 本地回退 |
 
 ## 使用边界
 

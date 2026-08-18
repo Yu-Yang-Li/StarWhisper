@@ -13,6 +13,13 @@ This copy is adapted for astronomy research and telescope-agent work.
 Default literature route: NASA ADS, then arXiv `astro-ph.*`, then the original skill's search backend if credentials exist.
 Do not claim a real hardware observing loop, a discovery, or a referee-ready result unless the user supplied that evidence.
 
+天文检索先跑这个脚本，不要一上来调 Giiisp：
+
+```powershell
+python skills/giiisp-paper-search-apis/scripts/ads_first_search.py --query "StarWhisper Telescope NGSS" --dry-run
+```
+
+有 `ADS_API_TOKEN` 时去掉 `--dry-run` 会查 NASA ADS；没有 token 则查 arXiv `astro-ph`。空结果就写空，不要补一篇“看起来像”的论文。Giiisp 只作补充。
 
 ## 接口依据
 
@@ -20,8 +27,11 @@ Do not claim a real hardware observing loop, a discovery, or a referee-ready res
 
 ## 先判断任务
 
+天文问题先走 `scripts/ads_first_search.py`。下表只在 ADS/arXiv 不够、需要 Giiisp OA 补充时使用。
+
 | 用户要做什么 | 首选接口 |
 |---|---|
+| 天文论文、bibcode、ApJ/MNRAS | `scripts/ads_first_search.py`（ADS → arXiv `astro-ph`） |
 | 按主题查开放论文 | `/first/oaPaper/searchArticlesByQuery1` |
 | 按方法描述查 arXiv | `/first/paper/searchArxivByAbstract` |
 | 已有 arXiv 编号 | `/first/paper/searchArxivByArxivNo1` |

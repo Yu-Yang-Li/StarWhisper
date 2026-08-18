@@ -31,8 +31,8 @@ Chinese grant or thesis text may still need GB/T 7714; say which standard is in 
 ## Astronomy search order
 
 1. Parse the question into object / event / method / survey terms. Keep catalog names (ZTF, TNS, NGSS, SiTian, GOTO, ATLAS) as given.
-2. Query NASA ADS first when a refereed paper is needed. Record bibcode, title, year, refereed flag.
-3. Query arXiv `astro-ph.*` for methods and recent preprints.
+2. Run `scripts/ads_first_search.py` first (`--dry-run` if there is no token). Query NASA ADS when a refereed paper is needed. Record bibcode, title, year, refereed flag.
+3. Query arXiv `astro-ph.*` for methods and recent preprints. The same script does this when ADS is unavailable.
 4. Use the original Giiisp OA / arXiv routes only as a supplement, or when `GIIISP_AUTH_TOKEN` is available.
 5. Return a short table: bibcode or arXiv id, title, year, venue, why it is relevant, evidence status (ADS hit / preprint / not verified).
 

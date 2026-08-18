@@ -3,10 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=virtual-gotta-map.html">
-  <title>StarWhisper Docs</title>
+  <title>StarWhisper</title>
+  <style>
+    :root { --ink:#e8eef8; --muted:#9aa8bd; --bg:#0b1b33; --panel:#13243f; --accent:#7fd3c2; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; }
+    main { width:min(720px, calc(100vw - 40px)); margin:48px auto 64px; }
+    h1 { font-weight:600; letter-spacing:.02em; margin:0 0 8px; }
+    p { color:var(--muted); }
+    a { color:var(--accent); }
+    ul { padding:0; list-style:none; }
+    li { background:var(--panel); margin:10px 0; padding:14px 16px; border-radius:10px; }
+  </style>
 </head>
 <body>
-  <p><a href="virtual-gotta-map.html">Open Virtual-GOTTA Map</a></p>
+<main>
+  <h1>StarWhisper</h1>
+  <p>天文语言模型、光变分类、观测 agent 与虚拟司天的公开说明页。</p>
+  <ul>
+    <li><a href="virtual-gotta-map.html">Virtual-GOTTA 交互式路线图</a></li>
+    <li><a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub 仓库</a></li>
+    <li><a href="virtual-gotta-source.html">路线图来源说明</a></li>
+    <li><a href="assets/starwhisper-hero.jpg">README 插图</a>（hero、架构、观测闭环、验证路径、技能矩阵）</li>
+  </ul>
+</main>
 </body>
 </html>

@@ -15,16 +15,24 @@
 
 </div>
 
-StarWhisper 是天文方面的开源工作，由国家天文台、之江实验室等单位支持。2023 年先做语言模型，后来做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。
+StarWhisper 是面向天文学的开源工作，由国家天文台、之江实验室等单位支持。2023 年从天文语言模型做起，随后做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。
 
-最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
+最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。仓库按这条时间线组织；天文科研技能在 [`skills/`](skills/README.md)，交互式路线图在 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
 
 | 年 | 做了什么 | 代码 / 权重 |
 | --- | --- | --- |
 | 2023 | 仓库建立，天文语言模型 | [`LLM_Data/`](LLM_Data)，[StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
 | 2024 | 光变分类、脉冲星、Telescope 预印本 | [`StarWhisper_LC/`](StarWhisper_LC)，[Pulsar 代码](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2025 | LC、Telescope 发表 | [`NGSS/`](NGSS) |
-| 2026 | 虚拟司天（SN Clock） | snclock，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
+| 2026 | 虚拟司天（SN Clock）、Explore、天文技能 | snclock，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，[`skills/`](skills/README.md) |
+
+<div align="center">
+
+![StarWhisper layers](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-architecture.jpg)
+
+</div>
+
+<p align="center"><sub>语言模型 → 光变 / 脉冲星 → Telescope → 虚拟司天；右侧是贯通各层的天文科研技能。</sub></p>
 
 ---
 
@@ -53,6 +61,14 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 [论文](https://doi.org/10.1038/s44172-025-00520-4) 2024 年 12 月预印本，2025 年 11 月 6 日发表于 *Communications Engineering*。观测自动化 agent 接到近邻星系巡天（NGSS）上，大约 10 台业余级望远镜。代码在 [`NGSS/`](NGSS)。
 
 夜前计划很少能原样执行。临时目标会插进来，天气会关掉窗口，跟踪、调焦、相机或穹顶也可能出问题。系统要反复决定：继续、插入、延后、安全暂停，还是恢复后重规划。
+
+<div align="center">
+
+![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-observe-loop.jpg)
+
+</div>
+
+<p align="center"><sub>既定计划、三类扰动、观测智能体、受约束行动与反馈。这是 Telescope / Explore 共用的判断结构，不是光学仿真。</sub></p>
 
 <div align="center">
 
@@ -107,15 +123,32 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 </div>
 
-规则 Agent 相对确定性优先级，跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，过了预注册的 5 个百分点线。三个种子方向一样，复跑哈希一致。这是稳定的负结果。
+规则 Agent 相对确定性优先级，跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，过了预注册的 5 个百分点线。三个种子方向一样，复跑哈希一致。这是稳定的负结果：短期响应换来了过量的巡天欠账。
+
+<div align="center">
+
+![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-verification.jpg)
+
+</div>
+
+<p align="center"><sub>先合成环境可复现，再脱敏日志校准，最后才是真实硬件影子运行（只建议、不执行）。当前公开结果停在第一级。</sub></p>
 
 ---
 
 ## 2026 · 科研技能
 
-8 月从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 改了 13 个技能，默认查 NASA ADS 和 arXiv `astro-ph`，放在 [`skills/`](skills/README.md)。给 Codex 或 Cursor 用。没有密钥就 dry-run，不编文献，也不给望远镜下指令。
+8 月从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 改了 13 个技能，默认查 NASA ADS 和 arXiv `astro-ph`。文献、假设、数据合同、实验设计和写作都按天文学来，而不是临床 RCT。目录在 [`skills/`](skills/README.md)，给 Codex 或 Cursor 用。
+
+<div align="center">
+
+![Astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
+
+</div>
+
+没有密钥就 dry-run。不编文献，也不给望远镜下指令。
 
 ```powershell
+python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
 ```
 

@@ -17,14 +17,22 @@
 
 StarWhisper is open astronomy work supported by NAOC, Zhejiang Lab, and collaborators. It began in 2023 as a language model, then went on to Kepler / K2 light-curve classification, pulsar candidates, and an observing agent on the Nearby Galaxy Supernovae Survey (NGSS). The 2026 line is Virtual Sitian (SN Clock).
 
-The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025).
+The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025). The repo follows that timeline. Astronomy research skills live in [`skills/`](skills/README.md). The interactive sketch is the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
 
 | Year | What | Code / weights |
 | --- | --- | --- |
 | 2023 | repo created; astronomy LLM | [`LLM_Data/`](LLM_Data), [StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
 | 2024 | light-curve classification, pulsars, Telescope preprint | [`StarWhisper_LC/`](StarWhisper_LC), [Pulsar code](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2025 | LC and Telescope published | [`NGSS/`](NGSS) |
-| 2026 | Virtual Sitian (SN Clock) | snclock, [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
+| 2026 | Virtual Sitian (SN Clock), Explore, astronomy skills | snclock, [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw), [`skills/`](skills/README.md) |
+
+<div align="center">
+
+![StarWhisper layers](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-architecture.jpg)
+
+</div>
+
+<p align="center"><sub>Language models → light curves / pulsars → Telescope → Virtual Sitian, with astronomy research skills across the stack.</sub></p>
 
 ---
 
@@ -53,6 +61,14 @@ In December 2024, [StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)
 The [paper](https://doi.org/10.1038/s44172-025-00520-4) was a December 2024 preprint and appeared in *Communications Engineering* on 6 November 2025. The observing-automation agent runs on NGSS, a network of about 10 amateur-level telescopes. Code: [`NGSS/`](NGSS).
 
 A night plan rarely survives the night. Targets of opportunity arrive, weather closes windows, and tracking, focus, cameras, or the dome can fail. The system has to choose, repeatedly: continue, insert, defer, pause safely, or recover and replan.
+
+<div align="center">
+
+![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-observe-loop.jpg)
+
+</div>
+
+<p align="center"><sub>Scheduled plan, three disturbances, observing agent, constrained actions and feedback. This is the decision structure shared by Telescope and Explore, not an optical simulation.</sub></p>
 
 <div align="center">
 
@@ -107,15 +123,32 @@ The comparators were fixed in advance: no intervention, random, deterministic pr
 
 </div>
 
-Against deterministic priority, the rule agent raises follow-up by 23.52 percentage points and utility by about 1.6%, while completeness falls 9.44 points — past the 5-point line. Same direction on three seeds; a second run matched hashes. That is a stable negative result.
+Against deterministic priority, the rule agent raises follow-up by 23.52 percentage points and utility by about 1.6%, while completeness falls 9.44 points — past the 5-point line. Same direction on three seeds; a second run matched hashes. That is a stable negative result: short-term response bought too much survey debt.
+
+<div align="center">
+
+![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-verification.jpg)
+
+</div>
+
+<p align="center"><sub>Reproduce in a synthetic environment first, calibrate on de-identified logs, then hardware shadow mode (suggest only). The public result stops at stage one.</sub></p>
 
 ---
 
 ## 2026 · Research skills
 
-In August, 13 skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy, with NASA ADS and arXiv `astro-ph` as the default literature path, and placed in [`skills/`](skills/README.md). They are for Codex or Cursor. With no token they dry-run; they do not invent papers or command a telescope.
+In August, 13 skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy, with NASA ADS and arXiv `astro-ph` as the default literature path. Literature, hypotheses, data contracts, experiment design, and writing follow astronomy defaults rather than clinical RCT templates. They live in [`skills/`](skills/README.md) for Codex or Cursor.
+
+<div align="center">
+
+![Astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
+
+</div>
+
+With no token they dry-run. They do not invent papers or command a telescope.
 
 ```powershell
+python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
 ```
 
