@@ -1,4 +1,8 @@
-# StarWhisper Telescope Code Documentation
+# NGSS · StarWhisper Telescope
+
+近邻星系巡天（NGSS）上的观测自动化代码，对应论文 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。这是真实观测栈，不是 [`../explore/`](../explore/README.md) 里的合成环境。
+
+运行依赖 NINA、FTP、x-opstep 和望远镜连接。没有这些接口时不要把本地试跑写成硬件闭环已经通了。仓库总览见 [根目录 README](../README.md)。
 
 ## Project Structure
 ```
@@ -16,10 +20,13 @@ runningLog/            # supporting materials, no need to download
 ---
 
 ## Service Execution
-**Start the NGSS service:**
+**Start the NGSS service** from this directory (`NGSS/`):
+
 ```bash
-uvicorn main:app2.py --reload
+uvicorn src.app.app2:app --reload
 ```
+
+The old `uvicorn main:app2.py` line does not match the file layout. The FastAPI app object lives in `src/app/app2.py`.
 Capabilities:
 - Observation planning
 - Target management (addition/selection)
@@ -64,7 +71,7 @@ conda env create -f observe.yml
 ```bash
 python Pachong.py
 ```
-Note: Web scraping functionality may have stability issues depending on external service availability.
+This is a legacy helper for public TNS pages. It can fail when the site or login changes. It is not part of Explore, and it does not command the telescope.
 
 ---
 
