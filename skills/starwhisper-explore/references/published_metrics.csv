@@ -1,0 +1,5 @@
+policy,mean_utility,survey_completeness_pct,high_value_followup_pct,invalid_actions,unsafe_attempts_blocked,episodes
+no_intervention,3.9343,77.41,0.00,0,122,90
+random,2.4027,30.19,30.37,18,72,90
+deterministic_priority,4.3289,61.11,49.81,0,0,90
+rule_agent,4.3996,51.67,73.33,0,0,90

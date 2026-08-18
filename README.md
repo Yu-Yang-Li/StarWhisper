@@ -147,12 +147,13 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 ## 2026 · 技能
 
-过去几条线已经收成 `starwhisper-*` 技能，和他山改编的 13 个天文科研技能放在 [`skills/`](skills/README.md)。先装 [`starwhisper-index`](skills/starwhisper-index/SKILL.md) 做路由。
+过去几条线已经收成可执行的 `starwhisper-*` 技能，和他山改编的 13 个天文科研技能放在 [`skills/`](skills/README.md)。先装本线，再用 [`starwhisper-index`](skills/starwhisper-index/SKILL.md) 做路由。
 
-没有密钥就 dry-run。不编文献。未接通 NINA / 望远镜时，观测类技能只读代码，不下指令。
+没有密钥就 dry-run。不编文献。未接通 NINA / 望远镜时，观测类技能只 inspect，不下指令。
 
 ```powershell
-Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.codex\skills\starwhisper-index"
+powershell -File .\skills\install_native.ps1
+python .\skills\starwhisper-index\scripts\route.py --query "Explore 负结果" --json
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 ```
 

@@ -1,35 +1,38 @@
 # 技能包
 
-两套技能放在一起，安装方式相同：复制 `skills/<name>/` 到 Codex 或 Cursor 的 skills 目录。
+两套技能放在一起。本线 `starwhisper-*` 现在带可执行脚本：先盘点仓库文件或打印合同，默认不下令、不训练、不编文献。
 
-1. **星语本线** `starwhisper-*`：把仓库里已经公开的 LLM、光变、Telescope、Explore、全天相机、稀疏光变、低信噪光谱和虚拟司天收成可路由的技能。
+1. **星语本线** `starwhisper-*`：LLM、光变、Telescope、Explore、全天相机、稀疏光变、低信噪光谱、GOTTA 原型和虚拟司天路由。
 2. **天文科研（他山改编）**：文献、假设、数据合同、写作。默认 NASA ADS / arXiv `astro-ph`。
 
-先装 [`starwhisper-index`](starwhisper-index/SKILL.md)。问“StarWhisper 是什么 / 开哪个目录 / 装哪个技能”时用它。
+先装全部本线技能。问“StarWhisper 是什么 / 开哪个目录 / 装哪个技能”时用 [`starwhisper-index`](starwhisper-index/SKILL.md)。
 
 ```powershell
-Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.codex\skills\starwhisper-index"
-Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.cursor\skills\starwhisper-index"
+powershell -File .\skills\install_native.ps1
+python .\skills\starwhisper-index\scripts\route.py --query "NGSS 夜计划" --json
 ```
+
+技能被复制到 `~/.codex/skills` 后，把本仓库路径设成 `STARWHISPER_ROOT`，脚本才能找到 `NGSS/`、`explore/` 等目录。
 
 来源与许可证见 [`NOTICE.md`](NOTICE.md)。本线技能跟主仓库一样是 Apache-2.0；他山改编部分是 MIT。
 
 ## 星语本线
 
-| 技能 | 对应过去内容 | 做什么 |
+| 技能 | 对应过去内容 | 先跑 |
 | --- | --- | --- |
-| 总路由 | 整条时间线 | [`starwhisper-index`](starwhisper-index/SKILL.md) |
-| 语言模型 | `LLM_Data/`、StarWhisper 3 | [`starwhisper-llm`](starwhisper-llm/SKILL.md) |
-| 光变分类 | `StarWhisper_LC/` | [`starwhisper-lc`](starwhisper-lc/SKILL.md) |
-| 脉冲星 | ACMISLab/StarWhisper-Pulsar | [`starwhisper-pulsar`](starwhisper-pulsar/SKILL.md) |
-| 观测 agent | `NGSS/`、Telescope 论文 | [`starwhisper-telescope`](starwhisper-telescope/SKILL.md) |
-| 决策边界 | `explore/` | [`starwhisper-explore`](starwhisper-explore/SKILL.md) |
-| 全天相机 | `AllSky-Camera-XL/` | [`starwhisper-allsky`](starwhisper-allsky/SKILL.md) |
-| 稀疏光变 | `Early Classification from Sparse Light Curves/` | [`starwhisper-sparse-lc`](starwhisper-sparse-lc/SKILL.md) |
-| 低信噪光谱 | `Low-SNR-Stellar-Spectra-as-Language/` | [`starwhisper-lowsnr-spectra`](starwhisper-lowsnr-spectra/SKILL.md) |
-| 虚拟司天 | SitianClaw、GOTTA | [`starwhisper-sitian`](starwhisper-sitian/SKILL.md) |
+| 总路由 | 整条时间线 | [`starwhisper-index`](starwhisper-index/SKILL.md) `scripts/route.py` |
+| 语言模型 | `LLM_Data/`、StarWhisper 3 | [`starwhisper-llm`](starwhisper-llm/SKILL.md) `scripts/inventory_data.py` |
+| 光变分类 | `StarWhisper_LC/` | [`starwhisper-lc`](starwhisper-lc/SKILL.md) `scripts/inventory_code.py` |
+| 脉冲星 | ACMISLab/StarWhisper-Pulsar | [`starwhisper-pulsar`](starwhisper-pulsar/SKILL.md) `scripts/print_pointers.py` |
+| 观测 agent | `NGSS/`、Telescope 论文 | [`starwhisper-telescope`](starwhisper-telescope/SKILL.md) `scripts/inspect_stack.py` |
+| 决策边界 | `explore/` | [`starwhisper-explore`](starwhisper-explore/SKILL.md) `scripts/report_metrics.py` |
+| 全天相机 | `AllSky-Camera-XL/` | [`starwhisper-allsky`](starwhisper-allsky/SKILL.md) `scripts/inspect_pipeline.py` |
+| 稀疏光变 | `Early Classification from Sparse Light Curves/` | [`starwhisper-sparse-lc`](starwhisper-sparse-lc/SKILL.md) `scripts/inspect_pipeline.py` |
+| 低信噪光谱 | `Low-SNR-Stellar-Spectra-as-Language/` | [`starwhisper-lowsnr-spectra`](starwhisper-lowsnr-spectra/SKILL.md) `scripts/inspect_pipeline.py` |
+| GOTTA 原型 | `GOTTA_Prototype/` | [`starwhisper-gotta`](starwhisper-gotta/SKILL.md) `scripts/inventory.py` |
+| 虚拟司天 | SitianClaw | [`starwhisper-sitian`](starwhisper-sitian/SKILL.md) `scripts/route.py` |
 
-本线技能默认读代码和说明。Telescope / All-sky 只有在用户明确说本地栈已接通时才涉及 NINA 或流水线；否则只解释，不下令。虚拟司天主技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，这里只做路由。
+本线默认 inspect。Telescope / All-sky 只有在用户明确说本地栈已接通、并给出全天照片时才涉及 NINA 或流水线。虚拟司天主技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，这里只做路由。
 
 ## 天文科研（他山改编）
 

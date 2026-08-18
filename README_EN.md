@@ -147,12 +147,13 @@ Against deterministic priority, the rule agent raises follow-up by 23.52 percent
 
 ## 2026 · Skills
 
-Past lines are now `starwhisper-*` skills, next to 13 astronomy-adapted research skills, in [`skills/`](skills/README.md). Start with [`starwhisper-index`](skills/starwhisper-index/SKILL.md).
+Past lines are now executable `starwhisper-*` skills, next to 13 astronomy-adapted research skills, in [`skills/`](skills/README.md). Install the native set, then start with [`starwhisper-index`](skills/starwhisper-index/SKILL.md).
 
-With no token they dry-run. They do not invent papers. Observing skills only read code unless NINA / the telescope stack is actually connected.
+With no token they dry-run. They do not invent papers. Observing skills inspect code unless NINA / the telescope stack is actually connected.
 
 ```powershell
-Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.codex\skills\starwhisper-index"
+powershell -File .\skills\install_native.ps1
+python .\skills\starwhisper-index\scripts\route.py --query "Explore negative result" --json
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 ```
 

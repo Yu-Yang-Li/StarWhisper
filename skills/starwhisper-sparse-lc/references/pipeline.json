@@ -1,0 +1,21 @@
+{
+  "folder": "Early Classification from Sparse Light Curves",
+  "weights": "https://huggingface.co/castor0705/sparse-lc-early-classification",
+  "setting": {
+    "name": "varlen",
+    "n_obs": "3-30",
+    "n_classes": 7,
+    "split": "75/10/15",
+    "random_state": 42
+  },
+  "steps": [
+    "python data/create_sparse_segments.py --pool varlen",
+    "python data/build_split_manifests.py",
+    "python data/build_split_indices.py",
+    "python data/prepare_data_split.py",
+    "python features/extract_features_full.py",
+    "python data/build_handcrafted_features.py --set 1117",
+    "python train_models/summarize_model_comparison.py"
+  ],
+  "expected_dirs": ["data", "features", "train_models", "manuscript"]
+}

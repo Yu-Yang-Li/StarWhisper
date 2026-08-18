@@ -1,0 +1,27 @@
+{
+  "start": "uvicorn src.app.app2:app --reload",
+  "cwd": "NGSS",
+  "source": "NGSS/src/app/app2.py",
+  "routes": [
+    {"method": "GET", "path": "/look_config", "class": "read"},
+    {"method": "GET", "path": "/check_log", "class": "read"},
+    {"method": "GET", "path": "/get_oblist", "class": "read"},
+    {"method": "GET", "path": "/update_station", "class": "mutate"},
+    {"method": "GET", "path": "/modify_config", "class": "mutate"},
+    {"method": "GET", "path": "/plan_observation", "class": "mutate"},
+    {"method": "GET", "path": "/add_fine_oblist", "class": "mutate"},
+    {"method": "GET", "path": "/pipeline_transient", "class": "mutate"},
+    {"method": "GET", "path": "/get_filtered_csv_data", "class": "mutate"},
+    {"method": "GET", "path": "/ftp_transfer", "class": "hardware"},
+    {"method": "GET", "path": "/manipulate_nina/{action}", "class": "hardware"}
+  ],
+  "nina_actions": ["load_file", "start", "stop"],
+  "n8n": ["Make_Observation_Plan.json", "NGSS_Agent.json"],
+  "paper_workflow": [
+    "Make_Observation_Plan",
+    "Get_OB_List",
+    "Load_Observation_Plan",
+    "Add_Observation_Object",
+    "Transient_load"
+  ]
+}

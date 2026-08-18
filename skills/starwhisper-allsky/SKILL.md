@@ -1,6 +1,6 @@
 ---
 name: starwhisper-allsky
-description: Run or explain the Xinglong all-sky camera photo-to-replan pipeline. Use when the user has a full-sky image and wants a mask, deferred targets, or a NINA target set, or asks about AllSky-Camera-XL.
+description: Inspect or run the Xinglong all-sky camera photo-to-replan pipeline. Use when the user has a full-sky image and wants a mask, deferred targets, or a NINA target set, or asks about AllSky-Camera-XL.
 ---
 
 # StarWhisper all-sky replan
@@ -8,12 +8,18 @@ description: Run or explain the Xinglong all-sky camera photo-to-replan pipeline
 Code: [`AllSky-Camera-XL/`](../../AllSky-Camera-XL/README.md)  
 Packaged skill: `AllSky-Camera-XL/skill/photo-to-replan/SKILL.md`
 
-## Do
+## Default (inspect)
 
-From `AllSky-Camera-XL/`:
+```powershell
+python skills/starwhisper-allsky/scripts/inspect_pipeline.py
+```
 
-```bash
-python run_pipeline.py --image /abs/path/to/YYYY_MM_DD_HH_MM_SS.jpg
+## Run the pipeline
+
+Only with a raw all-sky jpg whose name contains Beijing time (`YYYY_MM_DD_HH_MM_SS.jpg`):
+
+```powershell
+python skills/starwhisper-allsky/scripts/inspect_pipeline.py --image /abs/path/to/YYYY_MM_DD_HH_MM_SS.jpg
 ```
 
 Then read `output/<image_stem>/pipeline_report.json`. Pipeline success means the report, scenario, schedule, and `.ninaTargetSet` exist. Whether future slots were filled is a separate check in `deferred_targets.json`.

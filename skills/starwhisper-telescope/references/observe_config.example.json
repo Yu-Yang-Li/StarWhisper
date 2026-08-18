@@ -1,0 +1,18 @@
+{
+  "inherit": true,
+  "time_windows": {
+    "early_night": 0.5,
+    "midnight": 2.0,
+    "midmorning": 2.0,
+    "early_morning": 2.0
+  },
+  "constraints": {
+    "d_moon": 15
+  },
+  "filters": ["L"],
+  "exposure": {
+    "count": 3,
+    "time": 120,
+    "wait": 1.0
+  }
+}

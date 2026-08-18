@@ -1,0 +1,70 @@
+{
+  "lines": [
+    {
+      "id": "llm",
+      "skill": "starwhisper-llm",
+      "path": "LLM_Data",
+      "keywords": ["llm", "语言模型", "starwhisper3", "starwhisper 4", "modelscope", "问答", "llm_data"]
+    },
+    {
+      "id": "lc",
+      "skill": "starwhisper-lc",
+      "path": "StarWhisper_LC",
+      "keywords": ["light curve", "光变", "kepler", "k2", "cepheid", "rr lyrae", "swin", "intelligent computing"]
+    },
+    {
+      "id": "pulsar",
+      "skill": "starwhisper-pulsar",
+      "path": "https://github.com/ACMISLab/StarWhisper-Pulsar",
+      "keywords": ["pulsar", "脉冲星", "fm4science", "neurips"]
+    },
+    {
+      "id": "telescope",
+      "skill": "starwhisper-telescope",
+      "path": "NGSS",
+      "keywords": ["telescope", "ngss", "nina", "观测", "夜计划", "observe_config", "communications engineering"]
+    },
+    {
+      "id": "explore",
+      "skill": "starwhisper-explore",
+      "path": "explore",
+      "keywords": ["explore", "决策边界", "跟进率", "巡天完成度", "goai", "负结果", "六时隙"]
+    },
+    {
+      "id": "allsky",
+      "skill": "starwhisper-allsky",
+      "path": "AllSky-Camera-XL",
+      "keywords": ["allsky", "all-sky", "全天相机", "兴隆", "replan", "掩码"]
+    },
+    {
+      "id": "sparse-lc",
+      "skill": "starwhisper-sparse-lc",
+      "path": "Early Classification from Sparse Light Curves",
+      "keywords": ["sparse", "ztf", "atlas", "varlen", "早期分类", "xgboost"]
+    },
+    {
+      "id": "spectra",
+      "skill": "starwhisper-lowsnr-spectra",
+      "path": "Low-SNR-Stellar-Spectra-as-Language",
+      "keywords": ["snr", "光谱", "lamost", "phoenix", "low-snr", "spectra"]
+    },
+    {
+      "id": "sitian",
+      "skill": "starwhisper-sitian",
+      "path": "https://github.com/Yu-Yang-Li/SitianClaw",
+      "keywords": ["sitian", "司天", "sn clock", "gotta", "超新星时钟", "explosion", "forced phot"]
+    },
+    {
+      "id": "gotta",
+      "skill": "starwhisper-gotta",
+      "path": "GOTTA_Prototype",
+      "keywords": ["gotta", "real/bogus", "真假源", "prototype"]
+    },
+    {
+      "id": "research",
+      "skill": "giiisp-paper-search-apis",
+      "path": "skills",
+      "keywords": ["ads", "论文", "bibcode", "润色", "审稿", "假设", "citation"]
+    }
+  ]
+}

@@ -7,13 +7,14 @@ description: Point to StarWhisper-Pulsar multimodal pulsar-candidate classificat
 
 This line is not vendored in Yu-Yang-Li/StarWhisper.
 
+```powershell
+python skills/starwhisper-pulsar/scripts/print_pointers.py
+```
+
 - Report: https://openreview.net/pdf?id=8SKgWpZiDL
 - Code: https://github.com/ACMISLab/StarWhisper-Pulsar
 
-## Do
-
-1. Send the user to that repository for code and weights.
-2. Keep it as candidate classification, not a confirmed pulsar catalogue.
+Send the user to that repository for code and weights. Keep it as candidate classification, not a confirmed pulsar catalogue.
 
 ## Do not
 

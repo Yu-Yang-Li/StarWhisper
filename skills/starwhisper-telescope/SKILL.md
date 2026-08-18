@@ -1,6 +1,6 @@
 ---
 name: starwhisper-telescope
-description: Inspect and explain the StarWhisper Telescope / NGSS observing-agent code. Use when the user asks about NGSS, NINA, night plans, observe_config.json, TNS helpers, or the Communications Engineering 2025 paper. Does not command hardware unless the user explicitly has a live stack.
+description: Inspect the StarWhisper Telescope / NGSS observing-agent stack on disk. Use when the user asks about NGSS, NINA, night plans, observe_config.json, TNS helpers, or the Communications Engineering 2025 paper. Does not command hardware unless the user explicitly has a live stack.
 ---
 
 # StarWhisper Telescope
@@ -8,23 +8,29 @@ description: Inspect and explain the StarWhisper Telescope / NGSS observing-agen
 Paper: https://doi.org/10.1038/s44172-025-00520-4  
 Code: [`NGSS/`](../../NGSS/README.md)
 
-This is the published observing-agent stack on Nearby Galaxy Supernovae Survey (about 10 amateur-level telescopes). It is not Explore, and it is not Virtual Sitian.
+This is the published observing-agent stack on Nearby Galaxy Supernovae Survey. It is not Explore, and it is not Virtual Sitian.
 
-## Default (no hardware)
+## Default (inspect)
 
-1. Read `NGSS/README.md` and `observe_config.json`.
-2. Explain plan → review → load into NINA → optional target inject.
-3. From `NGSS/`:
+```powershell
+python skills/starwhisper-telescope/scripts/inspect_stack.py --json
+```
+
+The script prints `observe_config`, FastAPI routes, and which paths are hardware. It never starts uvicorn or sends MQTT/NINA/FTP.
+
+If `NGSS/src/app/app2.py` is missing (sparse clone), it uses bundled `references/api.json`. Live files override the bundle when present.
+
+Start command, only after inspect, from `NGSS/`:
 
 ```bash
 uvicorn src.app.app2:app --reload
 ```
 
-4. List missing prerequisites instead of faking them: NINA, `FMoraes.NINA.SitesPlugin.dll`, x-opstep, FTP, telescope connection.
+Missing prerequisites to list instead of faking: NINA, `FMoraes.NINA.SitesPlugin.dll`, x-opstep, FTP/MQTT, telescope connection.
 
 ## Hardware
 
-Only if the user says the live stack is up and asks to run it. Safety interlocks outrank the agent. Do not send UDP/MQTT/NINA commands from a laptop that is not that stack.
+Only if the user says the live stack is up and asks to run it. Safety interlocks outrank the agent. Do not call `/manipulate_nina/{action}` or `/ftp_transfer` from a laptop that is not that stack.
 
 ## Do not
 
