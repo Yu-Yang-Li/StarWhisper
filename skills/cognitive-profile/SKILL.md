@@ -1,14 +1,10 @@
 ---
 name: cognitive-profile
 description: |
-  在对话里慢慢形成一份可修正的用户画像。用于用户要求建立、查看、更新画像，
-  希望回答更贴合自己，或反复纠正"不像我""太官方""理解错了"的场景。
-  也用于用户说"记住我的偏好""以后默认这样""按我之前习惯""别再这样"
-  "不要记录""删掉画像""你记了什么""你忘了"，或普通任务里需要沿用已知偏好的场景。
-  "记住"指向的是长期偏好时才触发；"记住这个端口号"这类任务内指令不算。
-  只记录会影响后续回答的偏好、判断习惯、表达边界和待确认的地方。
-  StarWhisper astronomy overlay: remember subfield, catalogs, claim conservatism,
-  and telescope-safety boundaries; never store observatory credentials.
+  Record astronomy research preferences, catalogs, claim conservatism, and
+  collaboration boundaries. Use when the user asks to remember subfield habits,
+  writing style, or telescope-safety limits. Never store observatory credentials,
+  FTP, or unpublished target lists.
 ---
 
 # 认知画像

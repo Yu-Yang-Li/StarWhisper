@@ -17,28 +17,39 @@
 
 StarWhisper is open astronomy work supported by NAOC, Zhejiang Lab, and collaborators. It began in 2023 as a language model, then went on to Kepler / K2 light-curve classification, pulsar candidates, and an observing agent on the Nearby Galaxy Supernovae Survey (NGSS). The 2026 line is Virtual Sitian (SN Clock).
 
-The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025). The repo follows that timeline. Astronomy research skills live in [`skills/`](skills/README.md). The interactive sketch is the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html).
+The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025). The repo follows that timeline.
+
+```mermaid
+flowchart LR
+  A["2023 LLM"] --> B["2024–25 LC / Pulsar"]
+  B --> C["2025 Telescope / NGSS"]
+  C --> D["2026 Virtual Sitian"]
+  S["Astronomy research skills"] -.-> A
+  S -.-> B
+  S -.-> C
+  S -.-> D
+```
 
 | Year | What | Code / weights |
 | --- | --- | --- |
 | 2023 | repo created; astronomy LLM | [`LLM_Data/`](LLM_Data), [StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
 | 2024 | light-curve classification, pulsars, Telescope preprint | [`StarWhisper_LC/`](StarWhisper_LC), [Pulsar code](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2025 | LC and Telescope published | [`NGSS/`](NGSS) |
-| 2026 | Virtual Sitian (SN Clock), Explore, astronomy skills | snclock, [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw), [`skills/`](skills/README.md) |
+| 2026 | Virtual Sitian, Explore, astronomy skills | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw), [`skills/`](skills/README.md) |
 
-<div align="center">
-
-![StarWhisper layers](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-architecture.jpg)
-
-</div>
-
-<p align="center"><sub>Language models → light curves / pulsars → Telescope → Virtual Sitian, with astronomy research skills across the stack.</sub></p>
+| Looking for | Where | Note |
+| --- | --- | --- |
+| Observing agent | [`NGSS/`](NGSS) | Code from the paper; needs NINA and related services |
+| Light-curve tests | [`StarWhisper_LC/`](StarWhisper_LC) | Test code, not a full training reproduction |
+| Research skills | [`skills/`](skills/README.md) | Install into Codex / Cursor; dry-run without keys |
+| Virtual Sitian | [map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html), [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | The runnable system is not at this repo root |
+| Explore numbers | this page | Synthetic environment; that code is not in this repo yet |
 
 ---
 
 ## 2023–2024 · Language models
 
-StarWhisper 3 answers astronomy questions and writes code. Training data is in [`LLM_Data/`](LLM_Data); weights are on ModelScope at [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3). Version 4.0 is still cleaning popular-science and research text; weights are meant to go on ModelScope.
+StarWhisper 3 answers astronomy questions and writes code. Training data is in [`LLM_Data/`](LLM_Data); weights are on ModelScope at [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3). Version 4.0 is still organizing popular-science and research text; weights are meant to go on ModelScope.
 
 ---
 
@@ -64,11 +75,11 @@ A night plan rarely survives the night. Targets of opportunity arrive, weather c
 
 <div align="center">
 
-![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-observe-loop.jpg)
+![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/goai-observe-loop-source.png)
 
 </div>
 
-<p align="center"><sub>Scheduled plan, three disturbances, observing agent, constrained actions and feedback. This is the decision structure shared by Telescope and Explore, not an optical simulation.</sub></p>
+<p align="center"><sub>Scheduled plan, three disturbances, observing agent, constrained actions and feedback. This is the decision structure shared by Telescope and Explore. It is not an optical simulation and not a hardware screenshot.</sub></p>
 
 <div align="center">
 
@@ -76,17 +87,11 @@ A night plan rarely survives the night. Targets of opportunity arrive, weather c
 
 </div>
 
-<div align="center">
-
-![Demo](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
-
-</div>
-
 ---
 
 ## 2026 · Virtual Sitian
 
-The runnable Virtual Sitian system is 2026 work, in the snclock (SN Clock) repo. The early science application is the supernova clock: explosion-epoch estimates and young-SN candidates. Public sketch: [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html). Installable skills for the same workflow: [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw). Real/bogus prototype: [`GOTTA_Prototype/`](GOTTA_Prototype).
+The runnable Virtual Sitian system is 2026 work (SN Clock). The early science application is the supernova clock: explosion-epoch estimates and young-SN candidates. Public sketch: [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html). Installable skills for the same workflow: [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw). Real/bogus prototype: [`GOTTA_Prototype/`](GOTTA_Prototype).
 
 Sitian plans 54 one-meter-class wide-field telescopes at Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”.
 
@@ -96,7 +101,12 @@ Sitian plans 54 one-meter-class wide-field telescopes at Chinese sites, covering
 
 </div>
 
-Also in 2026: Xinglong all-sky camera code in [`AllSky-Camera-XL/`](AllSky-Camera-XL), from a full-sky image to a replanned sequence; cloud nowcasting with Himawari in a private repo on 2022–2025 archived nights (that line closed in August 2026, not an operational forecast); early classification on sparse ZTF / ATLAS light curves in [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves); and low-SNR stellar spectra in [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) ([Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)).
+Also from 2026, but not the Virtual Sitian main line:
+
+- Xinglong all-sky camera [`AllSky-Camera-XL/`](AllSky-Camera-XL): from a full-sky image to a replanned sequence
+- Cloud nowcasting with Himawari: private repo on 2022–2025 archived nights; that line closed in August 2026 and is not an operational forecast
+- Early classification on sparse ZTF / ATLAS light curves: [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)
+- Low-SNR stellar spectra: [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) ([Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language))
 
 ---
 
@@ -104,7 +114,7 @@ Also in 2026: Xinglong all-sky camera code in [`AllSky-Camera-XL/`](AllSky-Camer
 
 Telescope can already observe automatically on a survey. Explore asks when that judgement holds, what it gives up, and when it has to stop.
 
-`StarWhisper-Explore-v0.2` is synthetic: Xinglong, one telescope, six slots per night. Targets, transients, weather, and device faults come from seeds and are shared across policies. The agent cannot see future disturbances or edit safety thresholds. This is not optical-propagation physics, and it is not wired to live hardware.
+`StarWhisper-Explore-v0.2` is synthetic: Xinglong, one telescope, six slots per night. Targets, transients, weather, and device faults come from seeds and are shared across policies. The agent cannot see future disturbances or edit safety thresholds. This is not optical-propagation physics, it is not wired to live hardware, and **the environment code is not in this repository yet**. What follows is the pre-registered bar plus one double-run with matching hashes.
 
 The comparators were fixed in advance: no intervention, random, deterministic priority, and a rule agent. A positive finding needs all three seeds to pass: no active safety violations, invalid-action rate ≤ 1%, survey-completeness drop ≤ 5 percentage points, and either ≥ 20% relative gain in high-value transient follow-up or ≥ 5% gain in scientific utility.
 
@@ -127,7 +137,7 @@ Against deterministic priority, the rule agent raises follow-up by 23.52 percent
 
 <div align="center">
 
-![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-verification.jpg)
+![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/goai-verification-source.png)
 
 </div>
 
@@ -137,7 +147,7 @@ Against deterministic priority, the rule agent raises follow-up by 23.52 percent
 
 ## 2026 · Research skills
 
-In August, 13 skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy, with NASA ADS and arXiv `astro-ph` as the default literature path. Literature, hypotheses, data contracts, experiment design, and writing follow astronomy defaults rather than clinical RCT templates. They live in [`skills/`](skills/README.md) for Codex or Cursor.
+Thirteen skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy, with NASA ADS and arXiv `astro-ph` as the default literature path. Literature, hypotheses, data contracts, experiment design, and writing follow astronomy defaults rather than clinical-trial templates. They live in [`skills/`](skills/README.md).
 
 <div align="center">
 
@@ -145,7 +155,7 @@ In August, 13 skills from [tashan-research-skills](https://github.com/TashanGKD/
 
 </div>
 
-With no token they dry-run. They do not invent papers or command a telescope.
+With no token they dry-run. They do not invent papers or command a telescope. The older `skill/*.zip` files are only for workflows that already upload zips; new installs should copy `skills/<name>/`.
 
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
@@ -169,7 +179,7 @@ Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\sk
 }
 ```
 
-Source code is Apache-2.0. The adapted skills under [`NOTICE.md`](skills/NOTICE.md) stay MIT. Model weights follow their own licenses.
+GitHub also reads [`CITATION.cff`](CITATION.cff). Source code is Apache-2.0. The adapted skills under [`NOTICE.md`](skills/NOTICE.md) stay MIT. Model weights follow their own licenses.
 
 ## Star History
 

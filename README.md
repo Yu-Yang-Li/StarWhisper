@@ -17,28 +17,39 @@
 
 StarWhisper 是面向天文学的开源工作，由国家天文台、之江实验室等单位支持。2023 年从天文语言模型做起，随后做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。
 
-最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。仓库按这条时间线组织；天文科研技能在 [`skills/`](skills/README.md)，交互式路线图在 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。
+最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。仓库按这条时间线组织。
+
+```mermaid
+flowchart LR
+  A["2023 语言模型"] --> B["2024–25 光变 / 脉冲星"]
+  B --> C["2025 Telescope / NGSS"]
+  C --> D["2026 虚拟司天"]
+  S["天文科研技能"] -.-> A
+  S -.-> B
+  S -.-> C
+  S -.-> D
+```
 
 | 年 | 做了什么 | 代码 / 权重 |
 | --- | --- | --- |
 | 2023 | 仓库建立，天文语言模型 | [`LLM_Data/`](LLM_Data)，[StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
 | 2024 | 光变分类、脉冲星、Telescope 预印本 | [`StarWhisper_LC/`](StarWhisper_LC)，[Pulsar 代码](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2025 | LC、Telescope 发表 | [`NGSS/`](NGSS) |
-| 2026 | 虚拟司天（SN Clock）、Explore、天文技能 | snclock，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，[`skills/`](skills/README.md) |
+| 2026 | 虚拟司天、Explore、天文技能 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，[`skills/`](skills/README.md) |
 
-<div align="center">
-
-![StarWhisper layers](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-architecture.jpg)
-
-</div>
-
-<p align="center"><sub>语言模型 → 光变 / 脉冲星 → Telescope → 虚拟司天；右侧是贯通各层的天文科研技能。</sub></p>
+| 要找什么 | 去哪 | 说明 |
+| --- | --- | --- |
+| 观测 agent | [`NGSS/`](NGSS) | 论文对应代码；依赖 NINA 等外部服务 |
+| 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC) | 测试代码，不是完整训练复现 |
+| 天文科研技能 | [`skills/`](skills/README.md) | 可装进 Codex / Cursor；无密钥 dry-run |
+| 虚拟司天 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 可运行系统不在本仓库根目录 |
+| Explore 数字 | 本页 | 合成环境；环境代码尚未放进本仓库 |
 
 ---
 
 ## 2023–2024 · 语言模型
 
-StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Data)，权重在魔搭 [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3)。4.0 还在洗科普和科研数据，权重打算放到魔搭。
+StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Data)，权重在魔搭 [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3)。4.0 仍在整理科普和科研文本，权重打算放到魔搭。
 
 ---
 
@@ -64,11 +75,11 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 <div align="center">
 
-![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-observe-loop.jpg)
+![Observing loop](https://yu-yang-li.github.io/StarWhisper/assets/goai-observe-loop-source.png)
 
 </div>
 
-<p align="center"><sub>既定计划、三类扰动、观测智能体、受约束行动与反馈。这是 Telescope / Explore 共用的判断结构，不是光学仿真。</sub></p>
+<p align="center"><sub>既定计划、三类扰动、观测智能体、受约束行动与反馈。这是 Telescope 与 Explore 共用的判断结构，不是光学仿真，也不是真实硬件截图。</sub></p>
 
 <div align="center">
 
@@ -76,17 +87,11 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 </div>
 
-<div align="center">
-
-![演示](https://yu-yang-li.github.io/StarWhisper/assets/demo-1.png)
-
-</div>
-
 ---
 
 ## 2026 · 虚拟司天
 
-2026 年才把虚拟司天做成可运行的系统，代码在 snclock（SN Clock）。早期科学应用是超新星时钟：估计爆发时刻、筛年轻超新星候选。公开说明见 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。同一套工作流的可安装技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，真假源样机在 [`GOTTA_Prototype/`](GOTTA_Prototype)。
+2026 年才把虚拟司天做成可运行的系统（SN Clock）。早期科学应用是超新星时钟：估计爆发时刻、筛年轻超新星候选。公开说明见 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。同一套工作流的可安装技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，真假源样机在 [`GOTTA_Prototype/`](GOTTA_Prototype)。
 
 司天计划在国内多个台站放 54 台 1 米级大视场望远镜，大约每 30 分钟扫 1 万平方度、三色。StarWhisper 是“司天大脑”的一条候选路径。
 
@@ -96,7 +101,12 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 </div>
 
-另外还有兴隆全天相机 [`AllSky-Camera-XL/`](AllSky-Camera-XL)，从原图排到新的观测序列。和葵花卫星搭配的云量临近预报在私有仓库，用 2022–2025 年的历史夜次，2026 年 8 月主线已经收口，还不是业务预报。稀疏 ZTF / ATLAS 光变的早期分类在 [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)。低信噪比恒星光谱在 [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language)，独立仓库是 [Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)。
+同属 2026 年、但独立于虚拟司天主线的还有：
+
+- 兴隆全天相机 [`AllSky-Camera-XL/`](AllSky-Camera-XL)：从原图排到新的观测序列
+- 葵花卫星云量临近预报：私有仓库，用 2022–2025 年历史夜次，2026 年 8 月主线已收口，还不是业务预报
+- 稀疏 ZTF / ATLAS 光变早期分类：[`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)
+- 低信噪比恒星光谱：[`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language)，独立仓库 [Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)
 
 ---
 
@@ -104,7 +114,7 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什么时候靠得住、会牺牲什么、什么时候必须停。
 
-`StarWhisper-Explore-v0.2` 是合成环境：兴隆、单镜、一夜六个时隙。候选目标、暂现源、天气和设备故障由种子生成，各策略共用同一份剧本。Agent 看不到未来扰动，也不能改安全阈值。这不是光学仿真，也没有接到真实望远镜上。
+`StarWhisper-Explore-v0.2` 是合成环境：兴隆、单镜、一夜六个时隙。候选目标、暂现源、天气和设备故障由种子生成，各策略共用同一份剧本。Agent 看不到未来扰动，也不能改安全阈值。这不是光学仿真，没有接到真实望远镜上，**环境代码也还没有放进本仓库**；下面只公开预注册门槛和一次双跑一致的结果。
 
 预先比较无干预、随机、确定性优先级和规则 Agent。算正向结果，三个种子都要过：没有主动安全违规，无效动作率 ≤ 1%，巡天完成度掉不超过 5 个百分点，并且高价值暂现源跟进率相对提高至少 20%，或科学效用提高至少 5%。
 
@@ -127,7 +137,7 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 <div align="center">
 
-![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-verification.jpg)
+![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/goai-verification-source.png)
 
 </div>
 
@@ -137,7 +147,7 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 ## 2026 · 科研技能
 
-8 月从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 改了 13 个技能，默认查 NASA ADS 和 arXiv `astro-ph`。文献、假设、数据合同、实验设计和写作都按天文学来，而不是临床 RCT。目录在 [`skills/`](skills/README.md)，给 Codex 或 Cursor 用。
+从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 改了 13 个技能，默认查 NASA ADS 和 arXiv `astro-ph`。文献、假设、数据合同、实验设计和写作按天文学来，而不是临床试验模板。目录在 [`skills/`](skills/README.md)。
 
 <div align="center">
 
@@ -145,7 +155,7 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 </div>
 
-没有密钥就 dry-run。不编文献，也不给望远镜下指令。
+没有密钥就 dry-run。不编文献，也不给望远镜下指令。旧的 `skill/*.zip` 只保留给已经按 zip 上传的工作流，新安装请复制 `skills/<name>/`。
 
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
@@ -169,7 +179,7 @@ Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\sk
 }
 ```
 
-源代码 Apache-2.0。`skills/` 里改编自他山的部分见 [`NOTICE.md`](skills/NOTICE.md)，按 MIT。权重按各自许可证。
+GitHub 也认根目录的 [`CITATION.cff`](CITATION.cff)。源代码 Apache-2.0。`skills/` 里改编自他山的部分见 [`NOTICE.md`](skills/NOTICE.md)，按 MIT。权重按各自许可证。
 
 ## Star History
 

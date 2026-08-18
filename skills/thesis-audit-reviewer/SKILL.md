@@ -1,6 +1,6 @@
 ---
 name: thesis-audit-reviewer
-description: Use this skill when the user asks to review, audit, proofread, or produce a formal evaluation report for a degree thesis, dissertation, academic paper, or thesis PDF/DOCX, especially when they require checklist-based, line-by-line, evidence-grounded comments, PDF page locations, external fact verification, MinerU/VLM parsing, or a standardized Chinese 学位论文审阅报告.Astronomy overlay: audit theses and papers for ADS-valid citations, coordinate/unit consistency, survey selection effects, and over-claimed discoveries.
+description: Audit astronomy theses and papers for ADS-valid citations, coordinate/time/photometric-system consistency, survey selection effects, and over-claimed discoveries. Use for checklist-based, evidence-grounded comments on PDF/DOCX manuscripts.
 ---
 
 # Thesis Audit Reviewer

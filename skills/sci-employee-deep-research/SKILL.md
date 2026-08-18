@@ -1,6 +1,6 @@
 ---
 name: sci-employee-deep-research
-description: 调用或模拟 Deep Research 流程，把论文检索、关键词拆解、候选证据和最终 answer 组织成可核验研究报告。适用于赛题讲解、开题调研、方案依据整理。Astronomy overlay: build evidence-bounded reviews for transients, surveys, telescope agents, and time-domain methods using ADS plus arXiv astro-ph.
+description: Build evidence-bounded reviews for transients, surveys, telescope agents, and time-domain methods using NASA ADS and arXiv astro-ph. Use when the user needs keyword decomposition, citation tracing, and explicit observation/simulation/log boundaries.
 ---
 
 # 深度研究员工

@@ -1,0 +1,84 @@
+cff-version: 1.2.0
+title: StarWhisper
+message: If you use this repository, please cite StarWhisper Telescope.
+type: software
+license: Apache-2.0
+repository-code: https://github.com/Yu-Yang-Li/StarWhisper
+url: https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html
+preferred-citation:
+  type: article
+  title: "StarWhisper Telescope: an AI framework for automating end-to-end astronomical observations"
+  authors:
+    - family-names: Wang
+      given-names: Cunshi
+    - family-names: Zhang
+      given-names: Yu
+    - family-names: Li
+      given-names: Yuyang
+    - family-names: Hu
+      given-names: Xinjie
+    - family-names: Mao
+      given-names: Yiming
+    - family-names: Chen
+      given-names: Xunhao
+    - family-names: Du
+      given-names: Pengliang
+    - family-names: Wang
+      given-names: Rui
+    - family-names: Wu
+      given-names: Ying
+    - family-names: Yang
+      given-names: Hang
+    - family-names: Li
+      given-names: Yansong
+    - family-names: Wang
+      given-names: Beichuan
+    - family-names: Mu
+      given-names: Haiyang
+    - family-names: Chen
+      given-names: Xiaohan
+    - family-names: He
+      given-names: Shunxuan
+    - family-names: Mo
+      given-names: Hao
+    - family-names: Zhang
+      given-names: Liyue
+    - family-names: Du
+      given-names: Lin
+    - family-names: Zhao
+      given-names: Yunning
+    - family-names: Tian
+      given-names: Jianfeng
+    - family-names: Ge
+      given-names: Liang
+    - family-names: Mao
+      given-names: Yongna
+    - family-names: Li
+      given-names: Shengming
+    - family-names: Wang
+      given-names: Zheng
+    - family-names: Lu
+      given-names: Xiaomeng
+    - family-names: Zou
+      given-names: Jinhang
+    - family-names: Huang
+      given-names: Yang
+    - family-names: Sun
+      given-names: Ningchen
+    - family-names: Zheng
+      given-names: Jie
+    - family-names: He
+      given-names: Min
+    - family-names: Bai
+      given-names: Yu
+    - family-names: Jin
+      given-names: Junjie
+    - family-names: Wu
+      given-names: Hong
+    - family-names: Liu
+      given-names: Jifeng
+  journal: Communications Engineering
+  year: 2025
+  volume: 4
+  pages: "184"
+  doi: 10.1038/s44172-025-00520-4

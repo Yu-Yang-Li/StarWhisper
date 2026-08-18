@@ -1,6 +1,6 @@
 ---
 name: experiment-design
-description: 在采集数据之前，把"想验证什么"变成统计上站得住、可复现、可解释的研究设计。当用户要设计实验/研究方案、选择设计类型（完全随机/随机区组/析因/部分析因/交叉/重复测量/整群随机/响应面）、做随机化与区组、估算样本量与统计功效、规划机器学习消融/基准、或制定统计分析计划与预注册时使用。只管"采集前的设计"；采集后的统计/组学执行交给数据分析类技能。Astronomy overlay: design observing campaigns, injection-recovery tests, and agent A/B evaluations before collecting or replaying data. Prefer survey/observational designs over clinical RCT language.
+description: Design observing campaigns, injection-recovery tests, and agent evaluations before collecting or replaying data. Use for night/field blocking, seeded synthetic nights, shadow-mode hardware runs, sample size, and pre-registered thresholds. Do not default to clinical RCT language.
 license: MIT
 ---
 

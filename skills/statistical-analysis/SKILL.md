@@ -1,6 +1,6 @@
 ---
 name: statistical-analysis
-description: 数据采集完成后，按采集前锁定的分析计划执行验证性统计分析。当用户要做组间比较（t 检验/ANOVA/非参数检验）、配对前后对比、列联表卡方、相关分析、效应量与置信区间计算、多重比较校正、检验前提检查（正态性/方差齐性）、或要把统计结果写成可报告的结论时使用。只管"采集后的验证性分析"；采集前的设计与样本量交给实验设计技能，机器学习建模交给数据处理技能。Astronomy overlay: confirmatory stats for light-curve, survey, and agent-evaluation tables, including selection effects and multiple-testing across candidates.
+description: Run confirmatory statistics on light-curve, survey, or agent-evaluation tables after the analysis plan is locked. Use for tests, effect sizes, confidence intervals, selection effects, small-count intervals, and multiple testing across candidates.
 license: MIT
 ---
 

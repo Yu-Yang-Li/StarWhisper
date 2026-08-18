@@ -1,6 +1,6 @@
 ---
 name: scispark
-description: Generate evidence-tracked research ideas through an arXiv-based, skill-native Scispark workflow. Use when Codex needs to turn a research keyword, question, paper set, Zotero/library material, or arXiv results into structured facts, testable hypotheses, an initial research idea, technical optimization, mechanism-of-action analysis, human-AI collaboration review, or optional academic slides. Also use when the user mentions Scispark, 科研想法生成, 研究假设生成, 机制优化, MoA, literature-backed idea generation, or 从关键词到研究方案.Astronomy overlay: generate evidence-tracked hypotheses for time-domain astronomy, telescope agents, and survey pipelines, with ADS/arXiv astro-ph as the literature route.
+description: Generate evidence-tracked hypotheses for time-domain astronomy, telescope agents, and survey pipelines. Use when the user starts from keywords, a paper set, or ADS/arXiv astro-ph results and needs testable claims with bibcodes or an explicit speculative flag.
 ---
 
 # Scispark

@@ -1,9 +1,9 @@
 ---
 name: visual-deck-builder
 description: >-
-  Build image-model-driven PPT decks from a user topic, source materials, papers, reports, notes, datasets, existing slides, or style references. Use when the user asks to create, redesign, package, or QA a PowerPoint deck where every slide should first be generated as a high-quality full-slide image and packaged into PPTX with manifests, previews, and evidence-backed QA. Layered editable reconstruction is optional and only used when explicitly requested.
-  This is the general deck-building entry. Prefer narrower skills only when the request is specifically an academic/research PPT workflow, a prompt/method clinic, a sci-employee course/video wrapper, or a recurring Chronicle research/script loop.
-  StarWhisper astronomy overlay: build time-domain / telescope-agent decks with conservative claims.
+  Build astronomy decks for papers, surveys, and telescope-agent talks.
+  Use when the user wants a PPT from a topic, paper, or notes, with published
+  results kept separate from synthetic Explore numbers. Conservative claims only.
 ---
 
 # Visual Deck Builder

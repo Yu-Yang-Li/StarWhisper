@@ -1,6 +1,6 @@
 ---
 name: research-baseline-builder
-description: Translate scientific questions into clear data inputs, outputs, and baseline workflows. Use when Codex needs to help researchers clarify what data goes in, what target or result should come out, how samples/labels/features are defined, and how to solve the resulting data problem through visualization, preprocessing, baseline design, training, evaluation, and reporting.Astronomy overlay: turn questions into data contracts over light curves, spectra, FITS images, alert streams, or telescope decision logs.
+description: Translate astronomy questions into data contracts over light curves, spectra, FITS, alert streams, or telescope decision logs. Use when the user needs inputs, outputs, sample units, splits, leakage checks, and a non-LLM baseline before modeling.
 ---
 
 # Research Baseline Builder

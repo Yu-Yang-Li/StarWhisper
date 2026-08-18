@@ -1,6 +1,6 @@
 ---
 name: scientific-humanization
-description: 用于中文科研文本的 scientific humanization：把论文、综述、基金、项目书、技术方案、答辩、课程讲稿、PPT讲稿和投资人科研表达改得更像专业作者或讲师本人在说，同时保护事实、术语、数字、引用、图表编号和证据强度。适用于用户说“别AI味”“人一点”“别太官方”“像我讲的”“去模板腔”“改顺但别改事实”的场景。Astronomy overlay: humanize Chinese astronomy papers, proposals, and talks while keeping bibcodes, filters, MJD, and discovery language conservative.
+description: Humanize Chinese astronomy papers, proposals, and talks while keeping bibcodes, filters, MJD, and discovery language conservative. Use when the user wants less template tone without changing facts.
 ---
 
 # Scientific Humanization

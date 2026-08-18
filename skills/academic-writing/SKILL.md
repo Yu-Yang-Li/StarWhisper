@@ -1,6 +1,6 @@
 ---
 name: academic-writing
-description: 面向科研成果的"写—审—改—投"学术写作全流程。当用户要撰写/改写论文或某个章节、做同行评审或生成审稿意见、回复审稿人(rebuttal)与规划修订、撰写基金/项目申请书、或准备投稿材料(摘要/标题/cover letter/期刊适配)时使用。聚焦学术文本的产出与打磨；不负责文献检索与综述综合(文献模块)，也不负责引用真实性与格式合规(引用合规技能)。Astronomy overlay: write, review, and submit astronomy manuscripts for AAS/MNRAS/A&A/PASP and Chinese NSFC astronomy proposals.
+description: Write, review, and submit astronomy manuscripts for AAS/MNRAS/A&A/PASP and Chinese NSFC astronomy proposals. Use for papers, referee reports, rebuttals, cover letters, and grant text. Do not retrieve literature or audit citation authenticity.
 license: MIT
 ---
 

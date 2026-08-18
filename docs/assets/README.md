@@ -3,20 +3,23 @@
 These files are served by GitHub Pages as
 `https://yu-yang-li.github.io/StarWhisper/assets/<file>`.
 README images must use those absolute Pages URLs (markdown `![]()`), not HTML
-relative `<img src>` and not jsDelivr: this repo is too large for jsDelivr, and
-GitHub rewrites relative HTML images to `/raw/` paths that currently 404.
+relative `<img src>` and not jsDelivr.
+
+Paper figures and the GOAI four-page originals are preferred over generated
+restyles. Generated banners stay in this folder for provenance, but the
+landing page should not present them as hardware screenshots or as results.
 
 | File | Used in | Note |
 | --- | --- | --- |
-| `starwhisper-hero.jpg` | README cover | Generated banner, compressed |
-| `starwhisper-architecture.jpg` | README timeline | Four layers plus research skills |
-| `starwhisper-lc.png` | LC section | From the LC paper materials |
-| `starwhisper-observe-loop.jpg` | Telescope section | Matches GOAI page-1 figure |
+| `starwhisper-hero.jpg` | README cover | Banner, not a runtime screenshot |
+| `starwhisper-lc.png` | LC section | From the LC paper |
+| `goai-observe-loop-source.png` | Telescope section | Original GOAI page-1 figure |
 | `starwhisper-telescope.png` | Telescope section | From the Telescope paper |
-| `demo-1.png` | Telescope section | Runtime screenshot |
 | `sitian.png` | Virtual Sitian section | Sitian sketch |
 | `goai-metrics-source.png` | Explore section | Original GOAI metrics figure |
-| `starwhisper-verification.jpg` | Explore section | Matches GOAI page-4 figure |
+| `goai-verification-source.png` | Explore section | Original GOAI page-4 figure |
 | `starwhisper-skills-matrix.jpg` | skills section | 13 astronomy-adapted skills |
-| `goai-observe-loop-source.png` | not embedded | Original GOAI page-1 figure, kept for provenance |
-| `goai-verification-source.png` | not embedded | Original GOAI page-4 figure, kept for provenance |
+| `demo-1.png` | not embedded | StarWhisper 4.0 capability sketch; wrong for Telescope |
+| `starwhisper-architecture.jpg` | not embedded | Generated layer diagram; README uses mermaid instead |
+| `starwhisper-observe-loop.jpg` | not embedded | Generated restyle of the GOAI loop |
+| `starwhisper-verification.jpg` | not embedded | Generated restyle of the GOAI path |

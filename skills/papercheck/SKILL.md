@@ -1,6 +1,6 @@
 ---
 name: papercheck
-description: Run no-key citation audits for academic papers using local evidence extraction, bundled TaShan-PaperChecker rules, and the current Codex model. Use when Codex needs to check .docx论文引用合规、正文引文和参考文献是否匹配、引用真实性、引文与上下文相关性、GB/T 7714 or UCAS reference-format issues, or when the user mentions PaperCheck, TaShan-PaperChecker, citation compliance, reference audit, citation authenticity, or 引文核验.Astronomy overlay: check citations against NASA ADS/arXiv, AAS reference style, and whether in-text claims are actually supported.
+description: Check astronomy citations against NASA ADS/arXiv, AAS/MNRAS reference practice, and whether in-text claims are actually supported. Use for .docx/.pdf citation audits, bibcode resolvability, and context-support mismatches. Do not invent references.
 ---
 
 # PaperCheck

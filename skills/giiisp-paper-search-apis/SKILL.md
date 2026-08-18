@@ -1,6 +1,6 @@
 ---
 name: giiisp-paper-search-apis
-description: 调用 Giiisp/集思谱论文检索 POST 接口，按用户问题选择 OA 标题摘要检索或 arXiv 摘要、编号、多字段、标题检索。用于论文检索、文献初筛、arXiv 定位、开放论文补充和引用审计。For astronomy, prefer NASA ADS and arXiv astro-ph before Giiisp OA search. Use when the user asks for ADS, bibcode, ApJ/MNRAS papers, transient literature, or StarWhisper-related papers.
+description: Search astronomy papers via NASA ADS and arXiv astro-ph, with optional Giiisp OA as a supplement. Use for ADS, bibcode, ApJ/MNRAS/A&A papers, transients, surveys, or StarWhisper literature. Dry-run without ADS_API_TOKEN; never invent papers.
 ---
 
 # Giiisp Paper Search APIs

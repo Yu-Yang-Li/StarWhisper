@@ -1,6 +1,6 @@
 ---
 name: giiisp-scientific-image-generation
-description: 使用 Giiisp Imagine 科研图像生成接口，把论文段落、图题、实验流程或机制描述整理成作图简报、生成请求、图片结果和检查记录。适用于论文配图、科研流程图、机制通路图、实验示意图和学术汇报图。Astronomy overlay: generate paper figures for survey workflows, telescope decision loops, light-curve panels, and spectral sequences. Forbid fake data ticks and fake English labels.
+description: Generate astronomy survey, telescope-decision, and mechanism diagrams from paper text. Use for observing-loop figures and system sketches. Do not invent axis ticks, photometry, or English labels that are not in the source.
 ---
 
 # Giiisp Scientific Image Generation
