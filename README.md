@@ -41,7 +41,7 @@ flowchart LR
 | --- | --- | --- |
 | 观测 agent | [`NGSS/`](NGSS) | 论文对应代码；依赖 NINA 等外部服务 |
 | 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC) | 测试代码，不是完整训练复现 |
-| 天文科研技能 | [`skills/`](skills/README.md) | 可装进 Codex / Cursor；无密钥 dry-run |
+| 天文科研技能 | [`skills/`](skills/README.md) | 本线 `starwhisper-*` + 他山改编；无密钥 dry-run |
 | 虚拟司天 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 可运行系统不在本仓库根目录 |
 | Explore 数字 | [`explore/`](explore/README.md) | 合成环境规格和已核对结果；环境代码尚未入库 |
 
@@ -145,21 +145,15 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 ---
 
-## 2026 · 科研技能
+## 2026 · 技能
 
-从 [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) 改了 13 个技能，默认查 NASA ADS 和 arXiv `astro-ph`。文献、假设、数据合同、实验设计和写作按天文学来，而不是临床试验模板。目录在 [`skills/`](skills/README.md)。
+过去几条线已经收成 `starwhisper-*` 技能，和他山改编的 13 个天文科研技能放在 [`skills/`](skills/README.md)。先装 [`starwhisper-index`](skills/starwhisper-index/SKILL.md) 做路由。
 
-<div align="center">
-
-![Astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
-
-</div>
-
-没有密钥就 dry-run。不编文献，也不给望远镜下指令。新安装请复制 `skills/<name>/`。
+没有密钥就 dry-run。不编文献。未接通 NINA / 望远镜时，观测类技能只读代码，不下指令。
 
 ```powershell
+Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.codex\skills\starwhisper-index"
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
-Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
 ```
 
 ---

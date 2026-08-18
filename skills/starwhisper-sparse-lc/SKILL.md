@@ -1,0 +1,15 @@
+---
+name: starwhisper-sparse-lc
+description: Explain or reproduce the sparse ZTF/ATLAS early-classification benchmark. Use when the user asks about varlen 3-30 observations, seven variability classes, XGBoost/Transformer/LSTM comparison, or Early Classification from Sparse Light Curves.
+---
+
+# Sparse light-curve early classification
+
+Folder: [`Early Classification from Sparse Light Curves/`](../../Early%20Classification%20from%20Sparse%20Light%20Curves/README.md)  
+Weights: https://huggingface.co/castor0705/sparse-lc-early-classification
+
+Main **varlen** setting: 3–30 observations per segment, seven merged classes, 75/10/15 split, `random_state = 42`.
+
+Follow that folder's README for preprocess → features → train → summarize. Do not quote LC Kepler/K2 90% accuracy as this benchmark's number.
+
+A test-set metric is not an explosion-time or a discovery.

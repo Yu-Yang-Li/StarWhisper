@@ -41,7 +41,7 @@ flowchart LR
 | --- | --- | --- |
 | Observing agent | [`NGSS/`](NGSS) | Code from the paper; needs NINA and related services |
 | Light-curve tests | [`StarWhisper_LC/`](StarWhisper_LC) | Test code, not a full training reproduction |
-| Research skills | [`skills/`](skills/README.md) | Install into Codex / Cursor; dry-run without keys |
+| Research skills | [`skills/`](skills/README.md) | Native `starwhisper-*` plus adapted Tashan skills; dry-run without keys |
 | Virtual Sitian | [map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html), [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | The runnable system is not at this repo root |
 | Explore numbers | [`explore/`](explore/README.md) | Spec and checked table; environment code is not in this repo yet |
 
@@ -145,21 +145,15 @@ Against deterministic priority, the rule agent raises follow-up by 23.52 percent
 
 ---
 
-## 2026 · Research skills
+## 2026 · Skills
 
-Thirteen skills from [tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills) were adapted for astronomy, with NASA ADS and arXiv `astro-ph` as the default literature path. Literature, hypotheses, data contracts, experiment design, and writing follow astronomy defaults rather than clinical-trial templates. They live in [`skills/`](skills/README.md).
+Past lines are now `starwhisper-*` skills, next to 13 astronomy-adapted research skills, in [`skills/`](skills/README.md). Start with [`starwhisper-index`](skills/starwhisper-index/SKILL.md).
 
-<div align="center">
-
-![Astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
-
-</div>
-
-With no token they dry-run. They do not invent papers or command a telescope. New installs should copy `skills/<name>/`.
+With no token they dry-run. They do not invent papers. Observing skills only read code unless NINA / the telescope stack is actually connected.
 
 ```powershell
+Copy-Item -Recurse .\skills\starwhisper-index "$env:USERPROFILE\.codex\skills\starwhisper-index"
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
-Copy-Item -Recurse .\skills\giiisp-paper-search-apis "$env:USERPROFILE\.codex\skills\giiisp-paper-search-apis"
 ```
 
 ---

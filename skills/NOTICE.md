@@ -1,6 +1,9 @@
 # Third-party notice
 
-The skill directories under `skills/` are astronomy-adapted from
+`skills/starwhisper-*` are StarWhisper-native and follow the repository
+Apache-2.0 license.
+
+The other skill directories under `skills/` are astronomy-adapted from
 [TashanGKD/tashan-research-skills](https://github.com/TashanGKD/tashan-research-skills)
 (MIT License). Original authors: 乔晗, 朱晓墨, Yu-Yang Li, 蔡安平, 赵瑞, 房泽锐.
 
