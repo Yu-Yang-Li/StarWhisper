@@ -15,9 +15,59 @@
 
 </div>
 
-StarWhisper 是面向天文学的开源工作，由国家天文台、之江实验室等单位支持。2023 年从天文语言模型做起，随后做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。
+StarWhisper 是面向天文学的开源工作，由国家天文台、之江实验室等单位支持。2023 年从天文语言模型做起，随后做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
 
-最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。仓库按这条时间线组织。
+这个仓库现在以**技能包**的形式交付：16 个可以装进 Codex 或 Cursor 的天文科研技能，加上它们操作的数据和规格。往下先是能跑什么，再是这些工作的时间线。
+
+---
+
+## 技能包
+
+```powershell
+git clone https://github.com/Yu-Yang-Li/StarWhisper.git
+cd StarWhisper
+powershell -File .\skills\install.ps1          # Linux / macOS: ./skills/install.sh
+```
+
+3 个本线技能只用标准库，不装依赖、不联网、不碰硬件，克隆下来就能跑：
+
+| 我要做什么 | 跑这个 |
+| --- | --- |
+| 从 SN Clock 表里挑最年轻的超新星候选 | `screen_snclock.py rank --top 10` |
+| 判断某个源现在还在不在爆发窗口内 | `screen_snclock.py window --within-days 2` |
+| 查这批预测的证据有多硬 | `screen_snclock.py audit` |
+| 判断一个观测策略有没有过预注册的线 | `eval_gate.py gate --agent rule_agent` |
+| 算一夜能排多少个目标 | `plan_night.py budget` |
+| 检查目标表能不能交 | `plan_night.py lint-targets --targets t.csv` |
+
+| 技能 | 全部子命令 |
+| --- | --- |
+| [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | `describe` `rank` `screen` `window` `audit` |
+| [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | `bar` `table` `gate` |
+| [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | `check-config` `budget` `lint-targets` `endpoints` |
+
+另外 13 个是从他山改编的科研技能：文献检索、假设生成、实验设计、统计分析、写作、审稿、绘图、PPT。清单和环境变量见 [`skills/README.md`](skills/README.md)。
+
+技能包的硬规矩：没有密钥就 dry-run，不编文献；夜计划只做检查，任何情况下不调用 `/manipulate_nina` 和 `/ftp_transfer`；筛空、判负、缺数据都照报，不放宽条件凑数。
+
+## 数据与规格
+
+技能操作的是这两份已公开材料，不是凭空生成的：
+
+| 目录 | 内容 | 边界 |
+| --- | --- | --- |
+| [`snclock/`](snclock/README.md) | 22 个 TNS 源的爆发年龄预测（q16/q50/q84） | 覆盖范围小于声明窗口，多数行输入未留存 |
+| [`explore/`](explore/README.md) | `StarWhisper-Explore-v0.2` 规格和四策略已核对表 | 合成环境，环境代码尚未入库 |
+
+| 还要找什么 | 去哪 |
+| --- | --- |
+| 观测 agent 代码 | [`NGSS/`](NGSS)，依赖 NINA 等外部服务 |
+| 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC)，不是完整训练复现 |
+| 虚拟司天可运行系统 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)、[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，不在本仓库根目录 |
+
+---
+
+## 时间线
 
 ```mermaid
 flowchart LR
@@ -35,16 +85,7 @@ flowchart LR
 | 2023 | 仓库建立，天文语言模型 | [`LLM_Data/`](LLM_Data)，[StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
 | 2024 | 光变分类、脉冲星、Telescope 预印本 | [`StarWhisper_LC/`](StarWhisper_LC)，[Pulsar 代码](https://github.com/ACMISLab/StarWhisper-Pulsar) |
 | 2025 | LC、Telescope 发表 | [`NGSS/`](NGSS) |
-| 2026 | 虚拟司天、Explore、天文技能 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，[`skills/`](skills/README.md) |
-
-| 要找什么 | 去哪 | 说明 |
-| --- | --- | --- |
-| 观测 agent | [`NGSS/`](NGSS) | 论文对应代码；依赖 NINA 等外部服务 |
-| 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC) | 测试代码，不是完整训练复现 |
-| 可跑的技能 | [`skills/`](skills/README.md) | 4 个本线功能技能 + 13 个他山改编；无密钥 dry-run |
-| SN Clock 候选表 | [`snclock/`](snclock/README.md) | 22 个源的爆发年龄预测；覆盖范围有限，看数据卡 |
-| 虚拟司天 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 可运行系统不在本仓库根目录 |
-| Explore 数字 | [`explore/`](explore/README.md) | 合成环境规格和已核对结果；环境代码尚未入库 |
+| 2026 | 虚拟司天、Explore、技能包 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，[`skills/`](skills/README.md) |
 
 ---
 
@@ -159,28 +200,6 @@ python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 </div>
 
 <p align="center"><sub>先合成环境可复现，再脱敏日志校准，最后才是真实硬件影子运行（只建议、不执行）。当前公开结果停在第一级。</sub></p>
-
----
-
-## 2026 · 技能
-
-[`skills/`](skills/README.md) 里是**做事的**技能，不是目录导览：每个都有决策规则、可跑脚本和回归测试。
-
-| 技能 | 做什么 |
-| --- | --- |
-| [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | 把爆发年龄预测筛成候选清单，并审计证据强度 |
-| [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | 按预注册门槛逐条判定策略对比 |
-| [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | 校验 observe_config、算一夜容量、lint 目标表 |
-
-另有他山改编的 13 个天文科研技能（检索、假设、实验设计、统计、写作、审稿、绘图）。
-
-没有密钥就 dry-run，不编文献。夜计划技能只做检查，任何情况下不碰 `/manipulate_nina` 和 `/ftp_transfer`。
-
-```powershell
-powershell -File .\skills\install_native.ps1
-python .\skills\starwhisper-night-plan\scripts\plan_night.py budget
-python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
-```
 
 ---
 

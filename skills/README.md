@@ -1,33 +1,67 @@
 # 技能包
 
-两套技能放在一起，都是**做事的**，不是介绍性的：每个技能有决策规则、可跑的脚本和回归测试。没有密钥就 dry-run，没有数据就报缺，不编文献，不下硬件指令。
+16 个技能，都是**做事的**，不是介绍性的：每个有决策规则、可跑的脚本，多数带回归测试。没有密钥就 dry-run，没有数据就报缺，不编文献，不下硬件指令。
+
+## 安装
 
 ```powershell
-powershell -File .\skills\install_native.ps1
-python .\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
+powershell -File .\skills\install.ps1 -List     # 先看会装什么
+powershell -File .\skills\install.ps1           # 16 个全装
+powershell -File .\skills\install.ps1 -Set native -Target codex
 ```
 
-装到 `~/.codex/skills` 或 `~/.cursor/skills` 之后，把本仓库路径设成 `STARWHISPER_ROOT`，脚本才找得到 `snclock/`、`explore/`、`NGSS/`。
+Linux / macOS 用 `./skills/install.sh`，参数是 `--list`、`--set native|research|all`、`--target codex|cursor|both`、`--dry-run`。
+
+默认装进 `~/.codex/skills` 和 `~/.cursor/skills` 两处。装完把本仓库路径设成 `STARWHISPER_ROOT`，本线脚本才找得到 `snclock/`、`explore/`、`NGSS/`：
+
+```powershell
+setx STARWHISPER_ROOT "C:\path\to\StarWhisper"
+```
+
+3 个本线技能是 stdlib，装完即用。`experiment-design`、`statistical-analysis`、`thesis-audit-reviewer`、`visual-deck-builder`、`papercheck` 各自带 `requirements.txt`，用到时再装。
 
 许可证见 [`NOTICE.md`](NOTICE.md)：本线 Apache-2.0，他山改编部分 MIT。
 
 ## 星语本线
 
-| 技能 | 做什么 | 主命令 |
-| --- | --- | --- |
-| [`starwhisper-snclock`](starwhisper-snclock/SKILL.md) | 把爆发年龄预测筛成年轻超新星候选清单，并审计证据强度 | `screen_snclock.py rank --top 10` |
-| [`starwhisper-explore`](starwhisper-explore/SKILL.md) | 按预注册门槛逐条判定策略对比 | `eval_gate.py gate --agent rule_agent` |
-| [`starwhisper-night-plan`](starwhisper-night-plan/SKILL.md) | 校验 observe_config、算一夜容量、lint 目标表 | `plan_night.py budget` |
+3 个技能，12 个子命令，全部 stdlib、不联网、不碰硬件。
+
+**[`starwhisper-snclock`](starwhisper-snclock/SKILL.md)** —— 读 [`snclock/`](../snclock/README.md) 的爆发年龄预测表
+
+| 子命令 | 做什么 |
+| --- | --- |
+| `describe` | 行数、发现日期跨度、tier 分布、覆盖范围警告 |
+| `rank` | 按 q50 从年轻到老排序 |
+| `screen` | 按 tier / 年龄 / 置信 / 红移 / 证据强度过滤 |
+| `window` | 把年龄推到指定时刻，判断谁还在窗口内 |
+| `audit` | 输入快照留存、预测过期、tier 标志自洽性 |
+
+**[`starwhisper-explore`](starwhisper-explore/SKILL.md)** —— 读 [`explore/`](../explore/README.md) 或你自己的指标表
+
+| 子命令 | 做什么 |
+| --- | --- |
+| `bar` | 先念预注册门槛（必须在数字之前） |
+| `table` | 四策略原始指标 |
+| `gate` | 逐条判定，给 positive / negative / inconclusive |
+
+**[`starwhisper-night-plan`](starwhisper-night-plan/SKILL.md)** —— 读 `NGSS/observe_config.json` 或内置样例
+
+| 子命令 | 做什么 |
+| --- | --- |
+| `check-config` | 字段缺失和取值越界 |
+| `budget` | 单目标耗时和一夜容量 |
+| `lint-targets` | 目标表列名、重复、RA/Dec 越界 |
+| `endpoints` | NGSS 路由分 read / mutate / hardware |
 
 几个例子：
 
 ```powershell
 python .\skills\starwhisper-snclock\scripts\screen_snclock.py screen --tier strict --require-redshift
-python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
+python .\skills\starwhisper-explore\scripts\eval_gate.py gate --csv my_run.csv --agent my_policy
 python .\skills\starwhisper-night-plan\scripts\plan_night.py lint-targets --targets targets.csv
 ```
 
-`eval_gate gate` 判定非正向、`plan_night` 有 error 时退出码为 1，可以直接进 CI。
+`eval_gate gate` 判定非正向、`plan_night` 有 error 时退出码为 1，可以直接进 CI。回归测试：`python -m pytest skills -q`。
 
 下面这些线在本仓库是材料，没有技能。缺了就说缺了，不要假装跑过。
 
