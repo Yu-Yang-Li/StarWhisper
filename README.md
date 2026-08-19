@@ -171,7 +171,6 @@ python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 | [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | 把爆发年龄预测筛成候选清单，并审计证据强度 |
 | [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | 按预注册门槛逐条判定策略对比 |
 | [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | 校验 observe_config、算一夜容量、lint 目标表 |
-| [`starwhisper-index`](skills/starwhisper-index/SKILL.md) | 判断该跑哪个技能，还是这条线只有材料可读 |
 
 另有他山改编的 13 个天文科研技能（检索、假设、实验设计、统计、写作、审稿、绘图）。
 

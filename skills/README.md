@@ -4,7 +4,7 @@
 
 ```powershell
 powershell -File .\skills\install_native.ps1
-python .\skills\starwhisper-index\scripts\route.py --query "这批候选还在两天内吗" --json
+python .\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
 ```
 
 装到 `~/.codex/skills` 或 `~/.cursor/skills` 之后，把本仓库路径设成 `STARWHISPER_ROOT`，脚本才找得到 `snclock/`、`explore/`、`NGSS/`。
@@ -15,7 +15,6 @@ python .\skills\starwhisper-index\scripts\route.py --query "这批候选还在�
 
 | 技能 | 做什么 | 主命令 |
 | --- | --- | --- |
-| [`starwhisper-index`](starwhisper-index/SKILL.md) | 判断问题该跑哪个技能，还是只能读材料 | `route.py --query "..."` |
 | [`starwhisper-snclock`](starwhisper-snclock/SKILL.md) | 把爆发年龄预测筛成年轻超新星候选清单，并审计证据强度 | `screen_snclock.py rank --top 10` |
 | [`starwhisper-explore`](starwhisper-explore/SKILL.md) | 按预注册门槛逐条判定策略对比 | `eval_gate.py gate --agent rule_agent` |
 | [`starwhisper-night-plan`](starwhisper-night-plan/SKILL.md) | 校验 observe_config、算一夜容量、lint 目标表 | `plan_night.py budget` |
@@ -30,7 +29,18 @@ python .\skills\starwhisper-night-plan\scripts\plan_night.py lint-targets --targ
 
 `eval_gate gate` 判定非正向、`plan_night` 有 error 时退出码为 1，可以直接进 CI。
 
-语言模型、Kepler/K2 光变、脉冲星、全天相机、稀疏光变、低信噪光谱、GOTTA 样机和 SitianClaw 在本仓库是**材料不是流程**，位置和边界收在 [`starwhisper-index/references/asset-map.md`](starwhisper-index/references/asset-map.md)，不单独占技能位。
+下面这些线在本仓库是材料，没有技能。缺了就说缺了，不要假装跑过。
+
+| 线 | 位置 | 边界 |
+| --- | --- | --- |
+| 语言模型 | `LLM_Data/`，[StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) | 清洗后的问答文本，不是观测日志；4.0 未发布 |
+| 光变分类 | `StarWhisper_LC/` | 测试代码，不是完整训练复现 |
+| 脉冲星 | [ACMISLab/StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) | 未 vendored；候选分类不是确认星表 |
+| 全天相机 | `AllSky-Camera-XL/` | 产出的是序列文件，不是已执行的夜次 |
+| 稀疏光变 | `Early Classification from Sparse Light Curves/` | 测试集指标不是爆发时刻 |
+| 低信噪光谱 | `Low-SNR-Stellar-Spectra-as-Language/` | 完整 tokenized 数据集仍是 coming soon |
+| GOTTA 样机 | `GOTTA_Prototype/` | 样机分数不是 broker 警报 |
+| 虚拟司天工作流 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | `snc-*` 装在那边跑，不要在这里重写 |
 
 ## 天文科研（他山改编）
 

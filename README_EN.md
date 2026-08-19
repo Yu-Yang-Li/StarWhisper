@@ -171,7 +171,6 @@ python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 | [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | Screen explosion-age predictions into a shortlist and audit how strong the evidence is |
 | [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | Judge a policy comparison criterion by criterion against the pre-registered bar |
 | [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | Validate observe_config, compute night capacity, lint a target list |
-| [`starwhisper-index`](skills/starwhisper-index/SKILL.md) | Decide which skill runs this, or whether the line is reference material only |
 
 Plus 13 astronomy-adapted research skills: search, hypotheses, experiment design, statistics, writing, review, figures.
 
