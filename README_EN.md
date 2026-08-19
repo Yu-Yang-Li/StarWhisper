@@ -17,7 +17,7 @@
 
 StarWhisper is open astronomy work supported by NAOC, Zhejiang Lab, and collaborators. It began in 2023 as a language model, then went on to Kepler / K2 light-curve classification, pulsar candidates, and an observing agent on the Nearby Galaxy Supernovae Survey (NGSS). The 2026 line is Virtual Sitian (SN Clock). The latest peer-reviewed paper is [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) (November 2025).
 
-This repository now ships as a **skill pack**: 16 astronomy research skills you can install into Codex or Cursor, plus the data and specs they operate on. What you can run comes first; the timeline of the work follows.
+This repository now ships as a **skill pack**: 17 astronomy research skills you can install into Codex or Cursor, plus the data and specs they operate on. What you can run comes first; the timeline of the work follows.
 
 ---
 
@@ -29,7 +29,7 @@ cd StarWhisper
 ./skills/install.sh                            # Windows: powershell -File .\skills\install.ps1
 ```
 
-The three native skills are stdlib only. No dependencies to install, no network, no hardware:
+The four native skills are stdlib only. No dependencies to install, no network, no hardware:
 
 | What you want | Run |
 | --- | --- |
@@ -39,12 +39,15 @@ The three native skills are stdlib only. No dependencies to install, no network,
 | Judge whether an observing policy cleared its pre-registered bar | `eval_gate.py gate --agent rule_agent` |
 | Work out how many targets fit in one night | `plan_night.py budget` |
 | Check whether a target list is ready to submit | `plan_night.py lint-targets --targets t.csv` |
+| Rank the published sparse-LC configs inside one pool | `eval_varlen.py best --pool varlen` |
+| Lint a light-curve table against the 3–30 / 7-class contract | `eval_varlen.py check --csv t.csv` |
 
 | Skill | All subcommands |
 | --- | --- |
 | [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | `describe` `rank` `screen` `window` `audit` |
 | [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | `bar` `table` `gate` |
 | [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | `check-config` `budget` `lint-targets` `endpoints` |
+| [`starwhisper-varlen`](skills/starwhisper-varlen/SKILL.md) | `contract` `table` `best` `compare` `labels` `check` |
 
 The other 13 are astronomy-adapted research skills: literature search, hypotheses, experiment design, statistics, writing, review, figures, decks. Full list and environment variables in [`skills/README.md`](skills/README.md).
 
@@ -58,11 +61,13 @@ The skills read published material, not anything generated on the fly:
 | --- | --- | --- |
 | [`snclock/`](snclock/README.md) | Explosion-age predictions for 22 TNS sources (q16/q50/q84) | Covers less than the declared window; most rows did not persist their input |
 | [`explore/`](explore/README.md) | `StarWhisper-Explore-v0.2` spec and the checked four-policy table | Synthetic environment; the environment code is not in this repo yet |
+| [`skills/starwhisper-varlen/references/`](skills/starwhisper-varlen/SKILL.md) | Published scores for 11 sparse-LC configs | Compare only inside one pool; a test-set metric is not an explosion time |
 
 | Also looking for | Where |
 | --- | --- |
 | Observing agent code | [`NGSS/`](NGSS), needs NINA and related services |
 | Light-curve tests | [`StarWhisper_LC/`](StarWhisper_LC), not a full training reproduction |
+| Sparse-LC training code | [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves), weights on Hugging Face |
 | The runnable Virtual Sitian system | [map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html), [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw), not at this repo root |
 
 ---
@@ -156,7 +161,7 @@ Also from 2026, but not the Virtual Sitian main line:
 
 - Xinglong all-sky camera [`AllSky-Camera-XL/`](AllSky-Camera-XL): from a full-sky image to a replanned sequence
 - Cloud nowcasting with Himawari: private repo on 2022–2025 archived nights; that line closed in August 2026 and is not an operational forecast
-- Early classification on sparse ZTF / ATLAS light curves: [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)
+- Early classification on sparse ZTF / ATLAS light curves: [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves). Read the checked scorecard with [`starwhisper-varlen`](skills/starwhisper-varlen/SKILL.md); do not quote 50-obs pretrain accuracy as the 3–30-obs main result
 - Low-SNR stellar spectra: [`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language) ([Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language))
 
 ---

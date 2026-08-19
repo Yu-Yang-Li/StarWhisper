@@ -68,4 +68,4 @@ Write-Host "Installed $($skills.Count) skills into $($targets.Count) location(s)
 Write-Host "Point the native skills at this checkout so they can read snclock/, explore/ and NGSS/:"
 Write-Host "  setx STARWHISPER_ROOT `"$repo`""
 Write-Host "Skills with extra Python deps: experiment-design, statistical-analysis, thesis-audit-reviewer, visual-deck-builder, papercheck."
-Write-Host "The three starwhisper-* skills are stdlib only and need nothing installed."
+Write-Host "The four starwhisper-* skills are stdlib only and need nothing installed."

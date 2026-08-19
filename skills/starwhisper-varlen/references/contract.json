@@ -1,0 +1,28 @@
+{
+  "raw_categories": ["BYDra", "CEP", "CEPII", "CV", "DSCT", "EA", "EW", "Mira", "RR", "RRc", "RSCVN", "SR", "SN"],
+  "merge": {
+    "RR": "RR",
+    "RRc": "RR",
+    "EA": "Eclipsing",
+    "EW": "Eclipsing",
+    "Mira": "LPV",
+    "SR": "LPV",
+    "BYDra": "Active",
+    "RSCVN": "Active",
+    "CV": "Cataclysmic",
+    "CEP": "Pulsating",
+    "CEPII": "Pulsating",
+    "DSCT": "Pulsating",
+    "SN": "SN"
+  },
+  "merged_categories": ["Active", "Cataclysmic", "Eclipsing", "LPV", "Pulsating", "RR", "SN"],
+  "varlen": {
+    "n_obs": [3, 30],
+    "split": "75/10/15",
+    "random_state": 42,
+    "n_total": 1718277,
+    "n_train": 1288707,
+    "n_val": 171828,
+    "n_test": 257742
+  }
+}

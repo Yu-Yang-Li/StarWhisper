@@ -17,7 +17,7 @@
 
 StarWhisper 是面向天文学的开源工作，由国家天文台、之江实验室等单位支持。2023 年从天文语言模型做起，随后做到 Kepler / K2 光变分类、脉冲星候选，以及接到近邻星系巡天（NGSS）上的观测 agent。2026 年的主线是虚拟司天（SN Clock）。最新正式论文是 2025 年 11 月的 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。
 
-这个仓库现在以**技能包**的形式交付：16 个可以装进 Codex 或 Cursor 的天文科研技能，加上它们操作的数据和规格。往下先是能跑什么，再是这些工作的时间线。
+这个仓库现在以**技能包**的形式交付：17 个可以装进 Codex 或 Cursor 的天文科研技能，加上它们操作的数据和规格。往下先是能跑什么，再是这些工作的时间线。
 
 ---
 
@@ -29,7 +29,7 @@ cd StarWhisper
 powershell -File .\skills\install.ps1          # Linux / macOS: ./skills/install.sh
 ```
 
-3 个本线技能只用标准库，不装依赖、不联网、不碰硬件，克隆下来就能跑：
+4 个本线技能只用标准库，不装依赖、不联网、不碰硬件，克隆下来就能跑：
 
 | 我要做什么 | 跑这个 |
 | --- | --- |
@@ -39,12 +39,15 @@ powershell -File .\skills\install.ps1          # Linux / macOS: ./skills/install
 | 判断一个观测策略有没有过预注册的线 | `eval_gate.py gate --agent rule_agent` |
 | 算一夜能排多少个目标 | `plan_night.py budget` |
 | 检查目标表能不能交 | `plan_night.py lint-targets --targets t.csv` |
+| 看稀疏光变 11 个配置谁最好 | `eval_varlen.py best --pool varlen` |
+| 检查光变表是否符合 3–30 / 7 类合同 | `eval_varlen.py check --csv t.csv` |
 
 | 技能 | 全部子命令 |
 | --- | --- |
 | [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | `describe` `rank` `screen` `window` `audit` |
 | [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | `bar` `table` `gate` |
 | [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | `check-config` `budget` `lint-targets` `endpoints` |
+| [`starwhisper-varlen`](skills/starwhisper-varlen/SKILL.md) | `contract` `table` `best` `compare` `labels` `check` |
 
 另外 13 个是从他山改编的科研技能：文献检索、假设生成、实验设计、统计分析、写作、审稿、绘图、PPT。清单和环境变量见 [`skills/README.md`](skills/README.md)。
 
@@ -58,11 +61,13 @@ powershell -File .\skills\install.ps1          # Linux / macOS: ./skills/install
 | --- | --- | --- |
 | [`snclock/`](snclock/README.md) | 22 个 TNS 源的爆发年龄预测（q16/q50/q84） | 覆盖范围小于声明窗口，多数行输入未留存 |
 | [`explore/`](explore/README.md) | `StarWhisper-Explore-v0.2` 规格和四策略已核对表 | 合成环境，环境代码尚未入库 |
+| [`skills/starwhisper-varlen/references/`](skills/starwhisper-varlen/SKILL.md) | 稀疏光变 11 个配置的已发表成绩单 | 只在同一 pool 里比；测试集指标不是爆发时刻 |
 
 | 还要找什么 | 去哪 |
 | --- | --- |
 | 观测 agent 代码 | [`NGSS/`](NGSS)，依赖 NINA 等外部服务 |
 | 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC)，不是完整训练复现 |
+| 稀疏光变训练代码 | [`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)，权重在 Hugging Face |
 | 虚拟司天可运行系统 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)、[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，不在本仓库根目录 |
 
 ---
@@ -156,7 +161,7 @@ python .\skills\starwhisper-snclock\scripts\screen_snclock.py audit
 
 - 兴隆全天相机 [`AllSky-Camera-XL/`](AllSky-Camera-XL)：从原图排到新的观测序列
 - 葵花卫星云量临近预报：私有仓库，用 2022–2025 年历史夜次，2026 年 8 月主线已收口，还不是业务预报
-- 稀疏 ZTF / ATLAS 光变早期分类：[`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)
+- 稀疏 ZTF / ATLAS 光变早期分类：[`Early Classification from Sparse Light Curves/`](Early%20Classification%20from%20Sparse%20Light%20Curves)。读已核对成绩单用 [`starwhisper-varlen`](skills/starwhisper-varlen/SKILL.md)，不要把 50 点预训练的准确率写成 3–30 点主结果
 - 低信噪比恒星光谱：[`Low-SNR-Stellar-Spectra-as-Language/`](Low-SNR-Stellar-Spectra-as-Language)，独立仓库 [Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)
 
 ---

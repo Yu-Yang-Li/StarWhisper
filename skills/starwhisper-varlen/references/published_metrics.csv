@@ -1,0 +1,12 @@
+exp_id,name,group,stage,pool,input,split_ratio,random_state,accuracy,macro_f1,n_test,metrics_kind
+xgb_1117,XGBoost 1117,handcrafted,varlen,varlen,57-feature,75/10/15,42,0.9133862544715258,0.9231366874262941,257742,json
+xgb_1121,XGBoost 1121,handcrafted,varlen,1121,39-feature no Lomb-Scargle,75/10/15,42,0.9214059020260571,0.9298852131191399,257742,json
+tf_feat_50obs,Transformer feat 50obs,handcrafted,50obs-pretrain,50obs,handcrafted ~250M,75/10/15,42,0.9892,0.9906,244938,txt
+tf_feat_finetune,Transformer feat varlen finetune,handcrafted,varlen-finetune,varlen,handcrafted ~250M,75/10/15,42,0.8224,0.8428,257742,txt
+tf_feat_scratch,Transformer feat varlen scratch,handcrafted,varlen-scratch,varlen,handcrafted ~250M,75/10/15,42,0.8799,0.8925,257742,txt
+e2e_tf_small_50,E2E Transformer light 50obs,e2e-light,50obs-pretrain,50obs,raw sequence ~11M,75/10/15,42,0.9797377295478856,0.9820961714716547,,json
+e2e_tf_small_ft,E2E Transformer light varlen finetune,e2e-light,varlen-finetune,varlen,raw sequence ~11M,75/10/15,42,0.7638180816475391,0.7920904429725114,,json
+e2e_tf_matched_50,E2E Transformer matched 50obs,e2e-matched,50obs-pretrain,50obs,raw sequence ~227M,75/10/15,42,0.9986486376144167,0.9987415350081302,,json
+e2e_tf_matched_ft,E2E Transformer matched varlen finetune,e2e-matched,varlen-finetune,varlen,raw sequence ~227M,75/10/15,42,0.9457558333527326,0.9496603984200387,,json
+e2e_tf_matched_scratch,E2E Transformer matched varlen scratch,e2e-matched,varlen-scratch,varlen,raw sequence ~227M,75/10/15,42,0.5128112608732763,0.5521827084964948,,json
+rnn_e2e_varlen,LSTM E2E varlen,rnn,varlen-e2e,varlen,raw sequence ~0.2M,75/10/15,42,0.8467032924397265,0.8638975990115191,,json

@@ -1,12 +1,12 @@
 # 技能包
 
-16 个技能，都是**做事的**，不是介绍性的：每个有决策规则、可跑的脚本，多数带回归测试。没有密钥就 dry-run，没有数据就报缺，不编文献，不下硬件指令。
+17 个技能，都是**做事的**，不是介绍性的：每个有决策规则、可跑的脚本，多数带回归测试。没有密钥就 dry-run，没有数据就报缺，不编文献，不下硬件指令。
 
 ## 安装
 
 ```powershell
 powershell -File .\skills\install.ps1 -List     # 先看会装什么
-powershell -File .\skills\install.ps1           # 16 个全装
+powershell -File .\skills\install.ps1           # 17 个全装
 powershell -File .\skills\install.ps1 -Set native -Target codex
 ```
 
@@ -18,13 +18,13 @@ Linux / macOS 用 `./skills/install.sh`，参数是 `--list`、`--set native|res
 setx STARWHISPER_ROOT "C:\path\to\StarWhisper"
 ```
 
-3 个本线技能是 stdlib，装完即用。`experiment-design`、`statistical-analysis`、`thesis-audit-reviewer`、`visual-deck-builder`、`papercheck` 各自带 `requirements.txt`，用到时再装。
+4 个本线技能是 stdlib，装完即用。`experiment-design`、`statistical-analysis`、`thesis-audit-reviewer`、`visual-deck-builder`、`papercheck` 各自带 `requirements.txt`，用到时再装。
 
 许可证见 [`NOTICE.md`](NOTICE.md)：本线 Apache-2.0，他山改编部分 MIT。
 
 ## 星语本线
 
-3 个技能，12 个子命令，全部 stdlib、不联网、不碰硬件。
+4 个技能，18 个子命令，全部 stdlib、不联网、不碰硬件。
 
 **[`starwhisper-snclock`](starwhisper-snclock/SKILL.md)** —— 读 [`snclock/`](../snclock/README.md) 的爆发年龄预测表
 
@@ -53,25 +53,36 @@ setx STARWHISPER_ROOT "C:\path\to\StarWhisper"
 | `lint-targets` | 目标表列名、重复、RA/Dec 越界 |
 | `endpoints` | NGSS 路由分 read / mutate / hardware |
 
+**[`starwhisper-varlen`](starwhisper-varlen/SKILL.md)** —— 读技能里冻结的 11 个稀疏光变成绩单
+
+| 子命令 | 做什么 |
+| --- | --- |
+| `contract` | 先念 3–30 点、7 类、75/10/15、`random_state=42` |
+| `table` | 按 pool 排序已发表配置 |
+| `best` | 同一 pool 里 macro-F1 最高的配置 |
+| `compare` | 两个 `exp_id` 的差值；跨池标 `NOT COMPARABLE` 并退出 1 |
+| `labels` | 把 `BYDra` / `EA` / `RRc` 等映射到 7 个合并类 |
+| `check` | 用户 CSV 的点数和标签是否对得上合同 |
+
 几个例子：
 
 ```powershell
 python .\skills\starwhisper-snclock\scripts\screen_snclock.py screen --tier strict --require-redshift
 python .\skills\starwhisper-explore\scripts\eval_gate.py gate --csv my_run.csv --agent my_policy
 python .\skills\starwhisper-night-plan\scripts\plan_night.py lint-targets --targets targets.csv
+python .\skills\starwhisper-varlen\scripts\eval_varlen.py best --pool varlen
 ```
 
-`eval_gate gate` 判定非正向、`plan_night` 有 error 时退出码为 1，可以直接进 CI。回归测试：`python -m pytest skills -q`。
+`eval_gate gate` 判定非正向、`plan_night` 有 error、`eval_varlen compare` 跨池或 `check`/`labels` 失败时退出码为 1，可以直接进 CI。回归测试：`python -m pytest skills -q`。
 
 下面这些线在本仓库是材料，没有技能。缺了就说缺了，不要假装跑过。
 
 | 线 | 位置 | 边界 |
 | --- | --- | --- |
 | 语言模型 | `LLM_Data/`，[StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) | 清洗后的问答文本，不是观测日志；4.0 未发布 |
-| 光变分类 | `StarWhisper_LC/` | 测试代码，不是完整训练复现 |
+| 光变分类 | `StarWhisper_LC/` | Kepler/K2 测试代码，不是稀疏 ZTF/ATLAS 基准，也不是完整训练复现 |
 | 脉冲星 | [ACMISLab/StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) | 未 vendored；候选分类不是确认星表 |
 | 全天相机 | `AllSky-Camera-XL/` | 产出的是序列文件，不是已执行的夜次 |
-| 稀疏光变 | `Early Classification from Sparse Light Curves/` | 测试集指标不是爆发时刻 |
 | 低信噪光谱 | `Low-SNR-Stellar-Spectra-as-Language/` | 完整 tokenized 数据集仍是 coming soon |
 | GOTTA 样机 | `GOTTA_Prototype/` | 样机分数不是 broker 警报 |
 | 虚拟司天工作流 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | `snc-*` 装在那边跑，不要在这里重写 |
