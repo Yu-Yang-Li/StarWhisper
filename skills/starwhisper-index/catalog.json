@@ -1,70 +1,90 @@
 {
-  "lines": [
+  "skills": [
     {
-      "id": "llm",
-      "skill": "starwhisper-llm",
-      "path": "LLM_Data",
-      "keywords": ["llm", "语言模型", "starwhisper3", "starwhisper 4", "modelscope", "问答", "llm_data"]
-    },
-    {
-      "id": "lc",
-      "skill": "starwhisper-lc",
-      "path": "StarWhisper_LC",
-      "keywords": ["light curve", "光变", "kepler", "k2", "cepheid", "rr lyrae", "swin", "intelligent computing"]
-    },
-    {
-      "id": "pulsar",
-      "skill": "starwhisper-pulsar",
-      "path": "https://github.com/ACMISLab/StarWhisper-Pulsar",
-      "keywords": ["pulsar", "脉冲星", "fm4science", "neurips"]
-    },
-    {
-      "id": "telescope",
-      "skill": "starwhisper-telescope",
-      "path": "NGSS",
-      "keywords": ["telescope", "ngss", "nina", "观测", "夜计划", "observe_config", "communications engineering"]
+      "id": "snclock",
+      "skill": "starwhisper-snclock",
+      "does": "screen SN Clock explosion-age predictions into a young-SN shortlist",
+      "run": "python skills/starwhisper-snclock/scripts/screen_snclock.py rank --top 10",
+      "keywords": ["snclock", "sn clock", "超新星时钟", "爆发时刻", "explosion", "young sn", "年轻超新星", "h3", "within 2d", "tns", "候选筛选", "候选表", "sitian", "司天"]
     },
     {
       "id": "explore",
       "skill": "starwhisper-explore",
-      "path": "explore",
-      "keywords": ["explore", "决策边界", "跟进率", "巡天完成度", "goai", "负结果", "六时隙"]
+      "does": "judge a policy comparison against the pre-registered bar",
+      "run": "python skills/starwhisper-explore/scripts/eval_gate.py gate --agent rule_agent",
+      "keywords": ["explore", "决策边界", "门槛", "预注册", "过线", "跟进率", "巡天完成度", "策略对比", "负结果", "goai", "policy", "gate"]
     },
     {
-      "id": "allsky",
-      "skill": "starwhisper-allsky",
-      "path": "AllSky-Camera-XL",
-      "keywords": ["allsky", "all-sky", "全天相机", "兴隆", "replan", "掩码"]
-    },
-    {
-      "id": "sparse-lc",
-      "skill": "starwhisper-sparse-lc",
-      "path": "Early Classification from Sparse Light Curves",
-      "keywords": ["sparse", "ztf", "atlas", "varlen", "早期分类", "xgboost"]
-    },
-    {
-      "id": "spectra",
-      "skill": "starwhisper-lowsnr-spectra",
-      "path": "Low-SNR-Stellar-Spectra-as-Language",
-      "keywords": ["snr", "光谱", "lamost", "phoenix", "low-snr", "spectra"]
-    },
-    {
-      "id": "sitian",
-      "skill": "starwhisper-sitian",
-      "path": "https://github.com/Yu-Yang-Li/SitianClaw",
-      "keywords": ["sitian", "司天", "sn clock", "gotta", "超新星时钟", "explosion", "forced phot"]
-    },
-    {
-      "id": "gotta",
-      "skill": "starwhisper-gotta",
-      "path": "GOTTA_Prototype",
-      "keywords": ["gotta", "real/bogus", "真假源", "prototype"]
+      "id": "night-plan",
+      "skill": "starwhisper-night-plan",
+      "does": "validate observe_config, compute night capacity, lint a target list",
+      "run": "python skills/starwhisper-night-plan/scripts/plan_night.py budget",
+      "keywords": ["ngss", "telescope", "nina", "夜计划", "observe_config", "d_moon", "曝光", "目标表", "排多少", "容量", "观测配置", "接口", "endpoint"]
     },
     {
       "id": "research",
       "skill": "giiisp-paper-search-apis",
-      "path": "skills",
-      "keywords": ["ads", "论文", "bibcode", "润色", "审稿", "假设", "citation"]
+      "does": "search NASA ADS then arXiv astro-ph without inventing papers",
+      "run": "python skills/giiisp-paper-search-apis/scripts/ads_first_search.py --query \"...\" --dry-run",
+      "keywords": ["ads", "论文", "文献", "bibcode", "arxiv", "检索", "引用", "citation"]
+    }
+  ],
+  "assets": [
+    {
+      "id": "llm",
+      "name": "StarWhisper 3 语言模型",
+      "path": "LLM_Data/",
+      "doc": "https://www.modelscope.cn/models/AstroYuYang/StarWhisper3",
+      "keywords": ["llm", "语言模型", "starwhisper3", "starwhisper 4", "modelscope", "问答", "训练数据"]
+    },
+    {
+      "id": "lc",
+      "name": "Kepler/K2 光变分类",
+      "path": "StarWhisper_LC/",
+      "doc": "https://spj.science.org/doi/10.34133/icomputing.0110",
+      "keywords": ["light curve", "光变", "kepler", "k2", "cepheid", "rr lyrae", "变星", "swin"]
+    },
+    {
+      "id": "pulsar",
+      "name": "脉冲星候选分类",
+      "path": "https://github.com/ACMISLab/StarWhisper-Pulsar",
+      "doc": "https://openreview.net/pdf?id=8SKgWpZiDL",
+      "keywords": ["pulsar", "脉冲星", "fm4science", "neurips"]
+    },
+    {
+      "id": "allsky",
+      "name": "兴隆全天相机重规划",
+      "path": "AllSky-Camera-XL/",
+      "doc": "AllSky-Camera-XL/skill/photo-to-replan/SKILL.md",
+      "keywords": ["allsky", "all-sky", "全天相机", "兴隆", "replan", "掩码", "云"]
+    },
+    {
+      "id": "sparse-lc",
+      "name": "稀疏光变早期分类",
+      "path": "Early Classification from Sparse Light Curves/",
+      "doc": "https://huggingface.co/castor0705/sparse-lc-early-classification",
+      "keywords": ["sparse", "ztf", "atlas", "varlen", "早期分类", "xgboost"]
+    },
+    {
+      "id": "spectra",
+      "name": "低信噪比恒星光谱",
+      "path": "Low-SNR-Stellar-Spectra-as-Language/",
+      "doc": "https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language",
+      "keywords": ["snr", "光谱", "lamost", "phoenix", "spectra", "信噪比"]
+    },
+    {
+      "id": "gotta",
+      "name": "GOTTA 真假源样机",
+      "path": "GOTTA_Prototype/",
+      "doc": "https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html",
+      "keywords": ["gotta", "real/bogus", "真假源", "样机"]
+    },
+    {
+      "id": "sitianclaw",
+      "name": "虚拟司天可运行工作流",
+      "path": "https://github.com/Yu-Yang-Li/SitianClaw",
+      "doc": "https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html",
+      "keywords": ["sitianclaw", "snc-", "强制测光", "forced phot", "可见性", "observability", "红移查询"]
     }
   ]
 }

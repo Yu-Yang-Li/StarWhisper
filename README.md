@@ -41,7 +41,8 @@ flowchart LR
 | --- | --- | --- |
 | 观测 agent | [`NGSS/`](NGSS) | 论文对应代码；依赖 NINA 等外部服务 |
 | 光变分类测试 | [`StarWhisper_LC/`](StarWhisper_LC) | 测试代码，不是完整训练复现 |
-| 天文科研技能 | [`skills/`](skills/README.md) | 本线 `starwhisper-*` + 他山改编；无密钥 dry-run |
+| 可跑的技能 | [`skills/`](skills/README.md) | 4 个本线功能技能 + 13 个他山改编；无密钥 dry-run |
+| SN Clock 候选表 | [`snclock/`](snclock/README.md) | 22 个源的爆发年龄预测；覆盖范围有限，看数据卡 |
 | 虚拟司天 | [地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)，[SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | 可运行系统不在本仓库根目录 |
 | Explore 数字 | [`explore/`](explore/README.md) | 合成环境规格和已核对结果；环境代码尚未入库 |
 
@@ -93,6 +94,15 @@ StarWhisper 3 做天文问答和写代码。训练数据在 [`LLM_Data/`](LLM_Da
 
 2026 年才把虚拟司天做成可运行的系统（SN Clock）。早期科学应用是超新星时钟：估计爆发时刻、筛年轻超新星候选。公开说明见 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。同一套工作流的可安装技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，真假源样机在 [`GOTTA_Prototype/`](GOTTA_Prototype)。
 
+[`snclock/`](snclock/README.md) 放了一次生产输出：22 个 TNS 源在发现时刻的爆发后年龄估计，给 q16 / q50 / q84 三个分位，按是否落在两天内分两档。其中只有 2 个源连保守口径 q84 都在两天内。这张表的覆盖范围小于声明的筛选窗口，多数行的输入快照也没有留存，具体在数据卡里写清楚了。读表用 [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md)：
+
+```powershell
+python .\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
+python .\skills\starwhisper-snclock\scripts\screen_snclock.py audit
+```
+
+年龄估计不是光谱分类，表里的源也都已经在 TNS 上，不构成新发现。
+
 司天计划在国内多个台站放 54 台 1 米级大视场望远镜，大约每 30 分钟扫 1 万平方度、三色。StarWhisper 是“司天大脑”的一条候选路径。
 
 <div align="center">
@@ -135,6 +145,13 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 规则 Agent 相对确定性优先级，跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，过了预注册的 5 个百分点线。三个种子方向一样，复跑哈希一致。这是稳定的负结果：短期响应换来了过量的巡天欠账。
 
+判定可以自己跑一遍，也可以拿去判自己的实验表：
+
+```powershell
+python .\skills\starwhisper-explore\scripts\eval_gate.py bar
+python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
+```
+
 <div align="center">
 
 ![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/goai-verification-source.png)
@@ -147,13 +164,22 @@ Telescope 已经能在巡天里自动观测。Explore 看的是这个判断什�
 
 ## 2026 · 技能
 
-过去几条线已经收成可执行的 `starwhisper-*` 技能，和他山改编的 13 个天文科研技能放在 [`skills/`](skills/README.md)。先装本线，再用 [`starwhisper-index`](skills/starwhisper-index/SKILL.md) 做路由。
+[`skills/`](skills/README.md) 里是**做事的**技能，不是目录导览：每个都有决策规则、可跑脚本和回归测试。
 
-没有密钥就 dry-run。不编文献。未接通 NINA / 望远镜时，观测类技能只 inspect，不下指令。
+| 技能 | 做什么 |
+| --- | --- |
+| [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | 把爆发年龄预测筛成候选清单，并审计证据强度 |
+| [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | 按预注册门槛逐条判定策略对比 |
+| [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | 校验 observe_config、算一夜容量、lint 目标表 |
+| [`starwhisper-index`](skills/starwhisper-index/SKILL.md) | 判断该跑哪个技能，还是这条线只有材料可读 |
+
+另有他山改编的 13 个天文科研技能（检索、假设、实验设计、统计、写作、审稿、绘图）。
+
+没有密钥就 dry-run，不编文献。夜计划技能只做检查，任何情况下不碰 `/manipulate_nina` 和 `/ftp_transfer`。
 
 ```powershell
 powershell -File .\skills\install_native.ps1
-python .\skills\starwhisper-index\scripts\route.py --query "Explore 负结果" --json
+python .\skills\starwhisper-night-plan\scripts\plan_night.py budget
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 ```
 

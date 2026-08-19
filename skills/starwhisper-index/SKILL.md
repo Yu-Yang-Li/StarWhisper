@@ -1,40 +1,46 @@
 ---
 name: starwhisper-index
-description: Route StarWhisper questions to the matching line, folder, paper, and skill. Use when the user asks what StarWhisper is, which folder to open, how LLM/LC/Telescope/Sitian/Explore relate, or which skill to install.
+description: Route a StarWhisper question to the skill that can actually run it, or to the reference asset when no skill exists. Use when the user asks what StarWhisper is, which folder to open, which skill to install, or how the LLM / light-curve / Telescope / Explore / SN Clock lines relate.
+license: Apache-2.0
 ---
 
-# StarWhisper index
+# StarWhisper 路由
 
-Pick one line. Do not mix a published paper, a synthetic Explore table, and hardware control in the same claim.
-
-Run this first:
+先问一句：这个问题是要**跑**什么，还是要**读**什么。
 
 ```powershell
-python skills/starwhisper-index/scripts/route.py --query "NGSS 夜计划" --json
+python scripts/route.py --query "这批候选还在两天内吗" --json
 ```
 
-Then open the matching skill below. Catalog: `catalog.json`.
+路由结果分两类。命中 `skills` 就去跑；只命中 `assets` 说明这条线在本仓库只有材料、没有可跑流程，读完如实说，不要假装跑过。
 
-| Line | When | Open | Skill |
-| --- | --- | --- | --- |
-| LLM | 问答模型、训练数据、StarWhisper 3/4 | `LLM_Data/` | `starwhisper-llm` |
-| LC | Kepler/K2 光变分类 | `StarWhisper_LC/` | `starwhisper-lc` |
-| Pulsar | 脉冲星候选 | ACMISLab/StarWhisper-Pulsar | `starwhisper-pulsar` |
-| Telescope | NGSS 观测 agent、NINA、夜计划 | `NGSS/` | `starwhisper-telescope` |
-| Explore | 决策边界、四策略表、稳定负结果 | `explore/` | `starwhisper-explore` |
-| All-sky | 兴隆全天相机 → 重规划 | `AllSky-Camera-XL/` | `starwhisper-allsky` |
-| Sparse LC | 稀疏 ZTF/ATLAS 早期分类 | `Early Classification from Sparse Light Curves/` | `starwhisper-sparse-lc` |
-| Spectra | 低信噪比恒星光谱 | `Low-SNR-Stellar-Spectra-as-Language/` | `starwhisper-lowsnr-spectra` |
-| GOTTA prototype | 真假源原型 | `GOTTA_Prototype/` | `starwhisper-gotta` |
-| Sitian | 虚拟司天、超新星时钟 | [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | `starwhisper-sitian` |
-| Research writing | ADS、假设、审稿、润色 | `skills/` 他山改编目录 | 对应科研技能 |
+## 会跑的技能
 
-Literature and writing skills do not replace NGSS. Native observing skills do not invent papers.
+| 技能 | 做什么 |
+| --- | --- |
+| `starwhisper-snclock` | 把 SN Clock 年龄预测筛成年轻超新星候选清单，并审计证据强度 |
+| `starwhisper-explore` | 按预注册门槛逐条判定策略对比，给 positive / negative / inconclusive |
+| `starwhisper-night-plan` | 校验 observe_config、算一夜容量、lint 目标表 |
+| `giiisp-paper-search-apis` | 先 NASA ADS 再 arXiv `astro-ph`，无 token 时 dry-run |
 
-Install every native skill:
+其余 13 个天文科研技能（假设、实验设计、统计、写作、审稿、绘图、PPT）见 [`skills/README.md`](../README.md)。
+
+## 只能读的材料
+
+语言模型、Kepler/K2 光变、脉冲星、全天相机、稀疏光变、低信噪光谱、GOTTA 样机、SitianClaw 工作流——位置和边界都在 [`references/asset-map.md`](references/asset-map.md)。
+
+## 跨线纪律
+
+一句话里不要同时混用已发表论文指标、Explore 合成表和硬件指令，这三者的证据强度完全不同。
+
+- 论文指标：有同行评议，但只在论文设定下成立
+- Explore 表：合成环境，环境代码不在仓库
+- 硬件：需要真实栈接通，安全联锁优先于 agent
+
+## 安装
 
 ```powershell
-powershell -File skills/install_native.ps1
+powershell -File ..\install_native.ps1
 ```
 
-Set `STARWHISPER_ROOT` if the skills are copied out of this checkout.
+装到别处后，把本仓库路径设成 `STARWHISPER_ROOT`，脚本才找得到 `snclock/`、`explore/`、`NGSS/`。

@@ -28,7 +28,14 @@ Telescope 已经能在巡天里自动观测。Explore 问的是这个判断什�
 
 ## 已公开结果
 
-90 episode / 策略，种子 `11/22/33`。数字见 [`published_metrics.csv`](published_metrics.csv)。
+90 episode / 策略，种子 `11/22/33`。数字见 [`published_metrics.csv`](published_metrics.csv)。逐条判定可以直接跑：
+
+```powershell
+python ..\skills\starwhisper-explore\scripts\eval_gate.py bar
+python ..\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
+```
+
+同一套判定也能用在自己的实验表上：`--csv my_run.csv --agent my_policy`，列名对上即可。
 
 规则 Agent 相对确定性优先级：跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，越过预注册的 5 个百分点线。三个种子方向一致，复跑哈希一致。这是稳定负结果，不是正向胜利。
 

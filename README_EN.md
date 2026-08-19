@@ -41,7 +41,8 @@ flowchart LR
 | --- | --- | --- |
 | Observing agent | [`NGSS/`](NGSS) | Code from the paper; needs NINA and related services |
 | Light-curve tests | [`StarWhisper_LC/`](StarWhisper_LC) | Test code, not a full training reproduction |
-| Research skills | [`skills/`](skills/README.md) | Native `starwhisper-*` plus adapted Tashan skills; dry-run without keys |
+| Skills that run | [`skills/`](skills/README.md) | 4 native working skills plus 13 adapted Tashan skills; dry-run without keys |
+| SN Clock table | [`snclock/`](snclock/README.md) | Explosion-age predictions for 22 sources; limited coverage, read the data card |
 | Virtual Sitian | [map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html), [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) | The runnable system is not at this repo root |
 | Explore numbers | [`explore/`](explore/README.md) | Spec and checked table; environment code is not in this repo yet |
 
@@ -93,6 +94,15 @@ A night plan rarely survives the night. Targets of opportunity arrive, weather c
 
 The runnable Virtual Sitian system is 2026 work (SN Clock). The early science application is the supernova clock: explosion-epoch estimates and young-SN candidates. Public sketch: [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html). Installable skills for the same workflow: [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw). Real/bogus prototype: [`GOTTA_Prototype/`](GOTTA_Prototype).
 
+[`snclock/`](snclock/README.md) holds one production output: post-explosion ages for 22 TNS sources at their discovery time, given as q16 / q50 / q84 quantiles and split into two tiers by whether the source falls within two days. Only 2 sources are within two days even at the conservative q84. The table covers less than the declared screening window, and most rows did not persist their input snapshot; the data card spells both out. Read it with [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md):
+
+```powershell
+python .\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
+python .\skills\starwhisper-snclock\scripts\screen_snclock.py audit
+```
+
+An age estimate is not a spectroscopic classification, and every source in the table is already on TNS, so nothing here is a new discovery.
+
 Sitian plans 54 one-meter-class wide-field telescopes at Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”.
 
 <div align="center">
@@ -135,6 +145,13 @@ The comparators were fixed in advance: no intervention, random, deterministic pr
 
 Against deterministic priority, the rule agent raises follow-up by 23.52 percentage points and utility by about 1.6%, while completeness falls 9.44 points — past the 5-point line. Same direction on three seeds; a second run matched hashes. That is a stable negative result: short-term response bought too much survey debt.
 
+You can re-run the verdict, or point it at your own metrics table:
+
+```powershell
+python .\skills\starwhisper-explore\scripts\eval_gate.py bar
+python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
+```
+
 <div align="center">
 
 ![Verification path](https://yu-yang-li.github.io/StarWhisper/assets/goai-verification-source.png)
@@ -147,13 +164,22 @@ Against deterministic priority, the rule agent raises follow-up by 23.52 percent
 
 ## 2026 · Skills
 
-Past lines are now executable `starwhisper-*` skills, next to 13 astronomy-adapted research skills, in [`skills/`](skills/README.md). Install the native set, then start with [`starwhisper-index`](skills/starwhisper-index/SKILL.md).
+[`skills/`](skills/README.md) holds skills that **do work**, not directory tours: each has decision rules, a runnable script, and regression tests.
 
-With no token they dry-run. They do not invent papers. Observing skills inspect code unless NINA / the telescope stack is actually connected.
+| Skill | What it does |
+| --- | --- |
+| [`starwhisper-snclock`](skills/starwhisper-snclock/SKILL.md) | Screen explosion-age predictions into a shortlist and audit how strong the evidence is |
+| [`starwhisper-explore`](skills/starwhisper-explore/SKILL.md) | Judge a policy comparison criterion by criterion against the pre-registered bar |
+| [`starwhisper-night-plan`](skills/starwhisper-night-plan/SKILL.md) | Validate observe_config, compute night capacity, lint a target list |
+| [`starwhisper-index`](skills/starwhisper-index/SKILL.md) | Decide which skill runs this, or whether the line is reference material only |
+
+Plus 13 astronomy-adapted research skills: search, hypotheses, experiment design, statistics, writing, review, figures.
+
+With no token they dry-run, and they do not invent papers. The night-plan skill only checks; it never calls `/manipulate_nina` or `/ftp_transfer`.
 
 ```powershell
 powershell -File .\skills\install_native.ps1
-python .\skills\starwhisper-index\scripts\route.py --query "Explore negative result" --json
+python .\skills\starwhisper-night-plan\scripts\plan_night.py budget
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "early supernova ZTF" --dry-run
 ```
 
