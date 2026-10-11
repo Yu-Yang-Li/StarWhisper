@@ -3,10 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=virtual-gotta-map.html">
-  <title>StarWhisper</title>
+  <meta name="description" content="StarWhisper 的研究说明、项目资料与科研技能使用文档。">
+  <title>文档 · StarWhisper</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf9f6; color: #262b2d; font-family: system-ui, "Noto Sans SC", sans-serif; line-height: 1.7; }
+    main { max-width: 840px; margin: 0 auto; padding: 48px 24px 64px; }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid #deded7; }
+    .name { font-size: 18px; font-weight: 650; letter-spacing: .02em; }
+    a { color: #315d67; text-underline-offset: 4px; }
+    a:hover { color: #193b43; }
+    a:focus-visible { outline: 2px solid #315d67; outline-offset: 5px; border-radius: 2px; }
+    h1 { margin: 44px 0 12px; font-size: clamp(30px, 5vw, 40px); line-height: 1.3; font-weight: 600; }
+    .intro { max-width: 620px; margin: 0 0 36px; color: #5e6567; }
+    h2 { margin: 32px 0 12px; font-size: 19px; font-weight: 600; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    li { padding: 20px 0; border-bottom: 1px solid #deded7; }
+    li a { font-size: 18px; font-weight: 550; }
+    li p { margin: 6px 0 0; color: #5e6567; }
+    .language { margin-left: 16px; font-size: 15px; font-weight: 400; }
+    footer { margin-top: 40px; font-size: 14px; color: #5e6567; }
+    @media (max-width: 480px) { main { padding: 28px 20px 40px; } header { gap: 12px; } h1 { margin-top: 32px; } }
+  </style>
 </head>
 <body>
-  <p><a href="virtual-gotta-map.html">Open Virtual-GOTTA map</a> · <a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub</a></p>
+  <main>
+    <header>
+      <span class="name">StarWhisper · 星语</span>
+      <a href="https://github.com/Yu-Yang-Li/StarWhisper">GitHub 仓库</a>
+    </header>
+    <h1>文档与资料</h1>
+    <p class="intro">这里整理了各项研究的说明、代码入口，以及科研技能的安装和使用方法。</p>
+    <nav aria-label="文档导航">
+      <ul>
+        <li>
+          <a href="https://github.com/Yu-Yang-Li/StarWhisper/blob/main/docs/research.md">研究说明</a>
+          <a class="language" href="https://github.com/Yu-Yang-Li/StarWhisper/blob/main/docs/research-en.md" lang="en">English</a>
+          <p>阅读论文、数据与模型说明，了解实验结果的适用范围。</p>
+        </li>
+        <li>
+          <a href="https://github.com/Yu-Yang-Li/StarWhisper/blob/main/skills/README.md">科研技能</a>
+          <p>查看技能目录，在 Codex 或 Cursor 中安装，并按示例运行。</p>
+        </li>
+        <li>
+          <a href="https://github.com/Yu-Yang-Li/StarWhisper#项目">项目目录</a>
+          <p>查找语言模型、光变曲线、光谱分析和望远镜观测的代码。</p>
+        </li>
+      </ul>
+    </nav>
+    <section aria-labelledby="observation-title">
+      <h2 id="observation-title">观测研究图表</h2>
+      <ul>
+        <li>
+          <a href="virtual-gotta-map.html">Virtual-GOTTA 观测规划示意</a>
+          <p>查看目标选择、观测计划与望远镜执行之间的关系。</p>
+        </li>
+        <li>
+          <a href="virtual-gotta-source.html">演示材料摘录</a>
+          <p>查看相关演示材料的摘录和页码。</p>
+        </li>
+      </ul>
+    </section>
+    <footer><a href="https://github.com/Yu-Yang-Li/StarWhisper/blob/main/CONTRIBUTING.md">参与贡献与报告问题</a></footer>
+  </main>
 </body>
 </html>
