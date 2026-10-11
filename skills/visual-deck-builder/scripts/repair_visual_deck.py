@@ -11,7 +11,7 @@ VISUAL_SKILL = Path(__file__).resolve().parents[1]
 IMAGE_SKILL = Path(
     os.environ.get(
         "GIIISP_IMAGE_SKILL_DIR",
-        str(Path.home() / ".codex" / "skills" / "giiisp-scientific-image-generation"),
+        str(VISUAL_SKILL.parent / "giiisp-scientific-image-generation"),
     )
 )
 IMAGE_SIZE = os.environ.get("VISUAL_DECK_IMAGE_SIZE", "1K")

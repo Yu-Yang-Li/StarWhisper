@@ -10,11 +10,11 @@
 
 - 一次 Pull Request 尽量解决一个问题，说明改动目的和实际验证方式。
 - 文档修改请同步相关的中英文入口，检查相对链接与图片能否在当前分支打开。
-- 代码修改请运行对应目录的检查；本线技能的现有回归测试见下方命令。
+- 代码修改请运行对应目录的检查；本仓库原生技能的回归测试见下方命令。
 - 科学结果请注明数据来源、样本范围和比较条件，区分历史预测、合成实验、真实观测与计划中的能力。
 - 保留原有作者和许可证信息；改编技能的来源见 [skills/NOTICE.md](skills/NOTICE.md)。
 
-本线技能测试（从仓库根目录执行，需要 `pytest`）：
+原生技能测试（从仓库根目录执行，需要 `pytest`）：
 
 ```bash
 python -m pytest skills/starwhisper-snclock/tests skills/starwhisper-explore/tests skills/starwhisper-night-plan/tests skills/starwhisper-varlen/tests -q

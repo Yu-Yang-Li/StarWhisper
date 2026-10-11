@@ -13,6 +13,7 @@ from urllib.request import Request, urlopen
 
 ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 DEFAULT_MODEL = "qwen3.7-plus"
+STYLE_AXES = ("style_contract_compliance", "formal_ppt_feel", "template_overfit")
 
 
 def read_json(path):
@@ -80,7 +81,7 @@ def first_choice_content(response_json):
     return message.get("content")
 
 
-def build_review_prompt(figure_spec, check, manifest, run_input=None):
+def build_review_prompt(figure_spec, check, manifest, run_input=None, style_contract=None):
     compact_manifest = {}
     if isinstance(manifest, dict):
         compact_manifest = {
@@ -91,11 +92,15 @@ def build_review_prompt(figure_spec, check, manifest, run_input=None):
         }
     run_input = run_input if isinstance(run_input, dict) else {}
     detailed_description = run_input.get("prompt") or (compact_manifest.get("task") or {}).get("prompt")
+    detailed_description = detailed_description or (figure_spec.get("prompt") if isinstance(figure_spec, dict) else None)
     methodology_section = run_input.get("source_context") or (compact_manifest.get("task") or {}).get("source_context_excerpt")
     figure_caption = figure_spec.get("caption") if isinstance(figure_spec, dict) else None
     figure_caption = figure_caption or run_input.get("caption") or (compact_manifest.get("task") or {}).get("caption")
+    axes = "content_accuracy|layout_quality|text_readability|aesthetic_quality|artifact_severity"
+    if style_contract:
+        axes += "|" + "|".join(STYLE_AXES)
     return (
-        "你是顶级 AI 会议标准的科研图 Critic，任务是对目标科研图做 sanity check，并基于内容和呈现质量给出修订后的详细描述。\n"
+        "请审查科研图的内容与呈现质量，指出具体问题，并给出修订后的详细描述。\n"
         "请严格对齐这条工作流：Critic 先看目标图、Detailed Description、Methodology Section 和 Figure Caption；"
         "如果发现问题，输出具体 critique，并给出合并修正后的 revised_description；如果不需要修改，critic_suggestions 和 revised_description 都写 No changes needed.\n"
         "审查规则：\n"
@@ -110,7 +115,7 @@ def build_review_prompt(figure_spec, check, manifest, run_input=None):
         "{"
         "\"schema\":\"giiisp_semantic_review_v1\","
         "\"overall_ready_to_ship\":true|false,"
-        "\"quality_review_axes\":[{\"name\":\"content_accuracy|layout_quality|text_readability|aesthetic_quality|artifact_severity\",\"status\":\"PASS|FAIL|UNCERTAIN\",\"score\":0-10,\"rationale\":\"...\"}],"
+        f"\"quality_review_axes\":[{{\"name\":\"{axes}\",\"status\":\"PASS|FAIL|UNCERTAIN\",\"score\":0-10,\"rationale\":\"...\"}}],"
         "\"observed_labels\":[\"...\"],"
         "\"missing_required_labels\":[\"...\"],"
         "\"forbidden_labels_seen\":[\"...\"],"
@@ -133,6 +138,15 @@ def build_review_prompt(figure_spec, check, manifest, run_input=None):
         + json.dumps(check or {}, ensure_ascii=False, indent=2)
         + "\n\nmanifest_summary:\n"
         + json.dumps(compact_manifest, ensure_ascii=False, indent=2)
+        + (
+            "\n\nvisual_style_contract:\n"
+            + json.dumps(style_contract, ensure_ascii=False, indent=2)
+            + "\n这是完整的汇报页面。逐项检查配色、字体、间距与图标是否遵循样式约定（style_contract_compliance），"
+            "是否适合正式汇报（formal_ppt_feel），以及是否避免重复套用模板或带入参考图的无关内容（template_overfit）。"
+            "每个审查维度必须单独返回；PASS 表示符合要求，包括 template_overfit 的 PASS 表示未发现过度套用模板。"
+            "无法从图中确认时写 UNCERTAIN。只有所有维度 PASS 且没有内容问题时 overall_ready_to_ship 才能为 true。"
+            if style_contract else ""
+        )
     )
 
 
@@ -199,6 +213,7 @@ def main():
     parser.add_argument("--figure-spec", help="Optional figure_spec.json path.")
     parser.add_argument("--check", help="Optional check.json path.")
     parser.add_argument("--manifest", help="Optional figure_manifest.json path.")
+    parser.add_argument("--style-contract", help="Optional visual_style_contract.json for full-slide style review.")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="DashScope model, default qwen3.7-plus.")
     parser.add_argument("--out", help="Output semantic_review.json path.")
     parser.add_argument("--timeout", type=int, default=120)
@@ -221,6 +236,20 @@ def main():
         print(json.dumps(review, ensure_ascii=False, indent=2))
         return 2
 
+    style_contract_path = Path(args.style_contract) if args.style_contract else None
+    style_contract = None
+    if style_contract_path:
+        try:
+            style_contract = read_json(style_contract_path)
+        except json.JSONDecodeError:
+            style_contract = None
+        if not isinstance(style_contract, dict) or not style_contract:
+            review = blocked("style contract is missing, empty, or invalid", {"path": str(style_contract_path)})
+            if out_path:
+                write_json(out_path, review)
+            print(json.dumps(review, ensure_ascii=False, indent=2))
+            return 2
+
     api_key = os.environ.get("DASHSCOPE_API_KEY", "").strip()
     if not api_key:
         print(
@@ -240,7 +269,7 @@ def main():
     check = read_json(check_path)
     manifest = read_json(manifest_path)
     run_input = read_json(run_dir / "run_input.json") if run_dir else None
-    prompt = build_review_prompt(figure_spec, check, manifest, run_input)
+    prompt = build_review_prompt(figure_spec, check, manifest, run_input, style_contract)
     response = call_dashscope(args.model, api_key, image_path, prompt, args.timeout)
 
     review = {
@@ -257,14 +286,25 @@ def main():
         "dashscope_status_code": response.get("status_code"),
         "token_policy": "read from DASHSCOPE_API_KEY environment variable; token is not written to files",
     }
+    if style_contract_path:
+        review["style_contract_path"] = str(style_contract_path)
 
     if review["status"] == "completed":
         try:
             parsed = extract_json_text(first_choice_content(response["json"]))
             review.update(parsed)
             review["status"] = "completed"
+            if style_contract:
+                axes = {axis["name"]: axis.get("status") for axis in review.get("quality_review_axes", [])}
+                required = ("content_accuracy", "layout_quality", "text_readability", "aesthetic_quality", "artifact_severity") + STYLE_AXES
+                failed_axes = [name for name in required if axes.get(name) != "PASS"]
+                if failed_axes:
+                    review["overall_ready_to_ship"] = False
+                    review["recommended_next_action"] = "manual_review"
+                    review["issues"] = (review.get("issues") or []) + ["Review axes not passed: " + ", ".join(failed_axes)]
         except Exception as exc:
             review["status"] = "blocked"
+            review["overall_ready_to_ship"] = None
             review["blocker"] = {"reason": "failed to parse DashScope JSON review", "details": {"error": str(exc)}}
             review["raw_response_excerpt"] = response.get("text", "")[:1000]
     else:
