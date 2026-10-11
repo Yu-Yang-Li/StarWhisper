@@ -266,6 +266,8 @@ python scripts/build_figure_manifest.py --run-dir "scientific_image_skill_runs/s
 
 审查脚本使用 DashScope OpenAI-compatible `chat/completions` 接口，默认模型是 `qwen3.7-plus`，也可通过 `--model` 改成账号可用的 Qwen 视觉模型。访问码只从环境变量 `DASHSCOPE_API_KEY` 读取，不写入 `semantic_review.json`、manifest、package 或最终报告。没有 key 时提醒用户到 `https://help.aliyun.com/zh/model-studio/get-api-key` 申请 DashScope/百炼 API key。
 
+审查整页 PPT 时，可加 `--style-contract visual_style_contract.json`。它在原有五项质量检查之外，增加样式符合度、正式汇报适用性和模板使用检查；八项均为 PASS 才可判为通过。缺项或 UNCERTAIN 需要人工复查，样式文件缺失或无法解析时写入 blocked 记录。普通科研图审查无需提供这个参数。
+
 `semantic_review.json` 必须保留：
 
 - `provider`、`endpoint`、`model`、`dashscope_status_code`。
