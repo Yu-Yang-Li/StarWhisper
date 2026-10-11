@@ -1,12 +1,14 @@
-# Photo To Replan Pipeline
+# 全天相机观测序列重排
 
-这个目录是整条端到端流程的编排层，用于把：
+根据原始全天相机照片生成云区掩码，再用掩码调整观测序列：
 
 `原始全天相机照片 -> 整图掩码 -> 重排后的观测序列`
 
-串成一个单入口命令。
+入口为 `run_pipeline.py`。输出包括调整后的计划和 NINA TargetSet 文件，实际执行仍需观测系统加载并确认。
 
-## 当前结构
+[项目首页](../README.md) · [研究文档](../docs/research.md)
+
+## 目录
 
 ```text
 AllSky-Camera-XL/
@@ -47,7 +49,7 @@ AllSky-Camera-XL/
 - 统一使用的 conda 环境名
 - 默认 `position_name`
 
-当前默认配置使用单一环境：
+默认环境名为：
 
 - `allsky-pipeline`
 
@@ -70,7 +72,7 @@ pip install -r requirements.txt
 
 如果你使用 CUDA，请按本机 CUDA 版本改用对应安装命令。
 
-## 一键运行
+## 运行
 
 在这个目录内执行：
 
@@ -86,7 +88,7 @@ python run_pipeline.py \
   --position-name position_2
 ```
 
-如果要保存整图分割 overlay：
+如果要保存掩码叠加预览：
 
 ```bash
 python run_pipeline.py \
@@ -111,7 +113,7 @@ python run_pipeline.py \
 - `x0y0_new.txt` 来自新版 `AltAzModeling.py`
 - `parameters_new.txt` 来自新版 `AltAzModeling.py`
 - `replan.py` 和 `标注地平坐标系.py` 都只从 `parameters.json` 读取标定参数
-- 投影计算使用同一套新版解析逆投影，不再使用旧的 `r = ze / k1` 近似
+- 投影计算使用完整解析逆投影；`r = ze / k1` 近似不适用于此参数组
 
 ## 输出结构
 
@@ -141,15 +143,15 @@ AllSky-Camera-XL/output/
 - `replan/<...>/` 是重排输出目录
 - `pipeline_report.json` 汇总了关键输出路径，便于后续 skill 直接读取
 
-## 当前 pipeline 语义
+## 处理步骤
 
 1. 输入原始全天相机照片
-2. 用打包目录内的 `Pic2mask/full_image_infer/infer_full_image.py` 直接整图推理生成掩码
-3. 用打包目录内的 `sequence_adjust_tool/scheme_horizon_to_image/replan.py` 执行重排：
+2. 用 `Pic2mask/full_image_infer/infer_full_image.py` 对整图推理，生成掩码
+3. 用 `sequence_adjust_tool/scheme_horizon_to_image/replan.py` 调整序列：
    - `RA/Dec -> Az/Alt`
    - `Az/Alt -> 图像坐标`，使用 `E/a0/e/k1..k4` 完整解析逆投影
    - 在掩码上查像素
-   - 输出重排 schedule 和 NINA TargetSet
+   - 输出调整后的观测计划和 NINA TargetSet
 
 ## 新版标定与地平标注
 
@@ -174,17 +176,12 @@ python sequence_adjust_tool/scheme_horizon_to_image/标注地平坐标系.py \
   --output output/debug_horizon_overlay.png
 ```
 
-## skill 的建议
+## 通过技能使用
 
-1. 在本机准备好 `allsky-pipeline` 这个 conda 环境，并安装本目录中的依赖
-2. 如果要把它接成 Codex skill，可将：
-
-```text
-skill/photo-to-replan/SKILL.md
-```
-
-复制到：
+在本机准备好依赖和标定参数后，可使用 [photo-to-replan](skill/photo-to-replan/SKILL.md)。这是本项目附带的入口说明，未列入根目录 `skills/` 的 17 个安装技能。将其 `SKILL.md` 复制到：
 
 ```text
 ~/.codex/skills/photo-to-replan/SKILL.md
 ```
+
+该技能仍需访问完整的 `AllSky-Camera-XL/` 项目目录；复制说明文件不会安装模型、依赖或标定数据。使用时应明确仓库位置，并从本目录运行入口脚本。

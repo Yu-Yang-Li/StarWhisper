@@ -1,17 +1,17 @@
 ---
 name: starwhisper-varlen
-description: Compare the published sparse ZTF/ATLAS early-classification benchmark and lint a light-curve table against the varlen 3-30 / 7-class contract. Use for varlen, sparse light curves, XGBoost vs Transformer vs LSTM, seven merged variability classes, or Early Classification from Sparse Light Curves. Does not train; never treats a test-set score as an explosion time.
+description: 比较稀疏 ZTF/ATLAS 光变分类的公开结果，检查观测点数和七类标签。用于 varlen 3–30 点基准、XGBoost/Transformer/LSTM 对比和标签映射；不训练或下载模型。
 license: Apache-2.0
 ---
 
 # 稀疏光变 varlen 基准
 
-把已经公开的 11 个配置成绩单变成**可横比、可拒比**的判定，并把别人的光变表先对照合同检查一遍。
+读取已经公开的 11 个配置结果，在相同数据设定下比较模型，并检查自备光变表的观测点数与标签。
 
-> 数字由 `scripts/eval_varlen.py` 读取（stdlib）。脚本不训练、不下载权重、不改划分。
+结果由 `scripts/eval_varlen.py` 读取，只依赖 Python 标准库。脚本不训练、不下载权重、不改变数据划分。
 > 主设定：3–30 个观测点、7 个合并类、75/10/15、`random_state = 42`。代码在 [`Early Classification from Sparse Light Curves/`](../../Early%20Classification%20from%20Sparse%20Light%20Curves/README.md)。
 
-默认读技能里冻结的 `references/published_metrics.csv`（从各配置 `test_metrics.json` / `metrics.txt` 抄来）。**只在同一 `pool` 里比。** `50obs` 的准确率不是 varlen 3–30 的结果。
+默认读取技能附带的 `references/published_metrics.csv`，数值来自各配置的 `test_metrics.json` / `metrics.txt`。只在同一 `pool` 内比较；`50obs` 的准确率不是 varlen 3–30 的结果。
 
 ## 何时使用
 
@@ -22,10 +22,10 @@ license: Apache-2.0
 
 ## 工作流
 
-1. **`contract`**：先念主设定。3–30、7 类、划分种子。没念完不要比数字。
+1. **`contract`**：先确认主设定，包括 3–30 点、7 类和划分种子，再比较指标。
 2. **`table --pool varlen`**：只看 varlen 池。不要把 50obs 行掺进来排序。
 3. **`compare --a --b`**：两个 `exp_id` 必须同池，否则标 `NOT COMPARABLE` 并退出说明，不要把差值写成方法增益。
-4. **`check`**：用户自己的 CSV 先过合同，再谈训练或投稿。
+4. **`check`**：检查自备 CSV 是否符合数据设定，再讨论训练或投稿。
 
 ## 已核对的 varlen 排序（按 macro-F1）
 
@@ -43,6 +43,8 @@ license: Apache-2.0
 
 ## 脚本用法
 
+下列路径相对于本技能目录。`lightcurves.csv` 需替换为实际文件。
+
 ```powershell
 python scripts/eval_varlen.py contract
 python scripts/eval_varlen.py table --pool varlen
@@ -56,10 +58,10 @@ python scripts/eval_varlen.py check --csv lightcurves.csv --nobs-col n_obs --lab
 
 用户表至少要有观测点数和标签两列。标签可以是 7 个合并类，也可以是原始目录名（`BYDra`、`EA`、`RRc` 等）。
 
-## 报告纪律
+## 结果说明
 
 - 先说设定再报数字。varlen 和 50obs 分开展示。
 - `e2e_tf_matched_scratch` 的 0.51 要照报，不要从对比里拿掉。
 - 测试集指标不是爆发时刻，也不是发现。
 - 不要拿 StarWhisper LC 的 Kepler/K2 约 90% 顶替本基准。
-- 权重在 https://huggingface.co/castor0705/sparse-lc-early-classification ；本技能不下载、不推理。
+- 权重见 [Hugging Face](https://huggingface.co/castor0705/sparse-lc-early-classification)；本技能不下载权重或执行模型推理。

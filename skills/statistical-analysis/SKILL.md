@@ -6,13 +6,11 @@ license: MIT
 
 # 统计分析 Statistical Analysis
 
-## StarWhisper astronomy overlay
+## 天文用法
 
-Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
+先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
 
-Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
-A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
-This skill does not send telescope commands.
+本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
 
 
 实验设计管"采集前"，这个技能管"采集后"：把数据变成可报告、可复核的统计结论。核心纪律是

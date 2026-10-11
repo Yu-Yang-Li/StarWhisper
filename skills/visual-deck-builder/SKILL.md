@@ -8,13 +8,17 @@ description: >-
 
 # Visual Deck Builder
 
-## StarWhisper astronomy overlay
+## 包内依赖
 
-Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
+图像生成和语义审查脚本位于相邻的 [giiisp-scientific-image-generation](../giiisp-scientific-image-generation/SKILL.md) 技能中，调用外部服务时需要相应密钥。`repair_visual_deck.py` 默认从 `~/.codex/skills/giiisp-scientific-image-generation` 读取它们；在 Cursor 或仓库内使用时，用 `GIIISP_IMAGE_SKILL_DIR` 指定该技能目录。
 
-Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
-A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
-This skill does not send telescope commands.
+当前包中的语义审查脚本支持 `--image`、`--figure-spec` 和 `--out`，不支持自动修订流程传入的 `--style-contract`。因此不要直接运行这条自动修订流程并宣称完成审查。可用实际图像工具生成和修订页面，逐页核对内容与样式，并如实记录审查方式及未完成项。
+
+## 天文用法
+
+先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
+
+本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
 
 
 Create high-quality visual PPT decks from whatever the user supplies: a topic, a document, a paper, a folder of materials, a style reference, or existing slide images. The main workflow is **spec first, page-description driven, full-slide image first, then image-only PPTX packaging**:
@@ -37,6 +41,8 @@ The deck is not a fixed "paper mode" or "topic mode". Route by the user input, b
 ## Boundary With Related PPT Skills
 
 Treat this skill as the default entry for actual PPT/deck creation, redesign, packaging, or QA. Route away only when the user's request clearly matches a narrower asset:
+
+The related skills below are optional and are not included in this package. Route to one only if it is installed and matches the task.
 
 - Use `research-ppt-generation` when the task is specifically an academic or research deck and needs paper/PDF-to-narrative planning, research audience structure, figure grounding, or academic template logic.
 - Use `ppt-image-generation` when the user is asking for slide-image prompting strategy, image-model page briefs, route selection, or diagnosis of weak PPT image prompts, not for an end-to-end deck package.
@@ -66,7 +72,7 @@ Do not create another PPT skill for a new deck style until this routing fails fo
 16. Build `visual_style_contract.json` with `scripts/build_style_contract.py --preset <key>` from the preset library in `scripts/style_presets.py`, not as a hand-written short style label. A style contract must carry explicit hex colors, named fonts, and spacing/accent-usage percentages; a one-line adjective description ("clean, modern, blue and white") gets reinterpreted differently by the image model on every independent per-slide call and is a known source of cross-slide drift. Run `scripts/validate_style_contract_richness.py` before release; treat a `fail` status the same as any other blocking QA failure.
 17. Write each slide's design brief as `extra_fields` (`visual_elements`, `visual_focus`, `layout_notes`, `speaker_notes`) instead of a single freeform paragraph. `scripts/build_slide_image_prompt.py` only feeds `visual_elements` + `visual_focus` + `layout_notes` into the image prompt; `speaker_notes` never reaches the image model. Freeform `page_description` remains a compatibility route for older decks written before this field existed, not the default for new decks.
 18. Before the first image generation call, run `scripts/stylist_refine_slide.py` once per slide as an independent aesthetic-refinement pass: it takes the draft `extra_fields` plus the style contract and returns a refined version that adds concrete visual detail without changing semantics, required labels, or exact visible text. If it is blocked (no `DASHSCOPE_API_KEY`, network failure), proceed with the unrefined draft and note the skip; it is a quality enhancement, not a hard gate that blocks generation.
-19. VLM review must judge `style_contract_compliance`, `formal_ppt_feel`, and `template_overfit` in addition to the original five axes. Pass `--style-contract visual_style_contract.json` to `scripts/semantic_review_dashscope.py` so the reviewer can compare the actual image against the contract's real hex/font/spacing values instead of guessing at general aesthetics.
+19. Review the actual slide against `visual_style_contract.json`, including palette, typography, spacing, `style_contract_compliance`, `formal_ppt_feel`, and `template_overfit`. The bundled `../giiisp-scientific-image-generation/scripts/semantic_review_dashscope.py` checks scientific content and five quality axes; it does not accept `--style-contract`. Record the separate style review and do not report unsupported automated checks as passed.
 20. Generate content with `scripts/generate_slide_spec.py` (topic -> outline -> per-page description, mirroring banana-slides' two-stage `get_outline_generation_prompt` + `get_page_description_prompt`), not by having the agent hand-write `body_text`/`extra_fields` ad hoc. Ad hoc hand-written content is a known source of two failure modes confirmed against a real generated deck: pages reduced to 3-5 isolated 2-4 character labels (banana's default density floor is 2-6 short phrases/sentences per page, `DETAIL_LEVEL_SPECS` in its `prompts.py`), and a cover page with no subtitle/presenter information (banana requires "title, subtitle, and presenter information" on page 1). Only fall back to hand-writing the spec when `DASHSCOPE_API_KEY` is unavailable, and in that case explicitly apply the density and cover rules below yourself.
 21. Every slide carries both `page_role` and `layout_profile`. `page_role` is `cover`, `content`, `data`, `comparison`, `timeline`, `summary`, or `section_divider`; `layout_profile` must mirror banana-slides' 9-field template-analysis schema (`template_role`, `layout_structure`, `content_capacity`, `text_regions`, `image_regions`, `visual_density`, `style_keywords`, `color_palette`, `notes`). A deck is not a chain of infographics: with 4+ slides, at least one slide must be `page_role: content` (text-forward: bullet lists, paragraphs, two-column text — not a diagram), and no `page_role` other than `cover` may repeat 4+ times in a row. Run `scripts/validate_content_density_and_roles.py` before release and treat `fail` as blocking, `warn` as needing a human look.
 22. Run `scripts/build_slide_image_prompt.py`'s built-in anti-drift guards seriously: exact_visible_text is a whitelist, not a repetition requirement (one label = one instance unless the spec explicitly asks for repetition); one logical step in a flow/decision/mechanism diagram must become exactly one visual node (never duplicate a same-named card to fill space); every piece of visible text must sit inside its owning card/node/title/legend region, never floating outside a shape or sitting on a connector line; icons must follow the style contract's `icon_style` exactly (no solid dots/badges/stickers substituting for a required line-art icon style). These were added after a real repair failure (duplicated "生成候选版" card, floating "复查通过才替换" text, solid-dot lock icon) and must not be weakened.
@@ -539,7 +545,7 @@ QA must check:
 - `scripts/validate_content_density_and_roles.py` passes: cover slide has subtitle/presenter content, body_text meets the density floor, every slide has the banana-style 9-field `layout_profile`, at least one `content`-role slide exists in a 4+ slide deck, and no non-cover `page_role` repeats 4+ times in a row
 - `visual_style_contract.json` exists, parses, and has a real style source; a deck without a template must still have a concrete style contract built from `scripts/build_style_contract.py`, and `scripts/validate_style_contract_richness.py` passes (explicit hex colors, named fonts, no missing richness fields)
 - every primary slide has `extra_fields` (or, for legacy decks, `page_description`), and `image_prompt` is derived from it rather than from raw field labels; `speaker_notes` never appears in `image_prompt` or on the rendered slide
-- VLM review (`semantic_review_dashscope.py`) was called with `--style-contract` so `style_contract_compliance`, `formal_ppt_feel`, and `template_overfit` are judged against the deck's actual palette/typography/spacing values, not general aesthetics
+- scientific-content and style reviews are recorded, including the actual review method; palette, typography, spacing, `style_contract_compliance`, `formal_ppt_feel`, and `template_overfit` are checked against the style contract, and no unsupported `--style-contract` invocation is reported as successful
 - primary delivery slides use `delivery_mode: image_only` or clearly imply image-only delivery through `rendered_image`
 - every slide has a generated or source-provided full-slide image
 - every slide image has the same aspect ratio as the target PPTX within QA tolerance; a square `1024 x 1024` source image is not acceptable for a `16:9` deck, even if the PPTX structure can stretch it to full slide

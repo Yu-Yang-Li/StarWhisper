@@ -1,40 +1,34 @@
-# Astronomy overlay
+# 天文使用说明
 
-This skill is the StarWhisper astronomy adaptation of the upstream Tashan research skill.
-Keep the original workflow, scripts, and evidence rules. Change the **defaults**.
+本技能沿用他山科研技能的脚本、模板和证据要求。处理天文问题时，使用下列资料来源和学科约定；具体步骤见 [SKILL.md](SKILL.md)。
 
-## Default sources
+## 资料来源
 
-| Need | First route | Fallback |
+需要查证时，优先使用对应的学科资料：
+
+| 内容 | 优先查阅 | 补充资料 |
 | --- | --- | --- |
-| Refereed astronomy papers | NASA ADS (`ads_search`, bibcode) | arXiv `astro-ph.*` |
-| Preprints / methods | arXiv `astro-ph.HE/CO/GA/IM/SR/EP/IM` | ADS `arxiv:` identifier |
-| Object metadata | SIMBAD / NED | user-supplied catalog |
-| Catalogs / tables | VizieR / CDS | paper supplementary |
-| Transients | TNS / ATels / GCN | user-supplied alert |
-| Observatory context | StarWhisper Telescope / NGSS notes | public site pages |
+| 天文期刊论文 | NASA ADS，保留 bibcode | arXiv `astro-ph.*` |
+| 预印本与方法 | arXiv `astro-ph.*` | ADS 中的 arXiv 记录 |
+| 天体信息 | SIMBAD / NED | 用户提供的星表 |
+| 星表与数据表 | VizieR / CDS | 论文附表 |
+| 暂现源 | TNS / ATels / GCN | 用户提供的警报 |
+| 台站与观测背景 | StarWhisper Telescope / NGSS 说明 | 台站公开资料 |
 
-Do not treat PubMed-style biomedical search, GB/T 7714-only citation, RCT/clinical CONSORT, or wet-lab n as the default.
+## 分析与表述
 
-## Claim boundary
+- 分别说明合成环境、脱敏日志回放和真实观测；安全联锁优先于智能体动作。
+- 拟合、分类分数或仿真不能单独证明物理机制；合成暂现源和演示候选不能写成新发现。
+- 保留数值、单位、滤镜、MJD/UTC、坐标和 bibcode。
+- 按天体、夜次、观测场或实际数据单位设计分析，不直接套用临床 RCT、CONSORT 或湿实验的样本量默认值。
+- 英文天文稿按目标期刊的 AAS / MNRAS / A&A / PASP 格式处理；中文申请书或学位论文需要 GB/T 7714 时，说明所用标准。
 
-- Distinguish **synthetic environment**, **de-identified log replay**, and **real hardware**.
-- Hardware safety interlocks outrank any agent action.
-- A fitted model, a light-curve classifier score, or a simulation is not a physical mechanism.
-- Do not write "discovered" for a synthetic transient or a demo candidate.
-- Keep numbers, units, filters, MJD/UTC, coordinates, and bibcodes unchanged.
+## 检索顺序
 
-## Writing venues
+1. 将问题整理为天体、事件、方法和巡天关键词，保留 ZTF、TNS、NGSS、SiTian、GOTO、ATLAS 等名称。
+2. 先运行 `scripts/ads_first_search.py`。需要查看请求而不联网时加 `--dry-run`；查询 ADS 时保留实际返回的 bibcode、题名和年份。
+3. ADS 无可用结果或凭据时，同一脚本可回退到 arXiv `astro-ph.*`。预印本命中不能据此声称论文已经过同行评审。
+4. Giiisp OA / arXiv 接口作为补充，按其鉴权要求使用 `GIIISP_AUTH_TOKEN`。
+5. 返回简短结果表，列出 bibcode 或 arXiv id、题名、年份、发表信息、相关性和核验状态。
 
-English astronomy papers default to AAS / MNRAS / A&A / PASP citation practice.
-Chinese grant or thesis text may still need GB/T 7714; say which standard is in force.
-## Astronomy search order
-
-1. Parse the question into object / event / method / survey terms. Keep catalog names (ZTF, TNS, NGSS, SiTian, GOTO, ATLAS) as given.
-2. Run `scripts/ads_first_search.py` first (`--dry-run` if there is no token). Query NASA ADS when a refereed paper is needed. Record bibcode, title, year, refereed flag.
-3. Query arXiv `astro-ph.*` for methods and recent preprints. The same script does this when ADS is unavailable.
-4. Use the original Giiisp OA / arXiv routes only as a supplement, or when `GIIISP_AUTH_TOKEN` is available.
-5. Return a short table: bibcode or arXiv id, title, year, venue, why it is relevant, evidence status (ADS hit / preprint / not verified).
-
-Never invent a bibcode. If ADS is unavailable, say so and fall back to arXiv, then stop claiming refereed status.
-
+不编造 bibcode。ADS 不可用时说明原因；没有命中时保留空结果。

@@ -2,13 +2,14 @@
 
 ## 当前定位
 
-这个 skill 面向集思谱论文检索接口包装，不复刻 CNKI、Web of Science 或其他商业检索产品的完整功能。
+这个技能优先查询 NASA ADS 和 arXiv，集思谱接口用于补充检索。
 
-接口依据文件：`../../reference_giiisp_search.md`。
+请求格式见 [examples/request_matrix.json](examples/request_matrix.json)，使用方法见 [SKILL.md](SKILL.md)。
 
-它负责三件事：
+它提供以下功能：
 
 - 把用户问题路由到合适的集思谱论文检索 POST 接口。
+- 用 `scripts/ads_first_search.py` 优先检索天文文献，保留 ADS 或 arXiv 的实际来源。
 - 在没有登录态时只构造 dry-run 请求和输出表，不擅自真实调用受限接口。
 - 把结果整理成可核验的论文候选表和引用审计表。
 

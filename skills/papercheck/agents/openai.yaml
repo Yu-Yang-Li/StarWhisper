@@ -1,4 +1,4 @@
 interface:
-  display_name: "PaperCheck"
-  short_description: "Run no-key citation compliance and reference audits."
-  default_prompt: "Use PaperCheck to audit this .docx paper with local rules, extracted citation evidence, and current-model review."
+  display_name: "论文引用检查"
+  short_description: "核对天文论文中的正文引用与参考文献，记录匹配关系和支持依据"
+  default_prompt: "使用 $papercheck 核对这份天文论文的引用和参考文献，区分本地检查结果、实际查到的记录与无法确认的内容。"

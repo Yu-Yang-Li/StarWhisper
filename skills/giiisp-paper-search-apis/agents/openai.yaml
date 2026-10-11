@@ -1,8 +1,8 @@
 interface:
-  display_name: "集思谱论文检索"
-  short_description: "构造论文检索请求并做引用审计"
+  display_name: "天文文献检索"
+  short_description: "优先查询 NASA ADS 和 arXiv，整理文献候选并保留实际来源"
   brand_color: "#2563EB"
-  default_prompt: "Use $giiisp-paper-search-apis to build a dry-run literature search and citation audit table for this research question."
+  default_prompt: "使用 $giiisp-paper-search-apis 为这个天文问题查找文献，优先查询 ADS 与 arXiv，记录真实返回的引用与失败原因；无法检索时给出请求预览。"
 
 policy:
   allow_implicit_invocation: true

@@ -17,7 +17,7 @@ These notes contain paper figures, experimental results, and details about the a
 
 ## 2023–2024 · Language models
 
-StarWhisper 3 answers astronomy questions and writes code. Training data is in [`LLM_Data/`](../LLM_Data); weights are on ModelScope at [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3). Version 4.0 is still organizing popular-science and research text; weights are meant to go on ModelScope.
+StarWhisper 3 supports astronomy questions and code generation. Training data is in [`LLM_Data/`](../LLM_Data); weights are on ModelScope at [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3). Popular-science and research text for version 4.0 is still being prepared, with weights planned for ModelScope.
 
 ---
 
@@ -35,7 +35,7 @@ In December 2024, [StarWhisper-Pulsar](https://openreview.net/pdf?id=8SKgWpZiDL)
 
 The [paper](https://doi.org/10.1038/s44172-025-00520-4) was a December 2024 preprint and appeared in *Communications Engineering* on 6 November 2025. The observing-automation agent runs on NGSS, a network of about 10 amateur-level telescopes. Code: [`NGSS/`](../NGSS).
 
-A night plan rarely survives the night. Targets of opportunity arrive, weather closes windows, and tracking, focus, cameras, or the dome can fail. The system has to choose, repeatedly: continue, insert, defer, pause safely, or recover and replan.
+Targets of opportunity, weather changes, or problems with tracking, focus, cameras, or the dome can alter an observing plan. The system then chooses whether to continue, insert a target, defer an observation, pause safely, or replan after recovery.
 
 ![Observing loop](assets/goai-observe-loop-source.png)
 
@@ -47,9 +47,9 @@ A night plan rarely survives the night. Targets of opportunity arrive, weather c
 
 ## 2026 · Virtual Sitian
 
-The runnable Virtual Sitian system is 2026 work (SN Clock). The early science application is the supernova clock: explosion-epoch estimates and young-SN candidates. Public sketch: [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html). Installable skills for the same workflow: [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw). Real/bogus prototype: [`GOTTA_Prototype/`](../GOTTA_Prototype).
+Virtual Sitian became a runnable SN Clock system in 2026. Its early science application estimates supernova explosion epochs and selects young-SN candidates. See the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) for an overview and [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) for installable skills. The real/bogus classification prototype is in [`GOTTA_Prototype/`](../GOTTA_Prototype).
 
-[`snclock/`](../snclock/README.md) holds one production output: post-explosion ages for 22 TNS sources at their discovery time, given as q16 / q50 / q84 quantiles and split into two tiers by whether the source falls within two days. Only 2 sources are within two days even at the conservative q84. The table covers less than the declared screening window, and most rows did not persist their input snapshot; the data card spells both out. Read it with [`starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md):
+[`snclock/`](../snclock/README.md) contains one historical prediction output: post-explosion ages for 22 TNS sources at their discovery time, given as q16 / q50 / q84 quantiles and split into two tiers by whether the source falls within two days. Only 2 sources are within two days at the conservative q84. The table covers less than the declared screening window, and most rows lack retained input snapshots; the data notes explain these limitations. Read it with [`starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md):
 
 ```powershell
 python .\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
@@ -58,24 +58,24 @@ python .\skills\starwhisper-snclock\scripts\screen_snclock.py audit
 
 An age estimate is not a spectroscopic classification, and every source in the table is already on TNS, so nothing here is a new discovery.
 
-Sitian plans 54 one-meter-class wide-field telescopes at Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate path for a “Sitian brain”.
+Sitian plans 54 one-meter-class wide-field telescopes at Chinese sites, covering about 10,000 square degrees in three colors every 30 minutes. StarWhisper is one candidate approach to Sitian's data analysis and observing automation.
 
 ![Sitian](assets/sitian.png)
 
-Also from 2026, but not the Virtual Sitian main line:
+Other work from 2026 includes:
 
 - Xinglong all-sky camera [`AllSky-Camera-XL/`](../AllSky-Camera-XL): from a full-sky image to a replanned sequence
-- Cloud nowcasting with Himawari: private repo on 2022–2025 archived nights; that line closed in August 2026 and is not an operational forecast
-- Early classification on sparse ZTF / ATLAS light curves: [`Early Classification from Sparse Light Curves/`](../Early%20Classification%20from%20Sparse%20Light%20Curves). Read the checked scorecard with [`starwhisper-varlen`](../skills/starwhisper-varlen/SKILL.md); do not quote 50-obs pretrain accuracy as the 3–30-obs main result
+- Cloud nowcasting with Himawari: a private repository using 2022–2025 archived nights; this phase ended in August 2026 and has not become an operational forecast
+- Early classification on sparse ZTF / ATLAS light curves: [`Early Classification from Sparse Light Curves/`](../Early%20Classification%20from%20Sparse%20Light%20Curves). Read the checked results with [`starwhisper-varlen`](../skills/starwhisper-varlen/SKILL.md); 50-obs pretrain accuracy cannot be reported as the 3–30-obs main result
 - Low-SNR stellar spectra: [`Low-SNR-Stellar-Spectra-as-Language/`](../Low-SNR-Stellar-Spectra-as-Language) ([Jared-web03](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language))
 
 ---
 
 ## 2026 · Explore
 
-Telescope can already observe automatically on a survey. Explore asks when that judgement holds, what it gives up, and when it has to stop.
+Telescope supports automated survey observations. Explore compares the benefits of observing policies, their effects on survey completeness, and the conditions that require a safe pause.
 
-The spec, action set, and checked table are in [`explore/`](../explore/README.md). `StarWhisper-Explore-v0.2` is synthetic: Xinglong, one telescope, six slots per night. The agent cannot see future disturbances or edit safety thresholds. This is not optical-propagation physics, it is not wired to live hardware, and **the environment code is not in this repository yet**.
+The experimental setup, action set, and metrics table are in [`explore/`](../explore/README.md). `StarWhisper-Explore-v0.2` uses a synthetic environment: Xinglong, one telescope, six slots per night. The agent cannot see future disturbances or change safety thresholds. The experiment does not simulate optical propagation or connect to live telescopes, and the environment code is not included in this repository.
 
 The comparators were fixed in advance: no intervention, random, deterministic priority, and a rule agent. A positive finding needs all three seeds to pass: no active safety violations, invalid-action rate ≤ 1%, survey-completeness drop ≤ 5 percentage points, and either ≥ 20% relative gain in high-value transient follow-up or ≥ 5% gain in scientific utility.
 
@@ -90,9 +90,9 @@ The comparators were fixed in advance: no intervention, random, deterministic pr
 
 ![Policy trade-off](assets/goai-metrics-source.png)
 
-Against deterministic priority, the rule agent raises follow-up by 23.52 percentage points and utility by about 1.6%, while completeness falls 9.44 points — past the 5-point line. Same direction on three seeds; a second run matched hashes. That is a stable negative result: short-term response bought too much survey debt.
+Against deterministic priority, the rule agent raises follow-up by 23.52 percentage points and utility by about 1.6%, while completeness falls 9.44 points, exceeding the allowed 5-point drop. All three seeds show the same direction, and recorded repeat runs matched hashes. This is a stable negative result: higher transient follow-up comes with a loss of survey completeness beyond the permitted range.
 
-You can re-run the verdict, or point it at your own metrics table:
+These commands recalculate the verdict; use `--csv` to supply your own metrics table:
 
 ```powershell
 python .\skills\starwhisper-explore\scripts\eval_gate.py bar
@@ -120,4 +120,4 @@ python .\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 }
 ```
 
-GitHub also reads [`CITATION.cff`](../CITATION.cff). Source code is Apache-2.0. The adapted skills under [`NOTICE.md`](../skills/NOTICE.md) stay MIT. Model weights follow their own licenses.
+Citation information is also available in [`CITATION.cff`](../CITATION.cff). Code is licensed under Apache-2.0. Adapted research skills retain the MIT license; see [`NOTICE.md`](../skills/NOTICE.md). Model weights follow their own licenses.

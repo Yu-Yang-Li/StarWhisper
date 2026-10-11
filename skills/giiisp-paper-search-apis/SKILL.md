@@ -5,25 +5,23 @@ description: Search astronomy papers via NASA ADS and arXiv astro-ph, with optio
 
 # Giiisp Paper Search APIs
 
-## StarWhisper astronomy overlay
+## 天文用法
 
-Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
+先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
 
-Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
-A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
-This skill does not send telescope commands.
+本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
 
-天文检索先跑这个脚本，不要一上来调 Giiisp：
+以下命令在本技能目录中运行。天文检索先查 ADS 和 arXiv，Giiisp 用于补充：
 
 ```powershell
-python skills/giiisp-paper-search-apis/scripts/ads_first_search.py --query "StarWhisper Telescope NGSS" --dry-run
+python scripts/ads_first_search.py --query "StarWhisper Telescope NGSS" --dry-run
 ```
 
 有 `ADS_API_TOKEN` 时去掉 `--dry-run` 会查 NASA ADS；没有 token 则查 arXiv `astro-ph`。空结果就写空，不要补一篇“看起来像”的论文。Giiisp 只作补充。
 
 ## 接口依据
 
-本 skill 的接口清单来自稳定目录中的 `reference_giiisp_search.md`。原文件由用户提供，已从临时路径复制到稳定工作目录；后续自动化和测试只引用稳定副本。
+本包的请求格式见 [examples/request_matrix.json](examples/request_matrix.json)，结果与失败响应示例也在 [examples/](examples/) 中。[ACCEPTANCE.md](ACCEPTANCE.md) 列出本地检查方法。示例说明脚本如何组织请求，不代表接口当前可用或已经得到真实检索结果。
 
 ## 先判断任务
 

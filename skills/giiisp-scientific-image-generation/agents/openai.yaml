@@ -1,8 +1,8 @@
 interface:
-  display_name: "集思谱科研图像生成"
-  short_description: "生成、续改、择优并归档科研配图"
+  display_name: "科研示意图"
+  short_description: "根据天文研究材料绘制或修改示意图，保留来源、数值和图注要求"
   brand_color: "#0F766E"
-  default_prompt: "Use $giiisp-scientific-image-generation to generate a journal-ready scientific figure with a structured figure_spec, traceable run manifest, quality check, and optional variant selection."
+  default_prompt: "使用 $giiisp-scientific-image-generation 根据这些研究材料绘制或修改天文示意图，保留已确认的内容，检查布局、文字和来源。"
 
 policy:
   allow_implicit_invocation: true

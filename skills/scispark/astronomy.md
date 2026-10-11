@@ -1,42 +1,32 @@
-# Astronomy overlay
+# 天文使用说明
 
-This skill is the StarWhisper astronomy adaptation of the upstream Tashan research skill.
-Keep the original workflow, scripts, and evidence rules. Change the **defaults**.
+本技能沿用他山科研技能的脚本、模板和证据要求。处理天文问题时，使用下列资料来源和学科约定；具体步骤见 [SKILL.md](SKILL.md)。
 
-## Default sources
+## 资料来源
 
-| Need | First route | Fallback |
+需要查证时，优先使用对应的学科资料：
+
+| 内容 | 优先查阅 | 补充资料 |
 | --- | --- | --- |
-| Refereed astronomy papers | NASA ADS (`ads_search`, bibcode) | arXiv `astro-ph.*` |
-| Preprints / methods | arXiv `astro-ph.HE/CO/GA/IM/SR/EP/IM` | ADS `arxiv:` identifier |
-| Object metadata | SIMBAD / NED | user-supplied catalog |
-| Catalogs / tables | VizieR / CDS | paper supplementary |
-| Transients | TNS / ATels / GCN | user-supplied alert |
-| Observatory context | StarWhisper Telescope / NGSS notes | public site pages |
+| 天文期刊论文 | NASA ADS，保留 bibcode | arXiv `astro-ph.*` |
+| 预印本与方法 | arXiv `astro-ph.*` | ADS 中的 arXiv 记录 |
+| 天体信息 | SIMBAD / NED | 用户提供的星表 |
+| 星表与数据表 | VizieR / CDS | 论文附表 |
+| 暂现源 | TNS / ATels / GCN | 用户提供的警报 |
+| 台站与观测背景 | StarWhisper Telescope / NGSS 说明 | 台站公开资料 |
 
-Do not treat PubMed-style biomedical search, GB/T 7714-only citation, RCT/clinical CONSORT, or wet-lab n as the default.
+## 分析与表述
 
-## Claim boundary
+- 分别说明合成环境、脱敏日志回放和真实观测；安全联锁优先于智能体动作。
+- 拟合、分类分数或仿真不能单独证明物理机制；合成暂现源和演示候选不能写成新发现。
+- 保留数值、单位、滤镜、MJD/UTC、坐标和 bibcode。
+- 按天体、夜次、观测场或实际数据单位设计分析，不直接套用临床 RCT、CONSORT 或湿实验的样本量默认值。
+- 英文天文稿按目标期刊的 AAS / MNRAS / A&A / PASP 格式处理；中文申请书或学位论文需要 GB/T 7714 时，说明所用标准。
 
-- Distinguish **synthetic environment**, **de-identified log replay**, and **real hardware**.
-- Hardware safety interlocks outrank any agent action.
-- A fitted model, a light-curve classifier score, or a simulation is not a physical mechanism.
-- Do not write "discovered" for a synthetic transient or a demo candidate.
-- Keep numbers, units, filters, MJD/UTC, coordinates, and bibcodes unchanged.
+## 可检验的假设
 
-## Writing venues
+优先提出能用公开光变、光谱、星表，或固定种子并记录动作的观测实验检验的假设。已有分类器的消融实验也可作为检验方法。
 
-English astronomy papers default to AAS / MNRAS / A&A / PASP citation practice.
-Chinese grant or thesis text may still need GB/T 7714; say which standard is in force.
-## Astronomy hypothesis rules
+不要把无法检验的“AI 大脑”当作研究假设。生物医学中的 MoA 用语需按问题改为物理过程、观测选择效应或决策策略。
 
-Prefer hypotheses that can be tested with:
-
-- public light curves / spectra / catalogs; or
-- a replayable observing-decision environment (fixed seeds, logged actions); or
-- an ablation on a published classifier, not a new unfalsifiable "AI brain".
-
-Mechanism-of-action language from biomedicine does not map cleanly to astrophysics.
-Replace "MoA" with **physical process / observational selection / decision policy**.
-Every hypothesis row must cite at least one ADS or arXiv record, or be marked `speculative`.
-
+每条假设都应附至少一条 ADS 或 arXiv 记录；没有文献支持的部分标记为 `speculative`。

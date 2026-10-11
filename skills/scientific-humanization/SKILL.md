@@ -5,13 +5,11 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 
 # Scientific Humanization
 
-## StarWhisper astronomy overlay
+## 天文用法
 
-Read [`astronomy.md`](astronomy.md) first. That file sets the astronomy defaults for this copy.
+先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
 
-Literature: NASA ADS, then arXiv `astro-ph.*`. Do not invent papers.
-A synthetic Explore run, a classifier score, or a demo candidate is not a discovery.
-This skill does not send telescope commands.
+本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
 
 
 把科研文本改得像人写、像人讲，但不改坏科学事实。目标不是同义词替换，也不是追求“更高级”的词，而是让读者更容易看懂作者到底做了什么、证据支持到哪里、还有什么不能说满。
@@ -21,7 +19,7 @@ This skill does not send telescope commands.
 1. 先锁定事实：数字、时间、单位、p 值、阈值、作者年份、论文题名、机构、模型名、数据集、样本/对象、变量/参数、实验或观察条件、时间点、地点/尺度、领域专名、图表编号、引用关系。
 2. 判断场景：论文正文、摘要、讨论、基金/项目书、技术方案、答辩、课程/PPT讲稿、投资人表达。
 3. 诊断 AI 味：空泛拔高、机械承接、工程遗留、助手口吻、过强因果、句式同质化、模板管理词。
-4. 先改论证顺序，再改句子。优先把“做了什么 -> 看到什么 -> 能说明什么 -> 还不能说明什么”讲清楚。
+4. 先检查论证顺序，再改句子。只有顺序确实影响理解时才调整；把“做了什么 -> 看到什么 -> 能说明什么 -> 还不能说明什么”讲清楚。
 5. 回读一遍 claim、数字、术语、因果、引用和用户明确禁用的表达。
 
 ## Claim Strength
@@ -38,6 +36,8 @@ This skill does not send telescope commands.
 
 - 改稿默认少动。先假设原文里的口语、冗余和不工整是作者手迹；只有读起来打绊、证据说满、事实边界不清或明显模板腔时才改。改后不要追求更漂亮，优先保证作者还在、事实没变。
 - 用户给过明确措辞时，优先采用用户措辞，不替用户“升格”成更像模板的说法。
+- 从用户最后确认的版本继续，只改本次指定范围。已经确认的段落保留，数字、引文和图表关系逐项核对。
+- 不添加空泛的过渡、价值总结或宣传句。自然写作也应保持专业，不用刻意口语化、碎片化或制造错字来掩饰模板腔。
 - 标题和讲稿要短、清楚、轻专业；不要为了显得正式堆概念。
 - 删除或改写这些常见 AI 腔：全面赋能、深度融合、闭环机制、底座、生态、阶段门、沉淀、系统性提升、智能化解决方案、显著赋能。
 - 去掉助手身份：不要写“作为您的助手”“我将帮助讲师”。讲稿默认是讲师本人在讲。
@@ -67,9 +67,9 @@ This skill does not send telescope commands.
 
 ## Examples
 
-输入：相关性分析证明该基因直接调控果实糖酸比形成机制。
+输入：光变颜色相关性证明这些候选都是 Ia 型超新星。
 
-输出：相关性分析提示该基因可能与果实糖酸比形成有关，但其是否直接参与调控仍需进一步功能验证或直接证据支持。
+输出：光变颜色可为候选分类提供线索，但仅凭相关性还不能将这些源确认为 Ia 型超新星，分类仍需光谱等证据。
 
 输入：本系统通过多源数据融合、智能体协同与闭环反馈机制，全面提升科研文本生成质量。
 

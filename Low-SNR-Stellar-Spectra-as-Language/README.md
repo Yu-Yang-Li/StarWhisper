@@ -1,20 +1,14 @@
 # Low-SNR Stellar Spectra as Language
 
-[![Hugging Face — Weights](https://img.shields.io/badge/🤗_Weights-Hugging_Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=000)](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)
-[![Dataset](https://img.shields.io/badge/Dataset-Coming_Soon-9E9E9E?style=for-the-badge)](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language#dataset)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)
+Spectral diffusion and discrete-token modeling for stellar spectra at low signal-to-noise ratio. Pre-training uses long, high-SNR sequences (~3030 pixels); fine-tuning uses shorter sequences (~303 pixels) in SNR stages, such as 25–30 → 9–11 → 7–9.
 
-<p align="center">
-  <b>Spectral diffusion / discrete-token modeling for stellar spectra at low signal-to-noise ratio</b><br/>
-  <i>Pre-train on long, high-SNR sequences (~3030 pixels) → fine-tune on shorter, lower-SNR sequences (~303 pixels) in SNR stages (e.g. 25–30 → 9–11 → 7–9).</i>
-</p>
+[Model weights](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) · [Original repository](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) · [MIT license](LICENSE) · [StarWhisper](../README.md)
 
 ---
 
 ## Updates
 
-- **Mar 31, 2026:** Public **training code**, **`code/` data pipeline**, and **English README** (badges, dataset spec, HF links). **Model weights** are on [Hugging Face — Jaredxjc/Low-SNR-Stellar-Spectra-as-Language](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) (MIT).
+- **Mar 31, 2026:** Public **training code**, **`code/` data pipeline**, and **English documentation**. **Model weights** are on [Hugging Face — Jaredxjc/Low-SNR-Stellar-Spectra-as-Language](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) (MIT).
 - **Mar 31, 2026:** **Full tokenized spectra datasets** for redistribution: **Coming soon** (will be linked from this README and the HF dataset card when released).
 
 ---
@@ -23,7 +17,7 @@
 
 Pre-trained and staged fine-tuned checkpoints are hosted on Hugging Face:
 
-**[https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)**
+[Jaredxjc/Low-SNR-Stellar-Spectra-as-Language on Hugging Face](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)
 
 Load with the same architecture as in `src/spectral_lm/` and training scripts under `scripts/` (set `VOCAB_PATH` to `vocab/vocabulary.csv`). The HF model card may be extended with exact file names and training details.
 
@@ -73,6 +67,8 @@ Load with the same architecture as in `src/spectral_lm/` and training scripts un
 
 ## Training & reproduction
 
+Run the commands below from `Low-SNR-Stellar-Spectra-as-Language/`. In the shell examples, `REPO_ROOT` means the absolute path to this directory, rather than the parent StarWhisper directory.
+
 The canonical **model** and **train/finetune** entrypoints live outside `code/`:
 
 | Path | Role |
@@ -83,8 +79,6 @@ The canonical **model** and **train/finetune** entrypoints live outside `code/`:
 | `scripts/finetune.py` | Fine-tuning |
 | `vocab/vocabulary.csv` | Default vocabulary (`token_id`, `token`); see `vocab/README.md` |
 | `legacy_pretrain/` | Optional legacy SLURM launcher (`launch_slurm_pretrain.sh`) |
-
-Contributor-only notes (not published): **`private_docs/`** (gitignored).
 
 ### Prerequisites
 
@@ -251,11 +245,9 @@ bash examples/launch_finetune.example.sh
 
 ---
 
-## Open-source checklist
+## Local configuration
 
-- [x] Add a `LICENSE` (MIT).
-- [ ] Remove or anonymize private cluster paths inside `code/` scripts when forking.
-- [x] Host **weights** on Hugging Face; **datasets** — coming soon.
+Some scripts under `code/` retain paths from the original computing environment. Set the data and output paths for your own environment before running them. The complete tokenized dataset is still listed as coming soon; model weights are linked above.
 
 ## Citation
 
