@@ -1,20 +1,18 @@
 ---
 name: scientific-humanization
-description: Humanize Chinese astronomy papers, proposals, and talks while keeping bibcodes, filters, MJD, and discovery language conservative. Use when the user wants less template tone without changing facts.
+description: "修改中文科研文本、天文项目介绍或技能说明中的生硬句子、工程腔和模板措辞；以用户确认的稿件为准，保留数字、术语、引用和证据强度。"
 ---
 
-# Scientific Humanization
+# 科研文本修改
 
 ## 天文用法
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
-
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+天文术语和证据表述见 [astronomy.md](astronomy.md)。以用户确认的稿件为准，只修改生硬或事实不清的句子；不改数字、引用，也不把候选、分类分数或合成实验写成新发现。
 
 
 把科研文本改得像人写、像人讲，但不改坏科学事实。目标不是同义词替换，也不是追求“更高级”的词，而是让读者更容易看懂作者到底做了什么、证据支持到哪里、还有什么不能说满。
 
-## Working Order
+## 修改顺序
 
 1. 先锁定事实：数字、时间、单位、p 值、阈值、作者年份、论文题名、机构、模型名、数据集、样本/对象、变量/参数、实验或观察条件、时间点、地点/尺度、领域专名、图表编号、引用关系。
 2. 判断场景：论文正文、摘要、讨论、基金/项目书、技术方案、答辩、课程/PPT讲稿、投资人表达。
@@ -22,7 +20,7 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 4. 先检查论证顺序，再改句子。只有顺序确实影响理解时才调整；把“做了什么 -> 看到什么 -> 能说明什么 -> 还不能说明什么”讲清楚。
 5. 回读一遍 claim、数字、术语、因果、引用和用户明确禁用的表达。
 
-## Claim Strength
+## 证据强度
 
 - 相关性分析只能写“相关、提示、可能有关”，不能写“证明、导致、直接调控”。如果原文把相关性写成直接调控，改写时要补出“是否直接调控仍需功能验证或直接证据”。
 - 没有统计检验、阈值或图表标注时，不写“显著”；可写“呈升高趋势、发生变化、有所增加”。
@@ -32,7 +30,7 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 
 这些规则服务整个科研场景，不只服务生命科学。生命科学里可能表现为“候选基因、蛋白功能、共表达、启动子活性”；物理/天文里可能表现为“模型拟合、观测相关、仿真解释”；材料/工程里可能表现为“性能提升、工况泛化、失效机制”；计算/AI 里可能表现为“benchmark 提升、消融贡献、泛化能力”；医学/社科里可能表现为“关联、风险因素、干预效果、因果解释”。写作时按证据强度降级，不按领域套模板。
 
-## Human Voice
+## 保持作者的表达
 
 - 改稿默认少动。先假设原文里的口语、冗余和不工整是作者手迹；只有读起来打绊、证据说满、事实边界不清或明显模板腔时才改。改后不要追求更漂亮，优先保证作者还在、事实没变。
 - 用户给过明确措辞时，优先采用用户措辞，不替用户“升格”成更像模板的说法。
@@ -43,7 +41,7 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 - 去掉助手身份：不要写“作为您的助手”“我将帮助讲师”。讲稿默认是讲师本人在讲。
 - 对课程、答辩和投资人表达，可以更直接、更口语一点；对论文正文、结果和方法，要保守、准确、少加戏。
 
-## Scene Moves
+## 按文本用途处理
 
 - 论文/综述：保术语、保引用、保证据边界；少口语，少价值拔高。
 - 基金/项目书：把空泛目标落到科学问题、技术路线、验证指标和风险边界。
@@ -52,7 +50,7 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 - 答辩：先回答问题，再说依据和限制，不用长铺垫。
 - 投资人表达：讲清流程资产、复用价值和验证方式，不牺牲事实边界。
 
-## Output Style
+## 如何返回修改
 
 默认直接给可用版本。文本风险高时，用这个格式：
 
@@ -65,7 +63,7 @@ description: Humanize Chinese astronomy papers, proposals, and talks while keepi
 
 `仍需确认` 只放会影响事实或证据边界的事项，不放泛泛建议。
 
-## Examples
+## 例子
 
 输入：光变颜色相关性证明这些候选都是 Ia 型超新星。
 

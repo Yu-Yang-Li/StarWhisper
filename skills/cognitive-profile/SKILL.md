@@ -1,19 +1,13 @@
 ---
 name: cognitive-profile
-description: |
-  Record astronomy research preferences, catalogs, claim conservatism, and
-  collaboration boundaries. Use when the user asks to remember subfield habits,
-  writing style, or telescope-safety limits. Never store observatory credentials,
-  FTP, or unpublished target lists.
+description: "按用户要求记录或修正研究方向、写作习惯和协作偏好，用于记住长期偏好、查看记录或停止记录；不保存账号、台站凭据或未公开目标表。"
 ---
 
 # 认知画像
 
 ## 天文用法
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
-
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+研究方向与常用星表等偏好的记录方式见 [astronomy.md](astronomy.md)。只记录有来源的偏好，不保存账号、台站凭据或未公开目标表。
 
 
 只做一件事：以后再和这个人说话，别总从头猜。

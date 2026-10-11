@@ -1,6 +1,6 @@
 ---
 name: experiment-design
-description: Design observing campaigns, injection-recovery tests, and agent evaluations before collecting or replaying data. Use for night/field blocking, seeded synthetic nights, shadow-mode hardware runs, sample size, and pre-registered thresholds. Do not default to clinical RCT language.
+description: "在采集或回放数据前设计观测、注入回收和模型对照实验，明确样本单位、随机化、夜次或观测场分组、功效与预注册判据。"
 license: MIT
 ---
 
@@ -8,18 +8,13 @@ license: MIT
 
 ## 天文用法
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
-
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+先按 [astronomy.md](astronomy.md) 明确源身份、夜次、观测场和选择效应。观测、注入回收、合成实验和影子运行各自使用相应设计；计划文件不代表设备已经执行。
 
 
-设计决定了数据能回答什么问题——**混杂或伪重复的设计，事后再高级的分析也救不回来**。本技能覆盖
-Fisher 三原则、设计类型选择、随机化/区组、样本量与功效、以及采集前就锁定的分析计划。跨学科通用：
-湿实验、临床、社科实证、计算/机器学习实验都适用。
+在采集或回放数据前，明确实验单位、分组、随机化、样本量和分析计划。先检查混杂与伪重复，
+再选择设计类型；分析方法不能补回设计中没有记录的独立信息。
 
-> 本技能整合了实验设计与统计功效分析的通行方法（Fisher 随机化/重复/区组原则、
-> 经典 DOE 与响应面设计、Cohen 效应量与 a-priori 功效分析），并将样本量、随机化、
-> DOE 布局等确定性计算下沉为可复现脚本。
+样本量、随机化和 DOE 布局可用下列脚本计算。效应量、功效与设计假设应根据实际课题填写。
 
 ## 脚本（确定性工具，采集前直接生成方案）
 

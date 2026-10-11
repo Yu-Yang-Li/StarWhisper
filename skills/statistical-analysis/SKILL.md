@@ -1,6 +1,6 @@
 ---
 name: statistical-analysis
-description: Run confirmatory statistics on light-curve, survey, or agent-evaluation tables after the analysis plan is locked. Use for tests, effect sizes, confidence intervals, selection effects, small-count intervals, and multiple testing across candidates.
+description: "按预先确定的分析计划处理天文观测或实验数据，选择统计检验、效应量和区间，检查分组、选择效应、多重检验和不确定性。"
 license: MIT
 ---
 
@@ -8,9 +8,7 @@ license: MIT
 
 ## 天文用法
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
-
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+先按 [astronomy.md](astronomy.md) 核对样本单位、时间系统、分组与选择效应。分析计划和数据来源要能追溯，合成结果与真实观测分别报告。
 
 
 实验设计管"采集前"，这个技能管"采集后"：把数据变成可报告、可复核的统计结论。核心纪律是

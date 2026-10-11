@@ -1,6 +1,6 @@
 ---
 name: academic-writing
-description: Write, review, and submit astronomy manuscripts for AAS/MNRAS/A&A/PASP and Chinese NSFC astronomy proposals. Use for papers, referee reports, rebuttals, cover letters, and grant text. Do not retrieve literature or audit citation authenticity.
+description: "撰写或修改天文论文、审稿意见、审稿回复和基金申请；使用已有研究材料，检查表述与证据是否一致。文献检索和引用真实性检查由相应技能处理。"
 license: MIT
 ---
 
@@ -8,17 +8,14 @@ license: MIT
 
 ## 天文用法
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
-
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+天文期刊、申请书与术语的约定见 [astronomy.md](astronomy.md)。使用已有研究材料写作；合成实验与真实观测的结果分别说明，证据不足的论述不能写满。
 
 
-把一份研究成果从草稿推进到"可投、可评、可辩、可资助"。覆盖论文写作、同行评审、回稿修订、
-基金申请、投稿材料五条主线。它管**表达与协作**，不管**发现**（文献检索/综述综合走文献技能），
-也不管**引用真实性与格式合规**（走引用合规技能）。
+根据已有研究材料撰写论文、审稿意见、回复、申请书或投稿材料。先选本次需要的写作模式，
+再阅读相应模板。需要补充文献时使用检索技能，需要核对引用时使用 PaperCheck。
 
-> 本技能整合了学术出版通行的写作、评审、修订、基金与投稿最佳实践，遵循 IMRaD、
-> CONSORT/STROBE/PRISMA/ARRIVE 报告规范与主要资助机构（NSF/NIH/DOE/DARPA）的申报要求。
+论文通常按 IMRaD 组织。报告规范与申请要求按研究类型、目标期刊和资助机构选择；
+CONSORT / STROBE / PRISMA / ARRIVE 等只用于相应研究，不直接套用到所有天文论文。
 
 ## 资源（按需加载）
 
