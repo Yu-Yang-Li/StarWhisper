@@ -2,7 +2,7 @@
 
 [Repository home](../README_EN.md) · [中文](research.md) · English · [Skill installation](../skills/README.md)
 
-These notes collect the research timeline, original figures, public results, and reproduction scope. Run the commands below from the repository root.
+These notes document the integrated modules' research background, timeline, original figures, public results, and reproduction scope. See the [module catalog](../README_EN.md#modules-and-resources) for entry points. Run the commands below from the repository root.
 
 ## Timeline
 

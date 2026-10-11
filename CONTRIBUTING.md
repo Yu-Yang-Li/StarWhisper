@@ -1,6 +1,6 @@
 # Contributing to StarWhisper
 
-欢迎报告问题、补充复现说明或提交改进。请先从[首页](README.md)找到对应研究目录，阅读该目录的 README；[研究文档](docs/research.md)说明了公开材料与复现范围。
+欢迎报告问题、补充复现说明或提交改进。请先从[首页集成目录](README.md#集成内容)找到对应模块，阅读该目录的 README；[研究文档](docs/research.md)说明了公开材料与复现范围。
 
 ## 报告问题
 
