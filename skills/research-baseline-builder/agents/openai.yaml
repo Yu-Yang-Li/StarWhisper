@@ -1,4 +1,4 @@
 interface:
-  display_name: "Research Baseline Builder"
-  short_description: "Turn science questions into baselines."
-  default_prompt: "Turn this scientific question into a data task and baseline SOP."
+  display_name: "研究基线"
+  short_description: "明确天文课题的样本、输入、输出与数据划分，建立简单基线"
+  default_prompt: "使用 $research-baseline-builder 整理这个天文课题的输入、输出和样本单位，检查数据划分，再生成分析计划与基线工作目录。"

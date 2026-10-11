@@ -1,8 +1,8 @@
 interface:
-  display_name: "Thesis Audit Reviewer"
-  short_description: "含事实复核与方法前提审计的学位论文审阅"
+  display_name: "论文与学位论文审阅"
+  short_description: "检查天文论文的引用、方法前提、图表和结论，并记录依据"
   brand_color: "#2563EB"
-  default_prompt: "Use $thesis-audit-reviewer to run a matrix-first thesis audit with DOCX/PDF integrity checks, verifiable-claim ledgers, method-premise review, and a standardized reviewer-style report."
+  default_prompt: "使用 $thesis-audit-reviewer 审阅这份天文论文，核对引用、方法前提和图表，并逐项记录意见与依据。"
 
 policy:
   allow_implicit_invocation: true

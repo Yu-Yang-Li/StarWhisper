@@ -11,4 +11,4 @@ StarWhisper changes the default literature sources, examples, statistical
 assumptions, and writing venues to astronomy. Upstream scripts and templates
 are kept unless an overlay in `astronomy.md` says otherwise.
 
-The MIT license text is in `LICENSE-skills-mit.txt`.
+The MIT license text is in [LICENSE-skills-mit.txt](LICENSE-skills-mit.txt).

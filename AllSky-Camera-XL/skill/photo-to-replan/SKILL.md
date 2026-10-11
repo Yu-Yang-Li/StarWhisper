@@ -1,15 +1,15 @@
 ---
 name: photo-to-replan
-description: Use this skill when the user wants to run the end-to-end all-sky photo pipeline from a raw all-sky image to a replanned observing sequence, using the packaged run_pipeline.py entrypoint in this shared directory.
+description: 根据全天相机原始照片生成云区掩码和调整后的观测序列。用于 AllSky-Camera-XL 的 run_pipeline.py、标定参数选择和结果检查；生成文件，不执行望远镜观测。
 ---
 
-# Photo To Replan
+# 全天相机观测序列重排
 
-Use this skill when the task is to go from a raw all-sky image to replanned observing outputs.
+读取全天相机照片，生成掩码、调整后的观测计划和 NINA TargetSet。需要完整的 `AllSky-Camera-XL/` 项目、模型、依赖与标定参数；单独安装此说明文件不包含运行环境。
 
 ## Workflow
 
-1. Locate the shared `photo_to_replan_pipeline` directory.
+1. Locate the StarWhisper repository and its `AllSky-Camera-XL/` directory. Confirm the Python environment, model weights, and calibration group before running.
 
 2. Run the single-entry pipeline script from that directory:
 
@@ -48,11 +48,11 @@ Optional:
 
 ## Validation
 
-A run counts as pipeline-successful if these files exist and are readable:
+Check the process exit status and report, then confirm that these files exist and are readable:
 
 - `pipeline_report.json`
 - `scenario.json`
 - `replanned_schedule.json`
 - `replanned_sequence.ninaTargetSet`
 
-Business success is separate. Check `deferred_targets.json` and `replanned_schedule.json` to see whether future slots were actually filled.
+Check `deferred_targets.json` and `replanned_schedule.json` to see which targets were scheduled or deferred. These files describe a proposed sequence; generating them does not mean the telescope loaded or executed it.

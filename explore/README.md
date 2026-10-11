@@ -1,10 +1,10 @@
 # StarWhisper-Explore-v0.2
 
-Telescope 已经能在巡天里自动观测。Explore 问的是这个判断什么时候靠得住、会牺牲什么、什么时候必须停。
+Telescope 用于巡天自动观测，Explore 比较观测策略的收益、巡天完成度损失和安全暂停条件。
 
-本目录只公开**合成环境的规格和一次已核对结果**。可复现的环境代码还没有放进仓库；不要把下面的数字当成真实夜次，也不要写成硬件闭环已经跑通。
+本目录保存合成环境的实验设定和一次已核对的指标表。环境代码尚未收录到仓库；现有材料可用于重新计算策略比较，不能用于复现环境或声称已经验证真实观测。
 
-## 固定规则
+## 实验设定
 
 - 版本：`StarWhisper-Explore-v0.2`
 - 台站：兴隆；单镜；一夜六个有序时隙
@@ -15,9 +15,9 @@ Telescope 已经能在巡天里自动观测。Explore 问的是这个判断什�
 
 动作集合：`observe_plan`、`follow_transient`、`defer_transient`、`safe_pause`、`recover_and_replan`。
 
-## 预注册门槛
+## 预注册标准
 
-正向结果要求三个种子都过：
+正向结果要求三个种子均满足：
 
 - 没有主动安全违规
 - 无效动作率 ≤ 1%
@@ -35,9 +35,13 @@ python ..\skills\starwhisper-explore\scripts\eval_gate.py bar
 python ..\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 ```
 
-同一套判定也能用在自己的实验表上：`--csv my_run.csv --agent my_policy`，列名对上即可。
+自备实验表需使用相同列名，并将 `--csv` 放在子命令前：
 
-规则 Agent 相对确定性优先级：跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，越过预注册的 5 个百分点线。三个种子方向一致，复跑哈希一致。这是稳定负结果，不是正向胜利。
+```powershell
+python ..\skills\starwhisper-explore\scripts\eval_gate.py --csv my_run.csv gate --agent my_policy
+```
+
+规则 Agent 相对确定性优先级：跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，超过预注册的 5 个百分点上限。三个种子的结果方向一致，已记录的复跑哈希一致。因此报告为稳定负结果。
 
 图：
 

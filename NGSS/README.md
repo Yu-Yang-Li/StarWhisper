@@ -1,165 +1,100 @@
 # NGSS · StarWhisper Telescope
 
-近邻星系巡天（NGSS）上的观测自动化代码，对应论文 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。这是真实观测栈，不是 [`../explore/`](../explore/README.md) 里的合成环境。
+近邻星系巡天（NGSS）的观测自动化代码，对应论文 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。程序负责制定观测计划、管理目标、连接 NINA，以及传输和处理观测数据。
 
-运行依赖 NINA、FTP、x-opstep 和望远镜连接。没有这些接口时不要把本地试跑写成硬件闭环已经通了。仓库总览见 [根目录 README](../README.md)。
+[项目首页](../README.md) · [研究文档](../docs/research.md) · [离线配置检查](../skills/starwhisper-night-plan/SKILL.md)
 
-## Project Structure
+## 目录
+
+| 路径 | 内容 |
+| --- | --- |
+| `src/app/app2.py` | FastAPI 服务入口 |
+| `src/module/` | 观测计划、目标处理、通信等模块 |
+| `src/script/`、`src/util/` | 更新脚本与辅助函数 |
+| `observe.yml` | Python 环境依赖 |
+| `observe_config.json` | 观测配置 |
+| `Make_Observation_Plan.json`、`NGSS_Agent.json` | n8n 工作流示例 |
+| `observation Schedule/`、`runningLog/` | 观测计划与历史日志材料 |
+
+## 环境与启动
+
+运行需要 NINA、FTP、x-opstep 和已配置的望远镜连接。先在 `NGSS/` 目录创建环境：
+
+```bash
+conda env create -f observe.yml
 ```
-src/
-├── app/          # Core application logic
-│   └── app2.py   # Main service entry point
-├── module/       # Functional modules
-├── script/       # Utility scripts
-└── util/         # General utilities
-observation Schedule/  # supporting materials, no need to download
-runningLog/            # supporting materials, no need to download
-```
 
-
----
-
-## Service Execution
-**Start the NGSS service** from this directory (`NGSS/`):
+激活 `observe.yml` 中指定的环境，再从同一目录启动服务：
 
 ```bash
 uvicorn src.app.app2:app --reload
 ```
 
-The old `uvicorn main:app2.py` line does not match the file layout. The FastAPI app object lives in `src/app/app2.py`.
-Capabilities:
-- Observation planning
-- Target management (addition/selection)
-- NINA automation control
-- FTP-based internal network data transfer
+这条命令默认使用端口 8000，接口说明可在 [本地 API 文档](http://127.0.0.1:8000/docs) 查看。`--reload` 用于开发调试；启动服务不代表设备连接和真实观测已经验证。
 
----
+## 观测配置
 
-## Environment Setup
-### Python Environment
-```bash
-conda env create -f observe.yml
-```
+程序读取 `observe_config.json` 的平铺字段。仓库中的示例为：
 
-### Configuration
-`observe_config.json` parameters:
 ```json
 {
-  "inherit": true,          // Inherit yesterday's schedule
-  "time_windows": {         // Target selection time windows (hours)
-    "early_night": 0.5,
-    "midnight": 2.0,
-    "midmorning": 2.0,
-    "early_morning": 2.0
-  },
-  "constraints": {
-    "d_moon": 15           // Minimum moon distance (degrees)
-  },
-  "filters": ["L"],        // Filter configuration
-  "exposure": {
-    "count": 3,            // Exposure count per target
-    "time": 120,           // Exposure duration (seconds)
-    "wait": 1.0            // Wait time between exposures (minutes)
-  }
+  "inherit": true,
+  "early_night": 0.5,
+  "midnight": 2.0,
+  "midmorning": 2.0,
+  "early_morning": 2.0,
+  "d_moon": 15,
+  "FilterType": ["L"],
+  "TotalExposureCount": 3,
+  "ExposureTime": 120,
+  "WaitTime": 1.0
 }
 ```
 
----
+| 字段 | 含义 |
+| --- | --- |
+| `inherit` | 是否继承前一日计划 |
+| `early_night`、`midnight`、`midmorning`、`early_morning` | 各时段的目标选择时间窗，单位为小时 |
+| `d_moon` | 最小月距，单位为度 |
+| `FilterType` | 滤光片列表 |
+| `TotalExposureCount` | 每个目标的曝光次数 |
+| `ExposureTime` | 单次曝光时间，单位为秒 |
+| `WaitTime` | 每个目标的额外指向与读出时间，单位为分钟 |
 
-## TNS Integration
-**Transient Search:**
+调整前可用 [`starwhisper-night-plan`](../skills/starwhisper-night-plan/SKILL.md) 在本地检查字段、目标表和曝光预算。该技能读取文件，不连接设备。
+
+## 设备与数据处理依赖
+
+- 在 `src/module/UdpConnect.py` 中核对通信配置。
+- 配置 [X-OPSTEP](https://github.com/Shinehope-Chen/X-OPSTEP/blob/master/README.md) 及其 astrometry.net、ASTAP、Scamp、SWarp、HOTPANTS 依赖。
+- 安装 [NINA](https://nighttime-imaging.com/)，按现有部署方式将 `FMoraes.NINA.SitesPlugin.dll` 放入其插件目录，并核对望远镜连接。
+- 核对 FTP 地址、数据目录和工作流使用的服务地址。
+
+观测设备的安全联锁和人工确认仍由实际系统负责。没有连接设备时，本地运行只能验证相应的软件步骤。
+
+## 接口与工作流
+
+接口定义位于 `src/app/app2.py`，参数与返回格式以运行中的 API 文档为准：
+
+| 任务 | 接口路径 |
+| --- | --- |
+| 查看或修改配置 | `/look_config`、`/modify_config` |
+| 生成观测计划 | `/plan_observation` |
+| 查询计划和日志 | `/get_oblist`、`/check_log` |
+| 添加观测目标 | `/add_fine_oblist` |
+| 传输计划与数据 | `/ftp_transfer` |
+| 操作 NINA | `/manipulate_nina/{action}` |
+| 暂现源处理与结果读取 | `/pipeline_transient`、`/get_filtered_csv_data` |
+| 更新台站资料 | `/update_station` |
+
+部分接口会修改配置、传输文件或操作设备，调用前需明确动作与参数。n8n 示例通过这些接口安排任务并读取日志；语言模型与服务地址应根据本机环境配置，模型能返回工具调用并不代表调用已经成功。
+
+## TNS 辅助脚本
+
 ```bash
 python Pachong.py
 ```
-This is a legacy helper for public TNS pages. It can fail when the site or login changes. It is not part of Explore, and it does not command the telescope.
 
----
+这个旧脚本读取公开 TNS 页面，可能随页面或登录方式变化而失效。它不控制望远镜，也不运行 [Explore 合成实验](../explore/README.md)。
 
-## Prerequisites
-### 1. Server-Telescope Connection
-Configure in:  
-`src/module/UdpConnect.py`
-
-### 2. x-opstep Deployment
-[X-OPSTEP](https://github.com/Shinehope-Chen/X-OPSTEP/blob/master/README.md) required dependencies:
-- astrometry.net
-- ASTAP
-- Scamp
-- SWarp
-- HOTPANTS
-
-### 3. NINA Configuration
-1. Install [NINA](https://nighttime-imaging.com/)
-2. Replace plugin:
-```bash
-cp FMoraes.NINA.SitesPlugin.dll /path/to/NINA/plugins/
-```
-
-### 4. Telescope Connection
-Ensure proper connection via NINA's plugin interface
-
----
-
-## Workflow Automation (n8n)
-Example workflows:
-- `Make_Observation_Plan.json`
-- `NGSS_Agent.json`
-
-Structure principles:
-1. LLM-driven decision making
-2. FastAPI tool integration
-3. Log monitoring at:  
-   [http://127.0.0.1:80/check_log](http://127.0.0.1:80/check_log)
-
----
-
-## LLM Implementation Guide
-### Selection Criteria
-1. Latest generation model (>7B parameters)
-2. Instruct-tuned variants preferred
-3. On-premise deployment recommended for:
-   - Data security
-   - Consistent performance
-
-### Configuration Tips
-- Avoid quantized models (<16-bit)
-- API alternatives: OpenAI, Anthropic, etc.
-- Chinese language support required
-
----
-
-## Observation Workflow
-### Skill 1: Plan Creation
-```python
-Make_Observation_Plan() → {uuid, log_url}
-```
-
-### Skill 2: Plan Review
-```python
-Get_OB_List(station, date) → observation_plan_url
-```
-
-### Skill 3: Plan Execution
-```python
-Load_Observation_Plan(plan_id) → NINA_integration
-```
-
-### Skill 5: Target Addition
-```python
-Add_Observation_Object(target_params) → confirmation
-```
-
-### Skill 6: Transient Handling
-```python
-Transient_load(station, date, telescope) → analysis_results
-```
-
----
-
-## Operational Constraints
-1. Strict parameter validation required
-2. Mandatory tool use for all operations
-3. Chinese language support required
-4. URL outputs must be plaintext (no markdown formatting)
-
-> **Note:** All operations require active connection to telescope control systems
+引用实验结果时，应注明来自真实观测、历史日志还是合成环境。NGSS 的观测系统与本仓库公开的 Explore 指标表分别使用。
