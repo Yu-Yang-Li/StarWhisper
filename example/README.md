@@ -1,6 +1,6 @@
 # example
 
-历史插图备份。仓库首页 README 用的图已经改放到 GitHub Pages：
+历史插图备份。首页封面和研究文档中的图片统一保存在 [`docs/assets/`](../docs/assets/README.md)，并由 GitHub Pages 提供访问：
 
 https://yu-yang-li.github.io/StarWhisper/assets/
 

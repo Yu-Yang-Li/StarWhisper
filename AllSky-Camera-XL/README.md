@@ -9,7 +9,7 @@
 ## 当前结构
 
 ```text
-photo_to_replan_pipeline/
+AllSky-Camera-XL/
   configs/
     default.json
   Pic2mask/
@@ -40,7 +40,7 @@ photo_to_replan_pipeline/
 
 默认配置文件：
 
-- [default.json](/path/photo_to_replan_pipeline/configs/default.json)
+- [default.json](configs/default.json)
 
 里面记录：
 
@@ -118,7 +118,7 @@ python run_pipeline.py \
 每次运行会生成：
 
 ```text
-photo_to_replan_pipeline/output/
+AllSky-Camera-XL/output/
   <image_stem>/
     input/
       <original image>

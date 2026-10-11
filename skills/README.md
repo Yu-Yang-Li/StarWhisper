@@ -1,6 +1,6 @@
 # 技能包
 
-17 个技能，都是**做事的**，不是介绍性的：每个有决策规则、可跑的脚本，多数带回归测试。没有密钥就 dry-run，没有数据就报缺，不编文献，不下硬件指令。
+17 个可安装的天文科研技能：4 个本线技能、13 个天文适配科研技能。每个技能包含决策规则和可运行脚本，多数带回归测试。项目总览见[首页](../README.md)，研究背景见[研究文档](../docs/research.md)。
 
 ## 安装
 
@@ -94,12 +94,6 @@ python .\skills\starwhisper-varlen\scripts\eval_varlen.py best --pool varlen
 ```powershell
 python .\skills\giiisp-paper-search-apis\scripts\ads_first_search.py --query "StarWhisper Telescope" --dry-run
 ```
-
-<div align="center">
-
-![StarWhisper astronomy research skills](https://yu-yang-li.github.io/StarWhisper/assets/starwhisper-skills-matrix.jpg)
-
-</div>
 
 ### 文献证据
 
