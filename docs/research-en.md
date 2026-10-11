@@ -1,6 +1,6 @@
 # StarWhisper research notes
 
-[Repository home](../README_EN.md) · [中文](research.md) · English · [Skill installation](../skills/README.md)
+[Repository home](../README_EN.md) · [中文](research.md) · English · [Skill installation](../skills/INSTALL.md) · [Repository structure](architecture-en.md)
 
 These notes contain paper figures, experimental results, and details about the available data and code. For project links, see the [home page](../README_EN.md#projects). Run the commands below from the repository root.
 

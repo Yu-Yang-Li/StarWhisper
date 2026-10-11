@@ -1,6 +1,6 @@
 # StarWhisper 研究文档
 
-[返回首页](../README.md) · 中文 · [English](research-en.md) · [技能安装](../skills/README.md)
+[返回首页](../README.md) · 中文 · [English](research-en.md) · [技能安装](../skills/INSTALL.md) · [仓库结构](architecture.md)
 
 这里整理各项工作的论文图表、实验结果和复现说明。代码和数据链接见[首页](../README.md#项目)。下列命令均从仓库根目录执行。
 

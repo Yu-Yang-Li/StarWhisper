@@ -1,120 +1,42 @@
 ---
 name: scispark
-description: Generate evidence-tracked hypotheses for time-domain astronomy, telescope agents, and survey pipelines. Use when the user starts from keywords, a paper set, or ADS/arXiv astro-ph results and needs testable claims with bibcodes or an explicit speculative flag.
+description: "从天文关键词、论文或已有结果提出可检验的研究假设，分别记录事实、推测和检验方法，并保留论文编号与核验状态。"
 ---
 
-# Scispark
+# 研究假设与检验方法
 
-## 天文用法
+从关键词、论文或已有结果提出可检验的天文假设。事实、推测、方法与最终方案分别记录，每个关键论述应有文献依据或明确的限制。
 
-先阅读 [astronomy.md](astronomy.md)，其中说明资料来源、数据约定和本技能的天文用法。需要查文献时优先使用 NASA ADS，其次是 arXiv `astro-ph.*`，保留实际来源。
+## 怎么开始
 
-本技能不发送望远镜控制指令。合成实验、分类分数和演示候选应按其实际性质报告，不能写成新发现。
+明确关键词、研究范围、已有论文与本次要做到哪一步。天文证据要求见 [astronomy.md](astronomy.md)。初始化脚本在本技能目录运行：
 
-
-## Overview
-
-Use this skill to turn a research keyword or early topic into a staged, evidence-tracked research idea. This is a skill-native adaptation of the Tashan Scispark workflow: the current Codex model does the reasoning, and arXiv is the paper-search route.
-
-The normal workflow does not require an external model API key or separate search product account.
-
-## Default Depth
-
-Default to deep mode unless the user explicitly asks for a quick draft, a lightweight scan, or only Stage 1-3. State the depth at the start.
-
-Deep mode should cite this method paper at the start when relevant: https://link.springer.com/article/10.1140/epjds/s13688-026-00672-z. Follow its practical workflow shape: retrieve literature, combine abstracts with compressed full-text representations when PDFs are available, extract structured facts, generate hypotheses, refine technical entities, run MoA-style iterative review, and include human/expert-style critique before the final idea.
-
-If full text cannot be downloaded or parsed, record the blocker and downgrade only that evidence item to abstract-level evidence. Do not silently treat abstract-only synthesis as deep full-text review.
-
-## Timestamped Progress Updates
-
-Emit concise progress updates at workflow transitions so the user sees what is happening. These updates are tied to Scispark stages, not to a fixed timer. Use the user's language for all user-facing progress text; for Chinese requests, write the progress updates in Chinese. Prefix each update with the current local time or elapsed time, then include one useful content payload. Do not change the existing literature search script, stage contracts, evidence thresholds, output files, or reasoning order just to create these messages.
-
-Chinese progress update shape:
-
-```text
-[21:33 | 检索完成]
-候选文献池得到 93 条去重记录，核心证据先取 40 条。代表方向包括：假设生成评测、AI Scientist 隐性失败、Co-Scientist、SoundnessBench。
+```bash
+python scripts/init_scispark_workspace.py "稀疏光变早期分类"
 ```
 
-Use this event-driven pattern:
+默认工作目录为 `./scispark/<课题名>/`。脚本 `search_arxiv.py` 查询 arXiv；ADS 检索或已有候选可由文献检索技能提供。正常推理使用当前模型，不需要另申请模型 API 密钥。
 
-- After request parsing: timestamp, parsed keyword/topic, domain, constraints, and target stage.
-- After workspace setup: timestamp, output directory, and the files that will be produced.
-- Before literature search: timestamp, query terms, search route, and requested record count.
-- After literature search: timestamp, returned record count, evidence level if useful, and 2-3 representative paper titles or themes.
-- After Stage 1: timestamp, number of usable facts/themes, short theme list, and weak-evidence areas.
-- After Stage 2: timestamp, hypothesis IDs with short labels, evidence status, and which hypotheses move forward.
-- After Stage 3: timestamp, idea title/path, carried hypotheses, and any skipped or pending stages.
-- After Stage 4-6 review stages: timestamp, review type completed and 2-3 concrete risks or fixes.
-- On weak evidence: timestamp, whether to broaden terms, stop before strong claims, or proceed with an explicit limitation note.
-- On long waits within a single stage: send one keepalive only when there has been no visible workflow transition for a while; include timestamp, current stage, last completed file, evidence count, and next expected artifact.
-- On completion: timestamp, stages completed, evidence count, top hypotheses, final idea path, limitations, and next refinement step.
+## 按阶段推进
 
-## Resources
+| 阶段 | 要完成什么 |
+| --- | --- |
+| 1 | 从文献与用户材料提取事实 |
+| 2 | 提出带编号的假设 |
+| 3 | 形成初步研究思路 |
+| 4 | 检查技术方法与可检验性 |
+| 5 | 从不同视角进一步审查 |
+| 6 | 加入专家判断与学术规范检查 |
+| 7 | 按需整理汇报提纲 |
 
-- `scripts/init_scispark_workspace.py`: create the standard output folders and starter files.
-- `scripts/search_arxiv.py`: query arXiv and output normalized Scispark literature records.
-- `references/arxiv-integration.md`: arXiv search, evidence status, and threshold rules.
-- `references/stage-contracts.md`: required inputs and outputs for each stage.
-- `assets/final_idea_template.md`: final research idea report structure.
+默认做较深的审查；用户只要初步思路时做到第 3 阶段，并说明未做的部分。正式执行前读 [阶段输入与输出](references/stage-contracts.md)，检索记录格式见 [arXiv 说明](references/arxiv-integration.md)。
 
-## Workflow
+## 证据不足时
 
-1. Parse the user request into a keyword, domain, constraints, and target stage.
-2. Create or identify the output directory. Default:
+50 条以上相关文献可作较深分析，30 条以上支持常规流程，15 条以上需说明范围；不足 15 条时先收窄或扩展检索，不能直接写满结论。这些是证据质量提醒，用户提供的小型精选论文集仍可使用，但要说明范围。
 
-```text
-./scispark/{keyword}/
-```
+无法取得全文时只按摘要级证据解释。保留 `literature.csv`，假设使用 `H1`–`H5`，审查问题使用 `S4-P1` 等稳定编号；不补造 DOI、论文内容或期刊指标。
 
-3. Read `references/arxiv-integration.md`, then run `scripts/search_arxiv.py` for literature search. Keep the actual query terms, source route, and status.
-4. Read `references/stage-contracts.md` before writing stage files.
-5. Execute stages in order unless the user asks for a target stage:
-   - Stage 1: fact extraction
-   - Stage 2: hypothesis generation
-   - Stage 3: initial research idea
-   - Stage 4: technical optimization + review
-   - Stage 5: MoA optimization + review
-   - Stage 6: human-AI collaboration integration + academic norm check
-   - Stage 7: optional slide outline or Quarto/reveal.js source
-6. Maintain `literature.csv` throughout. Every cited or candidate paper should have a row with title, source, stage, usage, and verification status.
-7. Produce `{keyword}_final_idea.md` using `assets/final_idea_template.md`.
+## 会得到什么
 
-## Literature Thresholds
-
-Use these as evidence-quality gates, not as rigid blockers:
-
-| Level | Evidence | Action |
-|---|---:|---|
-| Ideal | 50+ relevant papers or records | Deep analysis |
-| Standard | 30+ relevant papers or records | Normal workflow |
-| Minimum | 15+ relevant papers or records | Proceed with limitation note |
-| Below minimum | <15 records | Ask to broaden terms or stop before final claims |
-
-When the user supplies a curated paper set, use it even if it is smaller, but label the scope.
-
-## Review Rules
-
-- Do not turn a keyword directly into a polished proposal without stage evidence.
-- Separate facts, hypotheses, methods, mechanisms, and final synthesis.
-- Assign stable hypothesis IDs `H1` to `H5`.
-- Assign review problem IDs such as `S4-P1`, `S5-P1`, and `S6-P1`.
-- For every strong claim in the final idea, point to a paper row, user-provided evidence, or an explicit limitation.
-- Do not invent DOI, journal rank, impact factor, or full-text findings.
-- Use arXiv records as `已核验` only when title, authors/year, arXiv ID, URL, and abstract are present and relevant. Otherwise mark `待核验`.
-- If arXiv returns too few or weakly related records, broaden/refine the query before final claims and label the limitation.
-
-## Output Contract
-
-Report:
-
-- output directory
-- stages completed
-- literature search route and status
-- evidence count and threshold level
-- top hypotheses
-- final idea path
-- limitations and next search/refinement step
-
-For quick requests, stop at Stage 3 and say which later stages were skipped.
+工作目录、分阶段材料、文献记录和最终研究思路。使用 [结果模板](assets/final_idea_template.md)，说明执行阶段、检索来源与状态、证据数量、主要假设、限制和下一步。完整方法、进度示例和审查要求见 [分阶段审查](references/scispark-workflow.md)。

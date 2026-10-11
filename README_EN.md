@@ -1,6 +1,6 @@
 # StarWhisper
 
-[中文](README.md) · English · [Research notes](docs/research-en.md) · [Skill pack](skills/README.md)
+[中文](README.md) · English · [Research notes](docs/research-en.md) · [Skill pack](skills/README.md) · [Repository structure](docs/architecture-en.md)
 
 ![Concept illustration of a mountain observatory under the night sky](docs/assets/starwhisper-cover.png)
 

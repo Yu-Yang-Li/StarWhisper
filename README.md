@@ -1,6 +1,6 @@
 # 星语 / StarWhisper
 
-中文 · [English](README_EN.md) · [研究文档](docs/research.md) · [技能包](skills/README.md)
+中文 · [English](README_EN.md) · [研究文档](docs/research.md) · [技能包](skills/README.md) · [仓库结构](docs/architecture.md)
 
 ![山地天文台与夜空的概念插画](docs/assets/starwhisper-cover.png)
 
