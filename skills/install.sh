@@ -81,7 +81,7 @@ if [ "$DRY_RUN" -eq 1 ]; then exit 0; fi
 
 echo
 echo "Installed ${#skills[@]} skills into ${#targets[@]} location(s)."
-echo "Point the native skills at this checkout so they can read snclock/, explore/ and NGSS/:"
+echo "Point the native skills at this checkout so they can read projects/snclock/, projects/explore/ and projects/ngss/:"
 echo "  export STARWHISPER_ROOT=\"$repo\""
 echo "Skills with extra Python deps: experiment-design, statistical-analysis, thesis-audit-reviewer, visual-deck-builder, papercheck."
 echo "The four starwhisper-* skills are stdlib only and need nothing installed."
