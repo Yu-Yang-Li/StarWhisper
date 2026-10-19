@@ -9,6 +9,8 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
 def run(*args, expect: int | None = None) -> dict:
+    if "--config" not in args:
+        args = ("--config", str(ROOT / "references" / "observe_config.example.json"), *args)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--json", *args],
         capture_output=True,

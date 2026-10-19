@@ -43,7 +43,7 @@ powershell -File .\skills\install.ps1 -Set native -Target codex
 
 ## 让技能找到仓库数据
 
-从仓库内运行时，原生脚本会向上查找项目文件。安装到其他位置后，可以设置 `STARWHISPER_ROOT`。从仓库根目录设置当前 PowerShell 会话，并保存给之后新开的终端：
+从仓库内运行时，原生脚本会向上查找 `projects/` 下的项目文件，也兼容旧版顶层目录。安装到其他位置后，可以设置 `STARWHISPER_ROOT`，指向包含 `projects/` 和 `skills/` 的仓库根目录。从仓库根目录设置当前 PowerShell 会话，并保存给之后新开的终端：
 
 ```powershell
 $env:STARWHISPER_ROOT = (Get-Location).Path

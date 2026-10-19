@@ -8,32 +8,33 @@ license: Apache-2.0
 
 检查观测配置、曝光时间预算和目标表，供安排夜间观测时参考。
 
-计算使用 `scripts/plan_night.py`，只依赖 Python 标准库，不建立 HTTP、MQTT、FTP 或 NINA 连接。配置来自 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) 对应的 [`NGSS/`](../../NGSS/README.md)，与 Explore 合成实验和虚拟司天分开使用。
+计算使用 `scripts/plan_night.py`，只依赖 Python 标准库，不建立 HTTP、MQTT、FTP 或 NINA 连接。配置来自 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4) 对应的 [`projects/ngss/`](../../projects/ngss/README.md)，与 Explore 合成实验和虚拟司天分开使用。
 
-配置按 `--config` → 仓库 `NGSS/observe_config.json` → 内置样例的顺序解析，输出会写明用的是哪一个。
+优先使用 `--config` 指定的配置，否则读取仓库的 `projects/ngss/observe_config.json`（旧仓库为 `NGSS/observe_config.json`）。找不到仓库配置时读取内置样例，输出会写明来源。支持 NGSS 的平铺字段和技能样例的分组字段。
 
 ## 何时使用
 
-- "这份 observe_config 有没有问题""d_moon 设 15 度够不够"
-- "一夜能排多少个目标""3×120 秒够不够用"
+- "这份 observe_config 有没有问题"、"d_moon 设 15 度够不够"
+- "一夜能排多少个目标"、"3×120 秒够不够用"
 - "这批目标表能不能直接交上去"
 - "NGSS 有哪些接口，哪些会真的动望远镜"
 
 ## 工作流
 
 1. **`check-config`**：字段缺失、取值越界、以及配置本身不自洽的地方。有 error 就先修，不要往下排。
-2. **`budget`**：算单目标耗时和一夜容量。这一步定下"能排几个"，后面所有讨论都以它为准。
+2. **`budget`**：估算单目标耗时和一夜容量，供检查目标表数量时参考。
 3. **`lint-targets`**：目标表列名、重复、RA/Dec 越界，以及数量是否超容量。
 4. **`endpoints`**：查看只读接口、修改状态的接口和设备控制接口，分别标记为 read、mutate、hardware。
 
 ## 时间预算怎么算
 
 ```
-单目标 = 滤镜数 × (曝光张数 × 曝光时长 + (张数-1) × 间隔) + 转向开销
-一夜容量 = 各时间窗小时数之和 ÷ 单目标
+NGSS 配置：单目标秒数 = 滤镜数 × 曝光张数 × 曝光秒数 + WaitTime × 60
+分组样例：单目标秒数 = 滤镜数 × (曝光张数 × 曝光秒数 + (张数-1) × 间隔分钟 × 60) + 额外开销秒数
+一夜容量 = 各时间窗小时数之和 × 3600 ÷ 单目标秒数，向下取整
 ```
 
-默认 `--slew-seconds 60`。公式将 `WaitTime` 作为曝光间隔；NGSS 观测代码则逐目标追加这一等待时间，因此这里的预算是固定假设下的估算。它不含高度角、月亮规避、天气和转向路径约束，实际耗时需结合观测日志核对。
+NGSS 的 `WaitTime` 是每个目标结束后的指向与读出冗余，按观测代码逐目标计算。分组样例使用 `exposure.wait` 表示曝光间隔，额外开销默认为 60 秒；`--slew-seconds` 可覆盖两种格式的逐目标额外开销。预算不含高度角、月亮规避、天气和转向路径约束，实际耗时需结合观测日志核对。
 
 ## 脚本用法
 
@@ -53,7 +54,7 @@ python scripts/plan_night.py --config path\to\observe_config.json --json check-c
 
 `endpoints` 把路由分三类。`/ftp_transfer` 和 `/manipulate_nina/{action}` 会落到硬件，本技能任何情况下都不调用它们。
 
-NGSS 服务依赖 NINA、`FMoraes.NINA.SitesPlugin.dll`、x-opstep、FTP/MQTT 通道和望远镜连接。服务启动命令为在 `NGSS/` 中执行 `uvicorn src.app.app2:app --reload`。本技能只检查文件，不启动这些服务。
+NGSS 服务依赖 NINA、`FMoraes.NINA.SitesPlugin.dll`、x-opstep、FTP/MQTT 通道和望远镜连接。服务启动命令为在 `projects/ngss/` 中执行 `uvicorn src.app.app2:app --reload`。本技能只检查文件，不启动这些服务。
 
 安全联锁优先于任何 agent 动作。设备指令只能由已配置并获得授权的台站环境执行。
 

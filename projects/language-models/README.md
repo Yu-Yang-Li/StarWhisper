@@ -1,8 +1,8 @@
-# LLM_Data
+# 天文语言模型训练数据
 
 本目录保存 StarWhisper 3 的中英文训练问答数据。模型权重见魔搭 [AstroYuYang/StarWhisper3](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3)。
 
-[项目首页](../README.md) · [研究文档](../docs/research.md)
+[项目首页](../../README.md) · [研究文档](../../docs/research.md)
 
 | 文件 | 内容 |
 | --- | --- |

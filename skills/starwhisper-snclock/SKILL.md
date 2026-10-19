@@ -10,7 +10,7 @@ license: Apache-2.0
 
 计算使用 `scripts/screen_snclock.py`，只依赖 Python 标准库，不访问网络。报告中应保留表的覆盖范围、输入数据留存情况和区间定义。
 
-默认读取仓库里的 [`snclock/`](../../snclock/README.md)。安装到其他位置后，需设置 `STARWHISPER_ROOT` 或用 `--csv` 指定表格；自备表格需使用相同列名。
+默认读取仓库里的 [`projects/snclock/`](../../projects/snclock/README.md)。安装到其他位置后，需设置 `STARWHISPER_ROOT` 或用 `--csv` 指定表格；自备表格需使用相同列名。
 
 `rank` 和 `screen` 按发现时的年龄与 tier 筛选。`screen --asof` 只增加更新后的年龄字段，不重新筛选 tier；查询指定时刻仍处于年龄窗口内的源，应使用 `window`。
 
@@ -71,4 +71,4 @@ python scripts/screen_snclock.py --csv path\to\other_table.csv --json rank
 
 ## 相关
 
-抓取、强制测光、可见性和三日筛选工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。真假源分类样机在本仓库的 `GOTTA_Prototype/`。观测配置与曝光预算检查见 [`starwhisper-night-plan`](../starwhisper-night-plan/SKILL.md)。
+抓取、强制测光、可见性和三日筛选工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。真假源分类样机在本仓库的 `archive/gotta-prototype/`。观测配置与曝光预算检查见 [`starwhisper-night-plan`](../starwhisper-night-plan/SKILL.md)。

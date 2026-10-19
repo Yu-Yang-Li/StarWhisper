@@ -26,20 +26,25 @@ BAR = {
 AGENT_POLICIES = {"rule_agent"}
 
 
+def project_csv(root: Path) -> Path:
+    project = root / "projects" / "explore" / "published_metrics.csv"
+    return project if project.exists() else root / "explore" / "published_metrics.csv"
+
+
 def repo_root() -> Path | None:
     env = os.environ.get("STARWHISPER_ROOT")
-    if env and Path(env, "explore", "published_metrics.csv").exists():
+    if env and project_csv(Path(env)).exists():
         return Path(env)
     here = Path(__file__).resolve()
     for parent in [here, *here.parents]:
-        if (parent / "explore" / "published_metrics.csv").exists():
+        if project_csv(parent).exists():
             return parent
     return None
 
 
 def default_csv() -> Path:
     root = repo_root()
-    return (root / "explore" / "published_metrics.csv") if root else BUNDLED
+    return project_csv(root) if root else BUNDLED
 
 
 def load(path: Path) -> dict[str, dict]:

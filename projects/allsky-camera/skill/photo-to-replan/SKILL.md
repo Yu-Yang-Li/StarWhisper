@@ -5,11 +5,11 @@ description: 根据全天相机原始照片生成云区掩码和调整后的观�
 
 # 全天相机观测序列重排
 
-读取全天相机照片，生成掩码、调整后的观测计划和 NINA TargetSet。需要完整的 `AllSky-Camera-XL/` 项目、模型、依赖与标定参数；单独安装此说明文件不包含运行环境。
+读取全天相机照片，生成掩码、调整后的观测计划和 NINA TargetSet。需要完整的 `projects/allsky-camera/` 项目、模型、依赖与标定参数；单独安装此说明文件不包含运行环境。
 
 ## Workflow
 
-1. Locate the StarWhisper repository and its `AllSky-Camera-XL/` directory. Confirm the Python environment, model weights, and calibration group before running.
+1. Locate the StarWhisper repository and its `projects/allsky-camera/` directory. Confirm the Python environment, model weights, and calibration group before running.
 
 2. Run the single-entry pipeline script from that directory:
 
