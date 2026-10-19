@@ -8,8 +8,8 @@ source activate lssttrans
 # 2) 然后在计算节点上：bash launch_n76hb_4gpus.sh
 set -euo pipefail
 
-# 强制使用硬编码绝对路径作为工作目录，避免在 SLURM 中落到 /var/spool
-BASE_DIR="/data/home/scyb121/aolsst/spec"
+# 从启动脚本所在目录运行历史版本。
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASE_DIR}"
 
 ######################## 基础环境（沿用你单卡脚本） ########################
@@ -89,7 +89,7 @@ export HASH_SPLIT_TRAIN_THRESHOLD=${HASH_SPLIT_TRAIN_THRESHOLD:-9}
 export SINGLE_CSV_PATH=${SINGLE_CSV_PATH:-}  # 仅当你想用单CSV时设置此项并开启 HASH_SPLIT_ENABLE=1
 
 # 可覆盖的训练/验证CSV路径（使用你提供的绝对路径，便于直接运行）
-export DATA_ROOT=${DATA_ROOT:-"/data/home/scyb121/aolsst/spec/pretrain_data"}
+export DATA_ROOT=${DATA_ROOT:-"${BASE_DIR}/../../data/pretrain_tokenized"}
 export TRAIN_CSV=${TRAIN_CSV:-"${DATA_ROOT}/spectrum_tokenized_train.csv"}
 export VAL_CSV=${VAL_CSV:-"${DATA_ROOT}/spectrum_tokenized_val.csv"}
 export VAL_SUBSET_CSV=${VAL_SUBSET_CSV:-"${DATA_ROOT}/spectrum_tokenized_val_subset.csv"}  # 步级验证用子集
@@ -111,7 +111,7 @@ export EPOCH_CHECKPOINT_INTERVAL=${EPOCH_CHECKPOINT_INTERVAL:-1}        # 每个
 export KEEP_LAST_EPOCH_CHECKPOINTS=${KEEP_LAST_EPOCH_CHECKPOINTS:-5}    # 最多保留5个epoch检查点
 
 # 词表路径（与你的 Python 脚本一致）
-export VOCAB_PATH=${VOCAB_PATH:-"/data/home/scyb121/aolsst/spec/pretrain_data/vocabulary.csv"}
+export VOCAB_PATH=${VOCAB_PATH:-"${BASE_DIR}/../../vocab/vocabulary.csv"}
 # 特殊token映射：按词表 `<BOS>=0 <EOS>=1 <SEP>=2`；mask 统一用 <SEP> 作为占位
 export MASK_TOKEN_ID=${MASK_TOKEN_ID:-2}
 

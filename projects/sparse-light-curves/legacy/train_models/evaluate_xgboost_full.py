@@ -9,6 +9,8 @@ from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+import os
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 
 def plot_single_bar_chart(values, classes, title, ylabel, save_path, color='steelblue'):
     """绘制单个柱状图"""
@@ -36,9 +38,9 @@ def plot_single_bar_chart(values, classes, title, ylabel, save_path, color='stee
 
 def main():
     # 配置
-    model_path = 'train_models/xgboost_full/xgboost_full_best.json'
-    test_file = 'features/test2_1117_20251117_235357_balanced.csv'
-    results_dir = Path('train_models/xgboost_full/results')
+    model_path = BASE_DIR / 'train_models/xgboost_full/xgboost_full_best.json'
+    test_file = BASE_DIR / 'features/test2_1117_20251117_235357_balanced.csv'
+    results_dir = BASE_DIR / 'train_models/xgboost_full/results'
     results_dir.mkdir(parents=True, exist_ok=True)
     
     print("=" * 60)

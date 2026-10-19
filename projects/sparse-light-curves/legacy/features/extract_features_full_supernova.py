@@ -18,6 +18,8 @@ SN 数据特征提取脚本（完整 57 特征 · 仅超新星）
 - category 统一标记为 "SN"（或根据文件名前缀区分）
 """
 
+import os
+
 import logging
 import sys
 from datetime import datetime
@@ -30,7 +32,7 @@ from astropy.timeseries import LombScargle
 from scipy import stats
 from sklearn.model_selection import train_test_split
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 SN_DIR = BASE_DIR / "SN"
 OUTPUT_DIR = BASE_DIR
 

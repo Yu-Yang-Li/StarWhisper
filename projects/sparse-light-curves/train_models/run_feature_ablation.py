@@ -16,9 +16,9 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from split_utils import load_split_feature_bundle
+from split_utils import BASE_DIR, load_split_feature_bundle
 
-OUT_DIR = Path(__file__).resolve().parent / "results" / "feature_ablation"
+OUT_DIR = BASE_DIR / "train_models/results/feature_ablation"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Fixed hyperparameters for fair comparison
@@ -82,8 +82,8 @@ def run_experiment(X_tr, y_tr, X_te, y_te, feature_names, exp_name):
 
 def analyze_feature_correlation(bundle):
     """Analyze correlation between LS features and other features."""
-    fi_1117 = pd.read_csv("/root/shared-nvme/train_models/xgboost_optuna_1117/results/feature_importance.csv")
-    fi_1121 = pd.read_csv("/root/shared-nvme/train_models/xgboost_optuna_1121/results/less_feature_feature_importance.csv")
+    fi_1117 = pd.read_csv(BASE_DIR / "train_models/xgboost_optuna_1117/results/feature_importance.csv")
+    fi_1121 = pd.read_csv(BASE_DIR / "train_models/xgboost_optuna_1121/results/less_feature_feature_importance.csv")
 
     logger.info("\n=== Feature Importance Comparison ===")
     logger.info("1117 top 10:")

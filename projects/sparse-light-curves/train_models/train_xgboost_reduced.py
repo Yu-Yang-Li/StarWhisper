@@ -5,7 +5,7 @@ XGBoost 分类器（1121 特征集版本，使用 Optuna 超参数优化）
 
 数据：features/train2_1121_* + test2_1121_* ；划分 data/split/1121/
 
-输出目录：/root/shared-nvme/train_models/xgboost_reduced
+输出目录：<data-root>/train_models/xgboost_reduced
 生成：
 - 最佳模型: xgboost_reduced_best.json
 - feature_importance.png/.csv
@@ -16,6 +16,8 @@ XGBoost 分类器（1121 特征集版本，使用 Optuna 超参数优化）
 - optuna_study.db（Optuna 研究数据库）
 - training.log
 """
+
+import os
 
 import logging
 import sys
@@ -41,7 +43,7 @@ from xgboost import XGBClassifier
 plt.rcParams["font.sans-serif"] = ["SimHei", "Arial Unicode MS", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 from split_utils import load_split_feature_bundle  # noqa: E402
 
 MODEL_DIR = BASE_DIR / "train_models/xgboost_reduced"

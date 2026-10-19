@@ -14,7 +14,7 @@ lamost_flux_preprocessing.py
 
 使用示例：
 python lamost_flux_preprocessing.py \
-  --data_dir /home/share/guofangkeda/wangcunshi/Spectrum/LAMOST_LRS/star_low_SN \
+  --data_dir /path/to/lamost_spectra \
   --output lamost_flux_tokenized_full.csv \
   --processes 8 --batch_files 500 --max_files 3000 --max_pixels 1024
 """
@@ -213,7 +213,7 @@ def write_batch(
 
 def main():
     parser = argparse.ArgumentParser(description="LAMOST flux 预处理（仅flux，无参数/无切分）")
-    parser.add_argument("--data_dir", default="/home/share/guofangkeda/wangcunshi/Spectrum/LAMOST_LRS/star_low_SN", help="包含 obsid.csv 的目录（不递归）")
+    parser.add_argument("--data_dir", required=True, help="包含 obsid.csv 的目录（不递归）")
     parser.add_argument("--output", default="lamost_flux_tokenized_full.csv", help="输出CSV路径")
     parser.add_argument("--processes", type=int, default=0, help="并行进程数（预留，当前顺序处理更省内存）")
     parser.add_argument("--batch_files", type=int, default=100, help="每批处理的文件数量（写一次磁盘）")

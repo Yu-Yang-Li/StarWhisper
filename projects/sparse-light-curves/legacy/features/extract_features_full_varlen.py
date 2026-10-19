@@ -10,6 +10,8 @@ ZTF光变曲线特征提取脚本（完整 57 特征 · train2/varlen 版）
 train2_1117_YYYYmmdd_HHMMSS.csv / test2_1117_YYYYmmdd_HHMMSS.csv
 """
 
+import os
+
 import logging
 import sys
 from datetime import datetime
@@ -33,7 +35,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 TRAIN_DIR = BASE_DIR / "train2"
 SN_DIR = BASE_DIR / "SN"
 OUTPUT_DIR = BASE_DIR

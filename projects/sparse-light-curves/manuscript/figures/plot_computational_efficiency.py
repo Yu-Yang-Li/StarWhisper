@@ -2,6 +2,7 @@
 """Regenerate fig_computational_efficiency.pdf from deploy benchmark CSV."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import matplotlib
@@ -11,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 CSV_PATH = ROOT / "train_models/results/inference_time_benchmark_deploy.csv"
 OUT = Path(__file__).resolve().parent
 

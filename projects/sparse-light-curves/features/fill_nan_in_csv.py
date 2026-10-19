@@ -4,9 +4,11 @@
 填充CSV文件中的NaN值并覆盖原文件
 
 处理文件：
-- E:/ZTF_variables/features/train2_1117_20251117_235357_balanced.csv
-- E:/ZTF_variables/features/test2_1117_20251117_235357_balanced.csv
+- <data-root>/features/train2_1117_20251117_235357_balanced.csv
+- <data-root>/features/test2_1117_20251117_235357_balanced.csv
 """
+
+import os
 
 import logging
 import sys
@@ -22,7 +24,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-BASE_DIR = Path("E:/ZTF_variables/features")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve() / "features"
 FILES = [
     BASE_DIR / "train2_1117_20251117_235357_balanced.csv",
     BASE_DIR / "test2_1117_20251117_235357_balanced.csv",

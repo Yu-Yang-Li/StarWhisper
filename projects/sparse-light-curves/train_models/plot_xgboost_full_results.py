@@ -9,6 +9,8 @@
 
 from __future__ import annotations
 
+import os
+
 import logging
 import sys
 from pathlib import Path
@@ -33,7 +35,7 @@ from split_utils import FEATURE_POOLS, load_split_feature_bundle  # noqa: E402
 plt.rcParams["font.sans-serif"] = ["SimHei", "Arial Unicode MS", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 POOL = "varlen"
 MODEL_DIR = BASE_DIR / "train_models/xgboost_full"
 RESULTS_DIR = MODEL_DIR / "results"

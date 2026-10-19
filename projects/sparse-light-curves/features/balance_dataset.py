@@ -6,6 +6,8 @@
 2. 限制最大类别样本数不超过最小类别的4倍
 """
 
+import os
+
 import logging
 import sys
 from pathlib import Path
@@ -23,13 +25,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 配置参数
-BASE_DIR = Path("E:/ZTF_variables")
-TRAIN_FILE = BASE_DIR / r"features\train2_1105_20251105_184349.csv"
-TEST_FILE = BASE_DIR / r"features\test2_1105_20251105_184349.csv"
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+TRAIN_FILE = BASE_DIR / "features/train2_1105_20251105_184349.csv"
+TEST_FILE = BASE_DIR / "features/test2_1105_20251105_184349.csv"
 
 # 输出文件
-TRAIN_OUTPUT = BASE_DIR / r"features\train2_1105_20251105_184349_balanced.csv"
-TEST_OUTPUT = BASE_DIR / r"features\test2_1105_20251105_184349_balanced.csv"
+TRAIN_OUTPUT = BASE_DIR / "features/train2_1105_20251105_184349_balanced.csv"
+TEST_OUTPUT = BASE_DIR / "features/test2_1105_20251105_184349_balanced.csv"
 
 # 定义合并映射
 MERGE_MAPPING = {

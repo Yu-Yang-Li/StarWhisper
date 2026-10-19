@@ -15,6 +15,8 @@ ZTF光变曲线特征提取脚本（精简 39 特征 · 无 Lomb-Scargle / is_mi
 train2_1121_YYYYmmdd_HHMMSS.csv / test2_1121_YYYYmmdd_HHMMSS.csv
 """
 
+import os
+
 import logging
 import sys
 from datetime import datetime
@@ -26,18 +28,20 @@ import pandas as pd
 from scipy import stats
 from sklearn.model_selection import train_test_split
 
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("extract_features_reduced.log", encoding="utf-8"),
+        logging.FileHandler(BASE_DIR / "extract_features_reduced.log", encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
 logger = logging.getLogger(__name__)
 
 
-BASE_DIR = Path("/root/shared-nvme")
+
 TRAIN_DIR = BASE_DIR / "train2"
 SN_DIR = BASE_DIR / "SN"
 OUTPUT_DIR = BASE_DIR

@@ -64,7 +64,7 @@ def generate_intermediate_spectra(
     feh = np.sort(np.array([feh]) if isinstance(feh, (int, float)) else np.array(feh))
     
     # 基础路径
-    base_path = r"/data1/R10000FITS"
+    base_path = os.environ.get("PHOENIX_INPUT_ROOT", str(Path(__file__).resolve().parents[3] / "data/R10000FITS"))
     
     # 在主循环开始前强制进行垃圾回收
     gc.collect()
@@ -207,12 +207,12 @@ def mainfunction(params):
     scale_factor = 1/10
     generate_intermediate_spectra(teff, logg, feh, scale_factor)
 
-# 假设读取参数的函数已经定义好
-cube_params = read_cube_parameters(r'/home/wcs/SpecDeNoise/ShowOut/valid_cubes.csv')
+def main():
+    cube_params = read_cube_parameters(Path(__file__).with_name("valid_cubes.csv"))
+    with ThreadPoolExecutor(max_workers=80) as executor:
+        for params in cube_params:
+            executor.submit(mainfunction, params)
 
-# 固定线程数为24
-max_workers = 80
 
-with ThreadPoolExecutor(max_workers=max_workers) as executor:
-    for params in cube_params:
-        executor.submit(mainfunction, params)
+if __name__ == "__main__":
+    main()

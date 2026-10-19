@@ -7,7 +7,7 @@ XGBoost 分类器（1117 特征集版本，使用 Optuna 超参数优化）
 - 特征文件: features/train2_1117_*_balanced.csv + test2_1117_*_balanced.csv
 - 划分索引: data/split/varlen/ （75/10/15，15% 测试集不参与训练）
 
-输出目录：/root/shared-nvme/train_models/xgboost_full
+输出目录：<data-root>/train_models/xgboost_full
 生成：
 - 最佳模型: xgboost_full_best.json
 - feature_importance.png/.csv
@@ -18,6 +18,8 @@ XGBoost 分类器（1117 特征集版本，使用 Optuna 超参数优化）
 - optuna_study.db（Optuna 研究数据库）
 - training.log
 """
+
+import os
 
 import logging
 import sys
@@ -43,7 +45,7 @@ from xgboost import XGBClassifier
 plt.rcParams["font.sans-serif"] = ["SimHei", "Arial Unicode MS", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 from split_utils import load_split_feature_bundle  # noqa: E402
 
 MODEL_DIR = BASE_DIR / "train_models/xgboost_full"

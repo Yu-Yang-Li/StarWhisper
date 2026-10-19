@@ -6,6 +6,10 @@
 - 生成训练/验证集和词汇表
 """
 
+from pathlib import Path
+
+_PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
 import argparse  # 命令行参数
 import os  # 操作系统相关
 import re  # 正则表达式
@@ -46,11 +50,11 @@ def load_vocab_tokens(vocab_path: str):
 
 
 def resolve_fixed_vocab_csv_path():
-    """For --make_groups: FIXED_VOCAB_PATH env, then ./vocabulary.csv, then vocab/vocabulary.csv."""
+    """For --make_groups: FIXED_VOCAB_PATH env, then ./vocabulary.csv, then the project vocabulary."""
     env_p = os.environ.get("FIXED_VOCAB_PATH", "").strip()
     if env_p and os.path.isfile(env_p):
         return env_p
-    for p in ("vocabulary.csv", os.path.join("vocab", "vocabulary.csv")):
+    for p in ("vocabulary.csv", str(_PROJECT_ROOT / "vocab/vocabulary.csv")):
         if os.path.isfile(p):
             return p
     return None
@@ -87,7 +91,7 @@ OUTPUT_COLUMNS = [
 
 # 新的参数提取，支持正负号和浮点数
 # 文件名格式如：10560+3.20-1.0.csv 或 10560-3.20+1.0.csv
-# 文件夹名如：/home/share/guofangkeda/wangcunshi/Spec/R1800FITS/SNR1/Z-1.0/10560+3.20-1.0.csv
+# 文件夹名如：<data_dir>/Z-1.0/10560+3.20-1.0.csv
 
 
 def extract_parameters_from_filename(filename):
@@ -341,7 +345,7 @@ class SpectrumPreprocessor:
 
     def __init__(
         self,
-        data_dir="/home/share/guofangkeda/wangcunshi/Spec/R1800FITS/SNR1",
+        data_dir,
         n_processes=None,
         test_mode=False,
         max_files=None,
@@ -368,7 +372,7 @@ class SpectrumPreprocessor:
         self.max_pixels = max_pixels
         if vocab_path is None:
             _vp = resolve_fixed_vocab_csv_path()
-            self.vocab_path = _vp if _vp else os.path.join("vocab", "vocabulary.csv")
+            self.vocab_path = _vp if _vp else str(_PROJECT_ROOT / "vocab/vocabulary.csv")
         else:
             self.vocab_path = vocab_path
         self.tokenized_dataset = None
@@ -607,12 +611,12 @@ def main():
     parser = argparse.ArgumentParser(description="光谱数据预处理器")
     parser.add_argument(
         "--data_dir",
-        default="/home/share/guofangkeda/wangcunshi/Spec/R1800FITS/SNR1",
+        default=None,
         help="数据目录路径",
     )
     parser.add_argument(
         "--fits_root",
-        default="/home/share/guofangkeda/wangcunshi/Spec/R1800FITS",
+        default=None,
         help="R1800FITS 根目录（启用 --make_groups 时生效）",
     )
     parser.add_argument(
@@ -653,6 +657,12 @@ def main():
     parser.add_argument("--batch_files", type=int, default=0, help="按文件数分批（>0优先于按GB）")
     parser.add_argument("--resume", action="store_true", help="续写已有CSV并延续 spectrum_id")
     args = parser.parse_args()
+    if args.make_groups:
+        if not args.fits_root:
+            parser.error("--make_groups requires --fits_root")
+        args.data_dir = args.fits_root
+    elif not args.data_dir:
+        parser.error("provide --data_dir, or --make_groups with --fits_root")
 
     # 组装配置字典
     config = {

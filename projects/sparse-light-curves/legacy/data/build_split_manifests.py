@@ -6,14 +6,16 @@
 - train2: 3-30 点变长数据
 """
 
+import os
+
 import sys
 from pathlib import Path
 
 import pandas as pd
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-BASE_DIR = SCRIPT_DIR.parent
-SPLIT_DIR = SCRIPT_DIR / "split"
+SCRIPT_DIR = Path(__file__).resolve().parents[2] / "data"
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
+SPLIT_DIR = BASE_DIR / "data/split"
 SPLIT_DIR.mkdir(parents=True, exist_ok=True)
 
 if str(SCRIPT_DIR) not in sys.path:

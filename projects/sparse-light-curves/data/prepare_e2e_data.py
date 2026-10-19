@@ -9,6 +9,8 @@
 
 from __future__ import annotations
 
+import os
+
 import logging
 import sys
 from pathlib import Path
@@ -19,11 +21,10 @@ from sklearn.preprocessing import LabelEncoder
 from tqdm import tqdm
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-BASE_DIR = SCRIPT_DIR.parent
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 POOL = "50obs"
-SPLIT_DIR = SCRIPT_DIR / "split" / POOL
-OUT_DIR = SCRIPT_DIR / "e2e"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+SPLIT_DIR = BASE_DIR / "data/split" / POOL
+OUT_DIR = BASE_DIR / "data/e2e"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -33,40 +34,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 SEQ_LEN = 50
-FILTERCODE_MAP = {"zg": 1, "zr": 2, "zz": 3, "g": 1, "r": 2, "z": 3}
-
-
-def resolve_csv_path(file_path: str) -> Path | None:
-    fp = str(file_path).replace("\\", "/").lstrip("/")
-    candidates = [
-        BASE_DIR / fp,
-        BASE_DIR / "train4" / Path(fp).name,
-    ]
-    parts = fp.split("/")
-    if len(parts) >= 3 and parts[0] == "train4":
-        candidates.insert(1, BASE_DIR / "train4" / parts[1] / parts[-1])
-    for p in candidates:
-        if p.is_file():
-            return p
-    return None
+from e2e_utils import encode_band_scalar, resolve_csv_path  # noqa: E402
 
 
 def encode_filtercode(df: pd.DataFrame, path: Path) -> np.ndarray:
-    for col in ("filtercode", "filter", "band"):
-        if col in df.columns and df[col].notna().any():
-            val = str(df[col].dropna().iloc[0]).lower().strip()
-            for key, code in FILTERCODE_MAP.items():
-                if key in val:
-                    return np.full(SEQ_LEN, code, dtype=np.float32)
-    if "fid" in df.columns and df["fid"].notna().any():
-        fid = int(pd.to_numeric(df["fid"].iloc[0], errors="coerce"))
-        if fid in (1, 2, 3):
-            return np.full(SEQ_LEN, fid, dtype=np.float32)
-    name = path.name.lower()
-    for key, code in FILTERCODE_MAP.items():
-        if f"_{key}" in name:
-            return np.full(SEQ_LEN, code, dtype=np.float32)
-    return np.full(SEQ_LEN, 4, dtype=np.float32)
+    return np.full(SEQ_LEN, encode_band_scalar(df, path), dtype=np.float32)
 
 
 def load_curve_matrix(path: Path) -> np.ndarray | None:
@@ -91,6 +63,7 @@ def load_curve_matrix(path: Path) -> np.ndarray | None:
 
 
 def main() -> None:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     manifest_path = SPLIT_DIR / "manifest.csv"
     if not manifest_path.is_file():
         raise FileNotFoundError(f"请先运行 prepare_data_split.py，缺少 {manifest_path}")
@@ -107,7 +80,7 @@ def main() -> None:
     logger.info("从 manifest 构建 50 点时序矩阵，共 %d 条…", len(manifest))
 
     for _, row in tqdm(manifest.iterrows(), total=len(manifest)):
-        fp = resolve_csv_path(str(row["file_path"]))
+        fp = resolve_csv_path(str(row["file_path"]), BASE_DIR, fallback_pool="train4")
         if fp is None:
             continue
         mat = load_curve_matrix(fp)

@@ -19,9 +19,11 @@ export BATCH_SIZE="${BATCH_SIZE:-64}"
 : "${VAL_CSV:?请设置 VAL_CSV}"
 : "${VOCAB_PATH:?请设置 VOCAB_PATH}"
 : "${PRETRAIN_CKPT_PATH:?请设置 PRETRAIN_CKPT_PATH}"
+if [ "${STEP_EVAL_FREQ_STEPS:-500}" -gt 0 ]; then
+  : "${STEP_EVAL_CSV:?请设置本阶段的 STEP_EVAL_CSV，或用 STEP_EVAL_FREQ_STEPS=0 关闭步级评估}"
+fi
 
 # 以下有合理默认（相对 REPO_ROOT）；生产环境建议通过 env 文件覆盖
-export STEP_EVAL_CSV="${STEP_EVAL_CSV:-${REPO_ROOT}/data/finetune_tokenized/spectrum_tokenized_val_first1500.csv}"
 export CKPT_DIR="${CKPT_DIR:-${REPO_ROOT}/output/finetune_ckpts}"
 export LOG_PATH="${LOG_PATH:-${REPO_ROOT}/logs/finetune_$(date +%Y%m%d_%H%M%S).log}"
 # 参数标准化：可选；不设置时由训练集流式估计（PARAM_STATS_SAMPLES 控制采样条数）

@@ -4,14 +4,15 @@
 为 train4 和 train2 生成 75/10/15 分层划分索引
 """
 
+import os
+
 import sys
-sys.path.insert(0, '.')
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from pathlib import Path
 
-BASE_DIR = Path.cwd()
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 SPLIT_DIR = BASE_DIR / "data/split"
 RANDOM_STATE = 42
 TEST_RATIO = 0.15

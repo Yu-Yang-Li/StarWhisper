@@ -10,6 +10,8 @@
 
 from __future__ import annotations
 
+import os
+
 import logging
 import pickle
 import sys
@@ -26,10 +28,10 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from e2e_utils import encode_band_scalar, resolve_csv_path  # noqa: E402
 
-BASE_DIR = SCRIPT_DIR.parent
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 POOL = "varlen"
-SPLIT_DIR = SCRIPT_DIR / "split" / POOL
-OUT_DIR = SCRIPT_DIR / "e2e_varlen"
+SPLIT_DIR = BASE_DIR / "data/split" / POOL
+OUT_DIR = BASE_DIR / "data/e2e_varlen"
 MIN_LEN, MAX_LEN = 3, 30
 
 logging.basicConfig(

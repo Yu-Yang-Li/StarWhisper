@@ -3,7 +3,7 @@
 """
 ZTF光变曲线特征提取脚本（train4 版 · 完整 57 特征）
 
-基于 legacy/extract_features_full_varlen.py，从 train4 目录提取特征。
+基于 legacy/features/extract_features_full_varlen.py，从 train4 目录提取特征。
 
 新增特征：
 - 各类统计量的缺失指示：skewness_is_missing、kurtosis_is_missing
@@ -14,6 +14,8 @@ ZTF光变曲线特征提取脚本（train4 版 · 完整 57 特征）
 输出文件名包含 1117 标识：
 train4_1117_YYYYmmdd_HHMMSS.csv / test4_1117_YYYYmmdd_HHMMSS.csv
 """
+
+import os
 
 import logging
 import sys
@@ -27,18 +29,20 @@ from astropy.timeseries import LombScargle
 from scipy import stats
 from sklearn.model_selection import train_test_split
 
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("extract_features_train4.log", encoding="utf-8"),
+        logging.FileHandler(BASE_DIR / "extract_features_train4.log", encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
 logger = logging.getLogger(__name__)
 
 
-BASE_DIR = Path("E:/ZTF_variables")
+
 TRAIN_DIR = BASE_DIR / "train4"
 SN_DIR = TRAIN_DIR / "SN"
 OUTPUT_DIR = BASE_DIR
@@ -612,7 +616,7 @@ def process_category(category: str):
 
 
 def calculate_lomb_scargle_features_sn(time, mag):
-    """SN版本的Lomb-Scargle特征计算（参考 legacy/extract_features_full_supernova.py）"""
+    """SN版本的Lomb-Scargle特征计算（参考 legacy/features/extract_features_full_supernova.py）"""
     if len(time) < 5:
         return {
             "ls_power_to_median": 0.0,
@@ -736,7 +740,7 @@ def calculate_lomb_scargle_features_sn(time, mag):
 
 
 def extract_sn_features_from_file(csv_file: Path) -> Optional[dict]:
-    """从SN文件提取特征（与 legacy/extract_features_full_supernova.py 一致，并加上 is_missing 特征）"""
+    """从SN文件提取特征（与 legacy/features/extract_features_full_supernova.py 一致，并加上 is_missing 特征）"""
     try:
         df = pd.read_csv(csv_file)
 

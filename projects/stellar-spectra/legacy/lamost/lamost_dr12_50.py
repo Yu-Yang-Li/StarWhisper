@@ -14,16 +14,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from astropy.io import fits
+from pathlib import Path
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LAMOST_ROOT = Path(os.environ.get("LAMOST_DATA_ROOT", _PROJECT_ROOT / "data/lamost")).expanduser()
+sys.path.insert(0, str(_PROJECT_ROOT / "code/pylamost-master/pylamost-master"))
 from pylamost import lamost
 from tqdm import tqdm
 
 
 # =================== 配置路径 ===================
-CSV_FILE = r"/data1/SpecTrain/lamost/DR12LRS_SNR5_7_FEHleq0.csv"
-TEMP_DIR = r"/data1/SpecTrain/lamost/temp_downloads"
+CSV_FILE = str(LAMOST_ROOT / "DR12LRS_SNR5_7_FEHleq0.csv")
+TEMP_DIR = str(LAMOST_ROOT / "temp_downloads")
 # 整条光谱图 PNG 输出目录，仅 50 条
-WORK_DIR = r"/data1/SpecTrain/lamost/LRS_full_spectrum_57_50"
-LOG_DIR = r"/data1/SpecTrain/lamost/logs"
+WORK_DIR = str(LAMOST_ROOT / "LRS_full_spectrum_57_50")
+LOG_DIR = str(LAMOST_ROOT / "logs")
 
 MAX_OBS = 500  # 只处理前 50 个
 
@@ -44,7 +48,7 @@ print(f"日志: {log_path}")
 
 # =================== 初始化 LAMOST API ===================
 lm = lamost(
-    token="lLY1albuoI", dr_version="dr12", sub_version="v1.0", is_dev=False
+    token=os.environ["LAMOST_TOKEN"], dr_version="dr12", sub_version="v1.0", is_dev=False
 )
 
 # =================== 读取 obsid 列表，只取前 50 个 ===================

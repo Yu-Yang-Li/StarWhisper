@@ -9,7 +9,7 @@
   - E2E/RNN: 原始时序推理（离线 prepare_e2e 预处理，不计入特征提取列）
 
 用法（推荐）:
-  cd /root/shared-nvme
+  cd projects/sparse-light-curves
 
   # 部署性能（默认）：仅 GPU 上测 PyTorch；XGB/LS 在 CPU。约 20–40 分钟（全量 test）
   conda run -n astro_classifier python train_models/run_benchmark_inference.py
@@ -26,7 +26,7 @@
 
 LS 特征提取前提:
   - 特征 CSV 含 file_path 列
-  - 原始光变 CSV 在 /root/shared-nvme/train2/... 或 train4/...（与 e2e 预处理相同数据源）
+  - 原始光变 CSV 在 <data-root>/train2/... 或 train4/...（与 e2e 预处理相同数据源）
 """
 
 from __future__ import annotations

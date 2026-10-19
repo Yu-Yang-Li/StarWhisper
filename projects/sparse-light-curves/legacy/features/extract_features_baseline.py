@@ -17,6 +17,8 @@ ZTF光变曲线特征提取脚本（早期基线版 - 约26特征）
 元数据 (2): ndethist, band_code（g=1, r=2, z=3, 其他=4）
 """
 
+import os
+
 import logging
 import sys
 from datetime import datetime
@@ -40,7 +42,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 配置参数
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 TRAIN_DIR = BASE_DIR / "train4"
 OUTPUT_DIR = BASE_DIR
 

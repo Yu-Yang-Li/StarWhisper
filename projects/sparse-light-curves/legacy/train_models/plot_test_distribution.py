@@ -6,6 +6,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+import os
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
@@ -60,8 +62,8 @@ def plot_distribution(csv_path, save_dir, title, color='#2E86AB'):
     return save_path
 
 # ==================== 完整特征实验 (1117) ====================
-csv_1117 = 'features/test2_1117_20251117_235357_balanced.csv'
-save_dir_1117 = 'train_models/xgboost_full/results'
+csv_1117 = BASE_DIR / 'features/test2_1117_20251117_235357_balanced.csv'
+save_dir_1117 = BASE_DIR / 'train_models/xgboost_full/results'
 
 print("生成完整特征实验分布图...")
 plot_distribution(
@@ -72,8 +74,8 @@ plot_distribution(
 )
 
 # ==================== 消融实验 (1121) ====================
-csv_1121 = 'features/test4_1121_20251121_121804_balanced.csv'
-save_dir_1121 = 'train_models/xgboost_reduced/results'
+csv_1121 = BASE_DIR / 'features/test4_1121_20251121_121804_balanced.csv'
+save_dir_1121 = BASE_DIR / 'train_models/xgboost_reduced/results'
 
 print("生成消融实验分布图...")
 plot_distribution(

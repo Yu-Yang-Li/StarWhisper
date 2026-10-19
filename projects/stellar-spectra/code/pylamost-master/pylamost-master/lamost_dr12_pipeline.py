@@ -9,21 +9,24 @@ from threading import Lock
 import numpy as np
 import pandas as pd
 from astropy.io import fits
+from pathlib import Path
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+LAMOST_ROOT = Path(os.environ.get("LAMOST_DATA_ROOT", _PROJECT_ROOT / "data/lamost")).expanduser()
 from pylamost import lamost
 from scipy.interpolate import interp1d
 from tqdm import tqdm
 
 
 # =================== 配置路径 ===================
-CSV_FILE = r"/data1/SpecTrain/lamost/DR12LRS_SNRz0_3.csv"
-TEMP_DIR = r"/data1/SpecTrain/lamost/temp_downloads"  # 存放 .fits.gz
-WORK_DIR = r"/data1/SpecTrain/lamost/LRS_SNR_0_3_303"  # 存放 .csv
-WAVELENGTH_DAT = r"/data1/R1800FITS_300/wavelength.dat"
+CSV_FILE = str(LAMOST_ROOT / "DR12LRS_SNRz0_3.csv")
+TEMP_DIR = str(LAMOST_ROOT / "temp_downloads")  # 存放 .fits.gz
+WORK_DIR = str(LAMOST_ROOT / "LRS_SNR_0_3_303")  # 存放 .csv
+WAVELENGTH_DAT = os.environ.get("LAMOST_WAVELENGTH_FILE", str(_PROJECT_ROOT / "data/R1800FITS_300/wavelength.dat"))
 
 # --- 自动创建目录 ---
 os.makedirs(TEMP_DIR, exist_ok=True)
 os.makedirs(WORK_DIR, exist_ok=True)
-LOG_DIR = r"/data1/SpecTrain/lamost/logs"
+LOG_DIR = str(LAMOST_ROOT / "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 
 # 日志文件名带时间戳
@@ -42,7 +45,7 @@ print(f"📝 日志文件: {log_path}")
 
 
 # =================== 初始化 LAMOST API ===================
-lm = lamost(token="lLY1albuoI", dr_version="dr12", sub_version="v1.0", is_dev=False)
+lm = lamost(token=os.environ["LAMOST_TOKEN"], dr_version="dr12", sub_version="v1.0", is_dev=False)
 
 # =================== 读取目标波长格点 ===================
 try:
