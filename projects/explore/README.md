@@ -4,6 +4,20 @@ Telescope 用于巡天自动观测，Explore 比较观测策略的收益、巡�
 
 本目录保存合成环境的实验设定和一次已核对的指标表。环境代码尚未收录到仓库；现有材料可用于重新计算策略比较，不能用于复现环境或声称已经验证真实观测。
 
+[项目目录](../README.md) · [研究文档](../../docs/research.md) · [指标工具说明](../../skills/starwhisper-explore/SKILL.md)
+
+## 直接查看比较
+
+需要 Python 3.10 或更新版本，只依赖标准库，不需要 GPU 或额外数据。从本目录（`projects/explore/`）运行：
+
+```bash
+python ../../skills/starwhisper-explore/scripts/eval_gate.py table
+python ../../skills/starwhisper-explore/scripts/eval_gate.py bar
+python ../../skills/starwhisper-explore/scripts/eval_gate.py gate --agent rule_agent
+```
+
+`table` 查看已有指标，`bar` 列出预先确定的判据，`gate` 检查是否达标。附带的规则 Agent 没有通过全部判据，最后一条命令会返回退出码 `1`；这表示负结果，不是脚本运行失败。
+
 ## 实验设定
 
 - 版本：`StarWhisper-Explore-v0.2`
@@ -28,24 +42,20 @@ Telescope 用于巡天自动观测，Explore 比较观测策略的收益、巡�
 
 ## 已公开结果
 
-90 episode / 策略，种子 `11/22/33`。数字见 [`published_metrics.csv`](published_metrics.csv)。从本目录逐条判定：
-
-```powershell
-python ..\..\skills\starwhisper-explore\scripts\eval_gate.py bar
-python ..\..\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
-```
-
-自备实验表需使用相同列名，并将 `--csv` 放在子命令前：
-
-```powershell
-python ..\..\skills\starwhisper-explore\scripts\eval_gate.py --csv my_run.csv gate --agent my_policy
-```
+每种策略有 90 个 episode，种子为 `11/22/33`，数字保存在 [`published_metrics.csv`](published_metrics.csv)。
 
 规则 Agent 相对确定性优先级：跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，超过预注册的 5 个百分点上限。三个种子的结果方向一致，已记录的复跑哈希一致。因此报告为稳定负结果。
 
-图：
-
-- [策略权衡](https://yu-yang-li.github.io/StarWhisper/assets/goai-metrics-source.png)
-- [三级验证路径](https://yu-yang-li.github.io/StarWhisper/assets/goai-verification-source.png)
+图表见[策略权衡](../../docs/assets/goai-metrics-source.png)和[三级验证路径](../../docs/assets/goai-verification-source.png)。
 
 当前公开结果停在验证路径的第一级（合成环境）。脱敏日志回放和真实硬件影子运行还没有作为本仓库材料发布。
+
+## 使用自己的指标表
+
+如果已有其他实验的汇总 CSV，可以沿用工具比较。输入需使用与 `published_metrics.csv` 相同的列名；从本目录运行，并将 `--csv` 放在子命令前：
+
+```bash
+python ../../skills/starwhisper-explore/scripts/eval_gate.py --csv /path/to/my_run.csv gate --agent my_policy
+```
+
+这一步只评估你提供的指标，不会生成仿真数据，也不会重跑策略。完整实验仍需要对应的环境代码、扰动剧本和运行记录；这些材料未随本目录提供。

@@ -1,187 +1,85 @@
 # 全天相机观测序列重排
 
-根据原始全天相机照片生成云区掩码，再用掩码调整观测序列：
+从全天相机照片识别云区，再据此调整观测序列。入口是 `run_pipeline.py`，输出包括云区掩码、调整后的计划和 NINA TargetSet 文件。
 
-`原始全天相机照片 -> 整图掩码 -> 重排后的观测序列`
+[项目目录](../README.md) · [研究文档](../../docs/research.md) · [技能用法](skill/photo-to-replan/SKILL.md)
 
-入口为 `run_pipeline.py`。输出包括调整后的计划和 NINA TargetSet 文件，实际执行仍需观测系统加载并确认。
+仓库已附带分割模型、样例照片、样例观测计划和标定文件。安装 Conda 与推理依赖后，可以用这些材料试跑；换用自己的相机时，需要核对标定和观测计划。生成的 TargetSet 仍需由观测系统加载并确认，脚本本身不执行观测。
 
-[项目首页](../../README.md) · [研究文档](../../docs/research.md)
+## 先用附带照片试跑
 
-## 目录
-
-```text
-projects/allsky-camera/
-  configs/
-    default.json
-  Pic2mask/
-    deeplabv3_best_loss_3_16.pth
-    full_image_infer/
-      infer_full_image.py
-  requirements.txt
-  sequence_adjust_tool/
-    parameters.json
-    observe_config.json
-    finals2000A.all
-    de440s.bsp
-    batch_0116_output/
-    scheme_horizon_to_image/
-      replan.py
-      标注地平坐标系.py
-      AltAzModeling.py
-      all_sky_astro.py
-  skill/
-    photo-to-replan/
-      SKILL.md
-  output/
-  run_pipeline.py
-  README.md
-```
-
-## 默认配置
-
-默认配置文件：
-
-- [default.json](configs/default.json)
-
-里面记录：
-
-- 统一使用的 conda 环境名
-- 默认 `position_name`
-
-默认环境名为：
-
-- `allsky-pipeline`
-
-## 环境准备
-
-推荐新建一个统一环境，例如：
+以下命令从本目录（`projects/allsky-camera/`）运行。先创建 Python 环境：
 
 ```bash
-conda create -n allsky-pipeline python=3.10
-conda activate allsky-pipeline
-```
-
-先安装通用依赖：
-
-```bash
+conda create -n cv python=3.10
+conda activate cv
 pip install -r requirements.txt
 ```
 
-再单独安装 `torch` 和 `torchvision`。
+再按本机 CPU / CUDA 环境安装匹配的 `torch` 和 `torchvision`，安装方法见 [PyTorch](https://pytorch.org/get-started/locally/)。项目的 [default.json](configs/default.json) 当前指定环境 `cv`、标定组 `position_5`；入口会通过 `conda run -n cv` 调用后续程序。若使用其他环境名，需要同时修改配置中的 `conda_env`。
 
-如果你使用 CUDA，请按本机 CUDA 版本改用对应安装命令。
-
-## 运行
-
-在这个目录内执行：
+准备好后运行：
 
 ```bash
-python run_pipeline.py --image /path/to/2025_03_02_20_33_49.jpg
+python run_pipeline.py --image test_seq_img/raw_img/2025_02_16_00_02_31.jpg --save-overlay
 ```
 
-如果要指定参数组：
+`--device cpu` 可指定 CPU，`--device cuda` 可指定 GPU，默认 `auto` 自动选择。虽然分割权重已在仓库中，当前 torchvision 模型构建仍可能在首次运行时下载骨干网络权重，需要网络或已有缓存。
+
+## 已经提供的材料
+
+| 材料 | 位置与用途 |
+| --- | --- |
+| 分割权重 | `Pic2mask/deeplabv3_best_loss_3_16.pth`，供整图云区推理使用 |
+| 样例照片 | `test_seq_img/raw_img/`，可用于单张或批量处理 |
+| 相机标定 | [parameters.json](sequence_adjust_tool/parameters.json)，按 `position` 分组 |
+| 观测计划 | `sequence_adjust_tool/batch_0116_output/` 中的计划和 TargetSet 样例 |
+| 观测设置与星历 | `sequence_adjust_tool/observe_config.json`、`de440s.bsp`、`finals2000A.all` |
+
+这些材料属于已有相机和观测设置。用新照片生成计划前，应检查照片时间、台站、相机几何和计划设置是否相符。
+
+## 换用自己的照片
+
+输入应为原始全天相机照片，文件名包含北京时间，建议使用 `YYYY_MM_DD_HH_MM_SS.jpg`。将路径替换为真实照片，并选择与相机对应的标定组：
 
 ```bash
-python run_pipeline.py \
-  --image /path/to/2025_03_02_20_33_49.jpg \
-  --position-name position_2
+python run_pipeline.py --image /path/to/image.jpg --position-name position_5 --save-overlay
 ```
 
-如果要保存掩码叠加预览：
+默认输出到 `output/<照片文件名>/`，可用 `--output-root /path/to/output` 指定其他位置。完成后先看 `pipeline_report.json`，其中列出了各项结果路径：
+
+| 输出 | 内容 |
+| --- | --- |
+| `input/` | 输入照片的副本 |
+| `mask/` | 云区掩码；使用 `--save-overlay` 时另有叠加预览 |
+| `replan/<时间戳>_mask/` | 场景、重排计划、延后目标、`replanned_sequence.ninaTargetSet` 和天空分布图 |
+
+批量处理附带照片可运行：
 
 ```bash
-python run_pipeline.py \
-  --image /path/to/2025_03_02_20_33_49.jpg \
-  --position-name position_2 \
-  --save-overlay
+python run_pipeline.py --mode batch --position-name position_5 --count-mode model_count
 ```
 
-如果要使用新版 `AltAzModeling.py` 生成的标定结果，请先把
-`x0y0_new.txt` 和 `parameters_new.txt` 写入
-`sequence_adjust_tool/parameters.json` 的某个 `position` 条目，例如当前的
-`position_5`，然后按参数组运行：
+批量结果写入 `output_batch/`。`model_count` 按模型掩码统计；默认的 `label_count` 还需要匹配的标签掩码，这些标签未随仓库提供。自己的序列可通过 `--raw-img-dir` 指定照片目录，使用标签统计时再通过 `--label-mask-dir` 指定标签目录。
 
-```bash
-python run_pipeline.py \
-  --image /path/to/2022_02_05_01_14_47_001991.jpg \
-  --position-name position_5
-```
+## 相机标定
 
-其中：
-
-- `x0y0_new.txt` 来自新版 `AltAzModeling.py`
-- `parameters_new.txt` 来自新版 `AltAzModeling.py`
-- `replan.py` 和 `标注地平坐标系.py` 都只从 `parameters.json` 读取标定参数
-- 投影计算使用完整解析逆投影；`r = ze / k1` 近似不适用于此参数组
-
-## 输出结构
-
-每次运行会生成：
-
-```text
-projects/allsky-camera/output/
-  <image_stem>/
-    input/
-      <original image>
-    mask/
-      <image_stem>.png
-      <image_stem>_overlay.png   # 仅当 --save-overlay
-    replan/
-      <YYYYMMDD_HHMMSS_mask>/
-        scenario.json
-        replanned_schedule.json
-        deferred_targets.json
-        replanned_sequence.ninaTargetSet
-        sky_replan_plot.png
-    pipeline_report.json
-```
-
-其中：
-
-- `mask/<image_stem>.png` 是整图掩码
-- `replan/<...>/` 是重排输出目录
-- `pipeline_report.json` 汇总了关键输出路径，便于后续 skill 直接读取
-
-## 处理步骤
-
-1. 输入原始全天相机照片
-2. 用 `Pic2mask/full_image_infer/infer_full_image.py` 对整图推理，生成掩码
-3. 用 `sequence_adjust_tool/scheme_horizon_to_image/replan.py` 调整序列：
-   - `RA/Dec -> Az/Alt`
-   - `Az/Alt -> 图像坐标`，使用 `E/a0/e/k1..k4` 完整解析逆投影
-   - 在掩码上查像素
-   - 输出调整后的观测计划和 NINA TargetSet
-
-## 新版标定与地平标注
-
-使用流程：
-
-1. 准备 `targetlist.txt` 和 `x0y0.txt`
-2. 在 `sequence_adjust_tool/scheme_horizon_to_image/` 下运行：
+已有参数不一定适用于其他相机。重新标定时，需要自备星点表 `targetlist.txt` 和初始图像中心 `x0y0.txt`，放到 `sequence_adjust_tool/scheme_horizon_to_image/`，并核对 `AltAzModeling.py` 中的拍摄时间与台站设置，再从该目录运行：
 
 ```bash
 python AltAzModeling.py
 ```
 
-3. 得到 `x0y0_new.txt` 和 `parameters_new.txt`
-4. 将这两个 txt 的数值写入 `sequence_adjust_tool/parameters.json` 对应 position，例如 `position_5`
-5. 运行 `run_pipeline.py` 时通过 `--position-name` 选择参数组，或单独运行地平标注：
+脚本生成 `x0y0_new.txt` 和 `parameters_new.txt`。将数值写入 `sequence_adjust_tool/parameters.json` 的相应 `position`，再用 `--position-name` 选择。重排与地平标注都从该 JSON 读参数，投影使用 `E/a0/e/k1..k4` 的完整解析逆投影；`r = ze / k1` 近似不适用于这组参数。
+
+回到项目目录后，可单独检查地平标注：
 
 ```bash
-python sequence_adjust_tool/scheme_horizon_to_image/标注地平坐标系.py \
-  --image /path/to/image_or_mask.png \
-  --parameters sequence_adjust_tool/parameters.json \
-  --position-name position_5 \
-  --output output/debug_horizon_overlay.png
+python sequence_adjust_tool/scheme_horizon_to_image/标注地平坐标系.py --image /path/to/image_or_mask.png --parameters sequence_adjust_tool/parameters.json --position-name position_5 --output output/debug_horizon_overlay.png
 ```
 
-## 通过技能使用
+## 代码与技能入口
 
-在本机准备好依赖和标定参数后，可使用 [photo-to-replan](skill/photo-to-replan/SKILL.md)。这是本项目附带的入口说明，未列入根目录 `skills/` 的 17 个安装技能。将其 `SKILL.md` 复制到：
+`run_pipeline.py` 依次调用 `Pic2mask/full_image_infer/infer_full_image.py` 生成掩码，再由 `sequence_adjust_tool/scheme_horizon_to_image/replan.py` 将目标的 RA/Dec 转为 Az/Alt 和图像坐标，检查掩码后重排计划。
 
-```text
-~/.codex/skills/photo-to-replan/SKILL.md
-```
-
-该技能仍需访问完整的 `projects/allsky-camera/` 项目目录；复制说明文件不会安装模型、依赖或标定数据。使用时应明确仓库位置，并从本目录运行入口脚本。
+依赖和标定准备好后，也可按 [photo-to-replan](skill/photo-to-replan/SKILL.md) 交给 Codex 使用。这个项目自带的技能未列入根目录 `skills/` 的 17 个安装技能；可将其说明文件复制到 `~/.codex/skills/photo-to-replan/SKILL.md`。使用时仍须提供完整项目的位置，复制说明文件不会安装模型、依赖或标定材料。

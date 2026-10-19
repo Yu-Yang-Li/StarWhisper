@@ -24,7 +24,7 @@ Paper figures, experimental results, and reproduction notes are in the [research
 
 ## Getting started
 
-Each project's README explains installation and usage. Some code and models are kept in separate repositories, linked above. The [research skills](skills/README.md) can be installed in Codex / Cursor.
+The [project index](projects/README.md) lists the supplied materials and what each project needs to run. You can read SN Clock predictions, Explore metrics, sparse light-curve results, and NGSS configuration with the included local tools. Training requires the corresponding data and environment; the full observing workflow also needs a configured observatory system. The [research skills](skills/README.md) can be installed in Codex / Cursor by task.
 
 For example, these commands read the historical SN Clock prediction table included in the repository:
 
@@ -34,7 +34,7 @@ cd StarWhisper
 python skills/starwhisper-snclock/scripts/screen_snclock.py rank --top 10
 ```
 
-Python 3.10 or newer is required, with no additional dependencies. The table contains historical predictions for 22 sources; see the [data notes](projects/snclock/README.md) for their origin and limitations. Use current data when screening current candidates.
+Python 3.10 or newer is required, with no additional dependencies or skill installation. The table contains historical predictions for 22 sources; see the [data notes](projects/snclock/README.md) for their origin and limitations. Use current data when screening current candidates. More local examples are in the [project index](projects/README.md#先试一条命令).
 
 ## Papers and citation
 
