@@ -24,7 +24,7 @@ StarWhisper（星语）收录了天文语言模型、光变曲线与光谱分析
 
 ## 使用
 
-各项目的安装和运行方法见对应目录的 README。部分代码和模型放在独立仓库，链接已列在上方。[科研技能](skills/README.md)可安装到 Codex / Cursor 中使用。
+先在[项目目录](projects/README.md)查看各项工作已经提供的材料和运行条件。SN Clock、Explore、稀疏光变指标和 NGSS 配置有现成的本地读取命令；重新训练模型需要对应的数据与环境，完整观测流程还需准备台站系统。[科研技能](skills/README.md)也可按任务安装到 Codex / Cursor。
 
 例如，下面的命令读取仓库附带的 SN Clock 历史预测表：
 
@@ -34,7 +34,7 @@ cd StarWhisper
 python skills/starwhisper-snclock/scripts/screen_snclock.py rank --top 10
 ```
 
-需要 Python 3.10 或更新版本，不需要安装其他依赖。表里是 22 个源的一次历史预测，来源和局限见[数据说明](projects/snclock/README.md)。筛选当前候选体时，应换用最新数据。
+需要 Python 3.10 或更新版本，不需要安装其他依赖或先安装技能。表里是 22 个源的一次历史预测，来源和局限见[数据说明](projects/snclock/README.md)。筛选当前候选体时，应换用最新数据。其他离线示例见[项目目录](projects/README.md#先试一条命令)。
 
 ## 论文与引用
 

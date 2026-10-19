@@ -1,269 +1,141 @@
-# Low-SNR Stellar Spectra as Language
+# 低信噪比恒星光谱分析
 
-Spectral diffusion and discrete-token modeling for stellar spectra at low signal-to-noise ratio. Pre-training uses long, high-SNR sequences (~3030 pixels); fine-tuning uses shorter sequences (~303 pixels) in SNR stages, such as 25–30 → 9–11 → 7–9.
+Low-SNR Stellar Spectra as Language 将恒星光谱表示为离散 token，并使用光谱扩散模型进行建模。预训练使用约 3030 像素的长序列；微调使用约 303 像素的短序列，按 SNR 25–30 → 9–11 → 7–9 等阶段接续训练。
 
-[Model weights](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) · [Original repository](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) · [MIT license](LICENSE) · [StarWhisper](../../README.md)
+[项目目录](../README.md) · [研究文档](../../docs/research.md) · [原始仓库](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) · [模型权重](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) · [MIT 许可](LICENSE)
 
----
+这里提供模型、数据处理和训练代码，以及固定词表。可以直接阅读这些材料；完整的原始光谱和可用于训练的 CSV 未随仓库提供。预处理需要自备光谱，训练需要相应环境，微调还需要前一阶段的权重。本目录没有附带可直接运行的单条光谱预测示例。
 
-## Updates
+## 先选入口
 
-- **Mar 31, 2026:** Public **training code**, **`code/` data pipeline**, and **English documentation**. **Model weights** are on [Hugging Face — Jaredxjc/Low-SNR-Stellar-Spectra-as-Language](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) (MIT).
-- The full ready-to-train tokenized dataset is not bundled in this repository; prepare it with the processing scripts below.
+| 想做的事 | 从哪里开始 | 需要准备什么 |
+| --- | --- | --- |
+| 看模型和词表 | [src/spectral_lm/](src/spectral_lm/)、[vocab/](vocab/README.md) | 阅读不需要额外数据 |
+| 将光谱转成训练 CSV | [scripts/preprocess_data.py](scripts/preprocess_data.py) | 符合输入格式的光谱 CSV，或按 SNR 分组的目录 |
+| 预训练 | [examples/launch_pretrain.example.sh](examples/launch_pretrain.example.sh) → `scripts/pretrain.py` | 训练、验证 CSV，固定词表和训练环境 |
+| 分阶段微调 | [examples/launch_finetune.example.sh](examples/launch_finetune.example.sh) → `scripts/finetune.py` | 本阶段数据、前一阶段权重，以及启用步级评估时的验证子集 |
+| 从 PHOENIX / LAMOST 准备数据 | 下方“光谱从哪里来” | 原始模板或巡天数据、星表参数及相应访问权限 |
 
----
+当前训练入口在 `scripts/`，数据生成工具在 `code/`。较早的预处理、预训练和台站作业脚本保留在 [legacy/](legacy/README.md)，不需要与当前入口一起运行。
 
-## Model weights
+## 环境
 
-Pre-trained and staged fine-tuned checkpoints are hosted on Hugging Face:
-
-[Jaredxjc/Low-SNR-Stellar-Spectra-as-Language on Hugging Face](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)
-
-Load with the same architecture as in `src/spectral_lm/` and training scripts under `scripts/` (set `VOCAB_PATH` to `vocab/vocabulary.csv`). The HF model card may be extended with exact file names and training details.
-
----
-
-## Dataset
-
-> **Data processing code — released.** The full pipeline for building tokenized training CSVs is in this repository: **`code/`** (LAMOST download, PHOENIX-based simulation, flux tokenization, catalog merge, augmentation) plus **`scripts/preprocess_data.py`** for generic CSV trees and **`vocab/vocabulary.csv`** for the fixed vocabulary.
->
-> **Ready-to-train CSVs are not bundled.** Follow the **Data pipeline** section below and LAMOST data-access rules to produce files locally.
-
----
-
-## Data pipeline
-
-### Acquisition and processing workflow
-
-1. **PHOENIX templates** — High-resolution synthetic spectra from the [PHOENIX grid (Göttingen)](https://phoenix.astro.physik.uni-goettingen.de/?page_id=15). Retrieve files over **FTP** with a standard client (e.g. FileZilla); a **full local mirror** is appropriate when generating large synthetic sets.
-2. **Interpolation and low-resolution Ca II spectra** — Regrid PHOENIX onto the working wavelength scale in `code/interpolation&decrease_resolution/ShowOut/interpolation0415.py`. Then apply **`CaII.py`** / **`CaII_300p.py`**: reduce resolving power, inject **SNR-matched Gaussian noise**, and retain the **Ca II** region; **`CaII_300p.py`** yields **~300 pixels** per spectrum for short-sequence fine-tuning. Outputs use metallicity-style directories (e.g. `Z-1.0`–`Z-4.0`).
-3. **LAMOST DR12** — Register at LAMOST; build a **CSV target list** via the [DR12 search portal](https://www.lamost.org/dr12/v1.1/search) (CSV output, SNR/SNRZ and [Fe/H] cuts, stellar type **Star**). Obtain a **PyLAMOST token** from the [user portal](https://www.lamost.org/lmusers/user/). Download and stage spectra with **`code/pylamost-master/pylamost-master/lamost_dr12_pipeline.py`**, using its adjacent `pylamost.py` client; stellar parameters come from the **survey catalog** bundled with the query.
-4. **Augmentation and training CSVs** — Optional row-level augmentation in `code/lamost_data_augmentation/` (adds **`augmentation_id`**). Flux tokenization and catalog merge to the trainer’s column layout live in **`code/lamost_sft_data/`** (`lamost_flux_preprocessing.py`, `convert_lamost_to_pretrain_format.py`, `mix_spectra.py`).
-
-### Pipeline summary (single reference)
-
-| Topic | Summary |
-|--------|---------|
-| **Synthetic path** | PHOENIX → `interpolation0415.py` → `CaII.py` / `CaII_300p.py` (resolution + SNR + Ca II window; ~300 px variant for fine-tune). |
-| **Observational path** | DR12 CSV → `pylamost` + `lamost_dr12_pipeline.py` → LAMOST spectra + catalog **Teff / log g / [Fe/H]**. |
-| **Flux tokens** | Four digit columns per pixel (`flux_thu` … `flux_one`); sequence delimiters `<BOS>`, `<EOS>`, `<SEP>`. |
-| **Label tokens** | \(T_\mathrm{eff}\) (five digits), log g (three digits + sign), [Fe/H] (two digits + sign); definition matches `convert_lamost_to_pretrain_format.py`. |
-| **Training table** | One row per pixel; **20 columns** in the default layout (`spectrum_id`, `pixel_idx`, stellar and flux tokens, specials)—see `OUTPUT_COLUMNS` in `scripts/preprocess_data.py`. Augmented runs add **`augmentation_id`**. |
-| **Splits** | Hash- or chunk-based **train/val** (e.g. ~9:1) in the streaming writers. |
-| **Flux-only LAMOST** | `lamost_flux_preprocessing.py` writes flux tokens + `obsid` (+ `augmentation_id` if used); `convert_lamost_to_pretrain_format.py` **joins** a catalog with `obsid`, `teff`, `logg`, `feh`. |
-
-### `code/` directory map
-
-| Path | Purpose |
-|------|---------|
-| `code/pylamost-master/pylamost-master/` | LAMOST API client and the current DR12 download pipeline (`lamost_dr12_pipeline.py`). Earlier one-object and preview experiments are in `legacy/lamost/`. |
-| `code/interpolation&decrease_resolution/` | Resolution reduction, SNR noise, Ca II extraction; `ShowOut/` holds helper notebooks and small parameter CSVs. |
-| `code/lamost_sft_data/` | Flux tokenization, catalog merge to 20-column CSV, `mix_spectra.py`, `run1207.sh`. |
-| `code/lamost_data_augmentation/` | As above plus **`augmentation_id`**; batch entry `run.sh`. |
-
-*Dependencies (typical):* `pandas`, `numpy`, `tqdm`, `scikit-learn`; `astropy` / `scipy` where noted in scripts. Input paths are supplied as command-line arguments or environment variables; see **Local configuration** below.
-
----
-
-## Training & reproduction
-
-Run the commands below from `projects/stellar-spectra/`. In the shell examples, `REPO_ROOT` means the absolute path to this directory, rather than the parent StarWhisper directory.
-
-The canonical **model** and **train/finetune** entrypoints live outside `code/`:
-
-| Path | Role |
-|------|------|
-| `src/spectral_lm/` | `SpectrumDiffusionModel` |
-| `scripts/preprocess_data.py` | Tokenization & CSV generation for this repo’s trainer |
-| `scripts/pretrain.py` | Pre-training |
-| `scripts/finetune.py` | Fine-tuning |
-| `vocab/vocabulary.csv` | Default vocabulary (`token_id`, `token`); see `vocab/README.md` |
-| [legacy/](legacy/README.md) | Earlier preprocessing, pretrainer/model source, site-specific SLURM launcher and download sketches |
-
-### Prerequisites
-
-- Python 3.10+ recommended, NVIDIA GPU(s), CUDA-compatible PyTorch.
+建议使用 Python 3.10 或更新版本。训练需要 NVIDIA GPU 与匹配的 CUDA / PyTorch；按 [PyTorch 安装说明](https://pytorch.org/get-started/locally/) 准备后，从本目录（`projects/stellar-spectra/`）安装依赖：
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Install `torch` for your CUDA version from [PyTorch](https://pytorch.org).
+下面的数据处理与训练例子使用 Bash。除明确切换到输出目录的步骤外，都从本项目目录运行。原始数据处理还会按所选工具用到 `astropy`、`scipy` 等依赖，见对应脚本的导入项。
 
-### Path placeholders (replace once, reuse everywhere)
+## 把光谱转成训练表
 
-| Placeholder | Meaning |
-|-------------|---------|
-| `REPO_ROOT` | Absolute path to `StarWhisper/projects/stellar-spectra/`. |
-| `RAW_SPECTRA_DIR` | Directory tree of **input** spectrum CSV files (recursive scan). |
-| `FITS_ROOT` | Parent folder that contains SNR subfolders (used with `--make_groups`). Example: `FITS_ROOT/SNR10/.../*.csv`. |
-| `VOCAB_FILE` | Fixed vocabulary CSV. Default: `REPO_ROOT/vocab/vocabulary.csv`. |
-| `PRETRAIN_DATA_DIR` | Folder with `spectrum_tokenized_train.csv`, `spectrum_tokenized_val.csv`, optional `spectrum_tokenized_val_subset.csv`. |
-| `PRETRAIN_CKPT` | Checkpoint from pre-training (e.g. `checkpoint_step_9000.pth`). |
-| `FT25_CKPT` / `FT911_CKPT` | Checkpoints after SNR stages. |
-| `OUT_PRETRAIN`, `OUT_FT25`, … | Output directories for checkpoints and logs. |
+### 已有光谱 CSV
 
-**Linux / macOS**
+通用预处理器递归读取 `--data_dir` 下的 CSV。输入的文件命名需包含恒星参数，例如 `Z-1.0/10560+3.20-1.0.csv`；具体读取与参数提取规则见 `scripts/preprocess_data.py`。LAMOST 的原始 FITS 需先经过下方专用处理工具，不能直接作为这里的输入。
+
+输出写到当前工作目录。下面先在项目目录记录代码位置，再切换到一个新的输出目录，避免覆盖已有数据：
 
 ```bash
-export REPO_ROOT="/absolute/path/to/this/repo"
-export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:$PYTHONPATH}"
+export SPECTRA_PROJECT="$(pwd)"
+export RAW_SPECTRA_DIR="/absolute/path/to/raw_spectrum_csvs"
+export FIXED_VOCAB_PATH="${SPECTRA_PROJECT}/vocab/vocabulary.csv"
+mkdir -p /absolute/path/to/tokenized
+cd /absolute/path/to/tokenized
+python "${SPECTRA_PROJECT}/scripts/preprocess_data.py" --data_dir "${RAW_SPECTRA_DIR}" --processes 8
 ```
 
-**Windows (PowerShell)**
+生成的训练和验证表为 `spectrum_tokenized_train.csv`、`spectrum_tokenized_val.csv`。一条光谱占多行，每行对应一个像素；列顺序见脚本中的 `OUTPUT_COLUMNS`，包括恒星参数、四位 flux token 和 `<BOS>`、`<EOS>`、`<SEP>`。增广流程还会保留 `augmentation_id`。训练时使用仓库的固定 `vocab/vocabulary.csv`，不要直接用本批数据统计的 token 表替换其编号。
 
-```powershell
-$env:REPO_ROOT = "D:\absolute\path\to\this\repo"
-$env:PYTHONPATH = "$env:REPO_ROOT\src"
-```
+参数 token 分别用五位表示有效温度、三位加符号表示 log g、两位加符号表示 [Fe/H]。通用模式按 `spectrum_id` 做 9:1 的训练 / 验证划分，`random_state = 42`，同一条光谱的像素行保留在同一组。
 
----
+### 按 SNR 分组的 CSV
 
-### Stage 1 — Data preprocessing & tokenization (`scripts/preprocess_data.py`)
-
-#### Mode A — Single root directory (CSVs in **current working directory**)
+若输入为 `FITS_ROOT/SNR10/.../*.csv` 这样的目录，可在新的输出目录中改用分组模式。这里的目录名沿用 `FITS_ROOT`，实际读取的仍是 CSV：
 
 ```bash
-export REPO_ROOT="/absolute/path/to/this/repo"
-export RAW_SPECTRA_DIR="/absolute/path/to/your/raw/csv_trees"
-
-mkdir -p /absolute/path/to/output/pretrain_tokenized
-cd /absolute/path/to/output/pretrain_tokenized
-
-python "${REPO_ROOT}/scripts/preprocess_data.py" \
-  --data_dir "${RAW_SPECTRA_DIR}" \
-  --processes 8
+export SPECTRA_PROJECT="/absolute/path/to/StarWhisper/projects/stellar-spectra"
+export FIXED_VOCAB_PATH="${SPECTRA_PROJECT}/vocab/vocabulary.csv"
+mkdir -p /absolute/path/to/grouped_tokenized
+cd /absolute/path/to/grouped_tokenized
+python "${SPECTRA_PROJECT}/scripts/preprocess_data.py" --make_groups --fits_root /absolute/path/to/R1800FITS --pretrain_snrs SNR10,SNR20 --finetune_snrs SNR1 --processes 8 --batch_gb 2.0
 ```
 
-#### Mode B — SNR folders under `FITS_ROOT` (`--make_groups`)
+预训练和微调表分别写入当前目录的 `pretrain_data/` 与 `finetune_data/`。SNR 目录名只是选择输入的示例，应按本次实验准备。`FIXED_VOCAB_PATH` 可显式指定固定词表；未指定时，程序依次查找当前目录的 `vocabulary.csv` 和项目自带词表。
+
+分组模式按输入文件路径的哈希划分训练 / 验证，比例约为 9:1；改变输入路径会影响这一划分，复现时需保留相应清单。
+
+## 预训练
+
+返回项目目录，指定上一步实际生成的训练表所在目录和模型输出位置：
 
 ```bash
-export REPO_ROOT="/absolute/path/to/this/repo"
-export FITS_ROOT="/absolute/path/to/R1800FITS"
-
-cd "${REPO_ROOT}"
-cp -n vocab/vocabulary.csv ./vocabulary.csv   # optional OOV check in cwd
-
-python scripts/preprocess_data.py \
-  --make_groups \
-  --fits_root "${FITS_ROOT}" \
-  --pretrain_snrs "SNR10,SNR20" \
-  --finetune_snrs "SNR1" \
-  --processes 8 \
-  --batch_gb 2.0
+cd /absolute/path/to/StarWhisper/projects/stellar-spectra
+export DATA_ROOT="/absolute/path/to/tokenized"
+export OUTPUT_DIR="/absolute/path/to/output/pretrain"
+NPROC_PER_NODE=1 bash examples/launch_pretrain.example.sh
 ```
 
-You can also set **`FIXED_VOCAB_PATH`** to an absolute path to `vocabulary.csv`.
+`DATA_ROOT` 下应有 `spectrum_tokenized_train.csv` 和 `spectrum_tokenized_val.csv`。启动脚本默认使用项目词表，设置 `PYTHONPATH` 并调用 `torchrun`；`NPROC_PER_NODE=1` 表示单 GPU，脚本默认值为 4。需要其他位置时，可分别设置 `TRAIN_CSV`、`VAL_CSV`、`VOCAB_PATH`。可选的 `VAL_SUBSET_CSV` 用于步级验证，缺少时预训练程序回退到完整验证表。
 
-#### Step-eval CSV for fine-tuning
+## 分阶段微调
+
+先复制对应的环境示例，在自己的副本中修改所有数据、权重、输出与日志路径，再通过 `FINETUNE_ENV_FILE` 加载。三个阶段分别使用各自的数据：
+
+| 阶段 | 环境示例 | 起始权重 |
+| --- | --- | --- |
+| SNR 25–30 | [env_finetune_snr_25_30.example.sh](examples/env_finetune_snr_25_30.example.sh) | 预训练权重 |
+| SNR 9–11 | [env_finetune_snr_9_11.example.sh](examples/env_finetune_snr_9_11.example.sh) | 前一阶段的微调权重 |
+| SNR 7–9 | [env_finetune_snr_7_9.example.sh](examples/env_finetune_snr_7_9.example.sh) | 前一阶段的微调权重 |
+
+启动前会检查 `TRAIN_CSV`、`VAL_CSV`、`VOCAB_PATH` 和 `PRETRAIN_CKPT_PATH`。默认每 500 步评估一次，还需明确指定本阶段的 `STEP_EVAL_CSV`；不会用其他数据组代替。若不做步级评估，显式设置 `STEP_EVAL_FREQ_STEPS=0`。
+
+例如，可从本阶段验证表中选取前 1500 个 `spectrum_id`，保留各自完整的像素行，生成步级验证子集：
 
 ```bash
-export VAL_CSV_FULL="/absolute/path/to/spectrum_tokenized_val.csv"
-export STEP_EVAL_CSV="/absolute/path/to/spectrum_tokenized_val_first1500.csv"
-
+export VAL_CSV="/absolute/path/to/current_stage/spectrum_tokenized_val.csv"
+export STEP_EVAL_CSV="/absolute/path/to/current_stage/spectrum_tokenized_val_first1500.csv"
 python - <<'PY'
 import os
 import pandas as pd
-src = os.environ["VAL_CSV_FULL"]
-dst = os.environ["STEP_EVAL_CSV"]
-df = pd.read_csv(src)
-ids = df["spectrum_id"].drop_duplicates().unique()[:1500]
-df[df["spectrum_id"].isin(ids)].to_csv(dst, index=False)
-print("wrote", dst, "spectra", len(ids))
+frame = pd.read_csv(os.environ["VAL_CSV"])
+ids = frame["spectrum_id"].drop_duplicates().iloc[:1500]
+frame[frame["spectrum_id"].isin(ids)].to_csv(os.environ["STEP_EVAL_CSV"], index=False)
 PY
 ```
 
----
+环境示例还包含 `PARAM_STATS_JSON`。有对应统计文件时填写其路径；若希望从训练集估计参数统计量，移除该变量的设置，由 `PARAM_STATS_SAMPLES` 控制采样量。不同阶段不要沿用无关数据的统计文件。
 
-### Stage 2 — Pre-training
-
-```bash
-export REPO_ROOT="/absolute/path/to/this/repo"
-export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:$PYTHONPATH}"
-export PRETRAIN_DATA_DIR="/absolute/path/to/pretrain_tokenized"
-export VOCAB_FILE="${REPO_ROOT}/vocab/vocabulary.csv"
-export OUT_PRETRAIN="${REPO_ROOT}/output/pretrain"
-export TRAIN_CSV="${PRETRAIN_DATA_DIR}/spectrum_tokenized_train.csv"
-export VAL_CSV="${PRETRAIN_DATA_DIR}/spectrum_tokenized_val.csv"
-export VAL_SUBSET_CSV="${PRETRAIN_DATA_DIR}/spectrum_tokenized_val_subset.csv"
-export VOCAB_PATH="${VOCAB_FILE}"
-export OUTPUT_DIR="${OUT_PRETRAIN}"
-export MASK_TOKEN_ID="2"
-mkdir -p "${OUTPUT_DIR}"
-export NPROC_PER_NODE=4
-export MASTER_ADDR=127.0.0.1
-export MASTER_PORT=29500
-
-torchrun --nproc_per_node="${NPROC_PER_NODE}" --master_port="${MASTER_PORT}" \
-  "${REPO_ROOT}/scripts/pretrain.py"
-```
-
-Single GPU: `NPROC_PER_NODE=1` and `torchrun --standalone --nproc_per_node=1 ...`.
-
----
-
-### Stage 3 — Fine-tuning (staged SNR)
+输入准备好后，从项目目录启动：
 
 ```bash
-export REPO_ROOT="/absolute/path/to/this/repo"
-export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:$PYTHONPATH}"
-export VOCAB_FILE="${REPO_ROOT}/vocab/vocabulary.csv"
-export BATCH_SIZE=64
-export NPROC_PER_NODE=1
-export PRELOAD_TO_MEMORY=0
-export STREAMING_MODE=1
-export PARAM_STATS_SAMPLES=256
+export FINETUNE_ENV_FILE="/absolute/path/to/your_finetune_env.sh"
+NPROC_PER_NODE=1 bash examples/launch_finetune.example.sh
 ```
 
-**3a — SNR ~25–30** (from pretrain checkpoint)
+已发布权重见 [Hugging Face 模型页](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)。加载时使用 `src/spectral_lm/` 的对应结构与固定词表；下载权重不会同时获得原训练数据。
 
-```bash
-export PRETRAIN_CKPT="/absolute/path/to/output/pretrain/checkpoint_step_9000.pth"
-export FT_DATA="/absolute/path/to/finetune_snr25_30_tokenized"
-export TRAIN_CSV="${FT_DATA}/spectrum_tokenized_train.csv"
-export VAL_CSV="${FT_DATA}/spectrum_tokenized_val.csv"
-export STEP_EVAL_CSV="${FT_DATA}/spectrum_tokenized_val_first1500.csv"
-export VOCAB_PATH="${VOCAB_FILE}"
-export PRETRAIN_CKPT_PATH="${PRETRAIN_CKPT}"
-export RESUME_FROM="${PRETRAIN_CKPT}"
-export CKPT_DIR="/absolute/path/to/output/finetune_snr25_30/ckpts"
-export LOG_PATH="/absolute/path/to/output/finetune_snr25_30/logs/run.log"
-mkdir -p "$(dirname "${LOG_PATH}")" "${CKPT_DIR}"
-torchrun --standalone --nproc_per_node="${NPROC_PER_NODE}" \
-  "${REPO_ROOT}/scripts/finetune.py"
-```
+## 光谱从哪里来
 
-**3b / 3c** — chain from `FT25_CKPT` and `FT911_CKPT` similarly, using `examples/env_finetune_snr_9_11.example.sh` and `examples/env_finetune_snr_7_9.example.sh`.
-
-**Shell helpers**
-
-```bash
-bash examples/launch_pretrain.example.sh
-export FINETUNE_ENV_FILE="/absolute/path/to/your_env.sh"
-bash examples/launch_finetune.example.sh
-```
-
----
-
-## Local configuration
-
-| Workflow | Explicit inputs |
+| 数据来源或步骤 | 工具与输入 |
 | --- | --- |
-| Generic tokenization | `--data_dir`; grouped SNR processing requires `--make_groups --fits_root` |
-| Fine-tuning | `TRAIN_CSV`, `VAL_CSV`, `PRETRAIN_CKPT_PATH`; also `STEP_EVAL_CSV` when step evaluation is enabled |
-| PHOENIX processing | `PHOENIX_INPUT_ROOT` and `PHOENIX_OUTPUT_ROOT`; defaults are under this project's `data/` directory |
-| LAMOST download | `LAMOST_TOKEN`, `LAMOST_DATA_ROOT`, and optionally `LAMOST_WAVELENGTH_FILE` |
-| LAMOST tokenization | `--data_dir`; shell examples use `LAMOST_DATA_ROOT` |
-| Mixing tokenized spectra | Four command arguments, or `MIX_A_PATH`, `MIX_B1_PATH`, `MIX_B2_PATH`, `MIX_OUT_DIR` |
+| PHOENIX 模板 | 从 [Göttingen PHOENIX grid](https://phoenix.astro.physik.uni-goettingen.de/?page_id=15) 获取原始高分辨率光谱；可用标准 FTP 客户端下载 |
+| 模拟低分辨率光谱 | `code/interpolation&decrease_resolution/ShowOut/interpolation0415.py` 做波长重采样，`CaII.py` / `CaII_300p.py` 降分辨率、加入对应 SNR 的高斯噪声并提取 Ca II 区域；后者输出约 300 像素的短序列 |
+| LAMOST DR12 | 在 [DR12 检索页](https://www.lamost.org/dr12/v1.1/search) 准备目标 CSV 和参数星表，在[用户页面](https://www.lamost.org/lmusers/user/)取得自己的访问 token；当前下载入口是 `code/pylamost-master/pylamost-master/lamost_dr12_pipeline.py`，与同目录的 `pylamost.py` 配合使用 |
+| LAMOST 转训练表 | `code/lamost_sft_data/lamost_flux_preprocessing.py` 生成 flux token，`convert_lamost_to_pretrain_format.py` 按 `obsid` 合并含 `teff`、`logg`、`feh` 的星表；`mix_spectra.py` 用于混合表格，`run1207.sh` 是批量处理示例 |
+| 数据增广 | `code/lamost_data_augmentation/` 的对应流程保留 `augmentation_id`，批量入口为 `run.sh` |
 
-Fine-tuning checks the required inputs before loading a model. Select the step-evaluation CSV for the current experiment explicitly; it does not substitute another cohort. Set `STEP_EVAL_FREQ_STEPS=0` to disable that evaluation. Existing seeds, SNR stages and model settings are retained.
+LAMOST 检索需按研究目标选择恒星类型、SNR / SNRZ 与金属丰度范围，并遵守数据访问规则。各处理脚本的路径设置如下：
 
-Data, vocabularies and checkpoints stay with the project. Current entrypoints are in `scripts/`; data-generation tools are in `code/`; earlier implementations are described in [legacy/README.md](legacy/README.md). Importing the PHOENIX interpolation helper no longer starts generation jobs.
+| 流程 | 路径设置 |
+| --- | --- |
+| PHOENIX 处理 | `PHOENIX_INPUT_ROOT`、`PHOENIX_OUTPUT_ROOT`；默认在本项目 `data/` 下 |
+| LAMOST 下载 | `LAMOST_TOKEN`、`LAMOST_DATA_ROOT`，可选 `LAMOST_WAVELENGTH_FILE` |
+| LAMOST token 化 | `--data_dir`；批处理脚本使用 `LAMOST_DATA_ROOT` |
+| 混合训练表 | 四个位置参数，或 `MIX_A_PATH`、`MIX_B1_PATH`、`MIX_B2_PATH`、`MIX_OUT_DIR` |
 
-After installing the project dependencies, run `python -m pytest tests -q` for
-input validation, vocabulary lookup and import checks. These checks do not train
-a model or download spectra.
+## 检查与引用
 
-## Citation
+装好项目依赖后，可从本目录运行 `python -m pytest tests -q`，检查输入条件、词表定位与导入行为；这些检查不训练模型或下载光谱。
 
-If you use this work, please cite the repository and the Hugging Face model card. A BibTeX entry will be added when the paper is public.
+使用本工作时，请引用[原始仓库](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language)和[模型卡](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language)，并保留本目录的 MIT 许可。
