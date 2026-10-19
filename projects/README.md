@@ -17,4 +17,4 @@
 
 脉冲星分类在独立的 [StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) 仓库，虚拟司天相关技能在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 维护。
 
-旧目录名称与新位置见[目录迁移](../docs/architecture.md#目录迁移)。历史展示图片、旧技能入口和未完成的样机占位材料见[归档](../archive/README.md)。
+旧目录名称与新位置见[目录迁移](../docs/architecture.md#目录迁移)。

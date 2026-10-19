@@ -16,7 +16,7 @@
 | `Make_Observation_Plan.json`、`NGSS_Agent.json` | n8n 工作流示例 |
 | `observation Schedule/` | 观测计划样例 |
 
-原有的 n8n 历史日志和 Python 编译缓存保存在[归档目录](../../archive/ngss/README.md)。服务自己的新日志按部署环境保存。
+运行日志与 Python 编译缓存不随源码分发。服务日志按部署环境保存。
 
 ## 环境与启动
 

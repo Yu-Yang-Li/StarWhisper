@@ -1,4 +1,0 @@
-interface:
-  display_name: "Real-Bogus ResNet18 CBAM"
-  short_description: "Predict real/bogus sources from temp-sci-diff image triples."
-  default_prompt: "Use this skill to run real/bogus prediction on complete temp, sci, diff image triples with the bundled ResNet18-CBAM model."

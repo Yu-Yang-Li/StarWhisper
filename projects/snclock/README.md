@@ -36,11 +36,13 @@
 
 ## 使用
 
+从本目录运行：
+
 ```powershell
-python ..\skills\starwhisper-snclock\scripts\screen_snclock.py describe
-python ..\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
-python ..\skills\starwhisper-snclock\scripts\screen_snclock.py audit
-python ..\skills\starwhisper-snclock\scripts\screen_snclock.py window --within-days 2 --conservative
+python ..\..\skills\starwhisper-snclock\scripts\screen_snclock.py describe
+python ..\..\skills\starwhisper-snclock\scripts\screen_snclock.py rank --top 10
+python ..\..\skills\starwhisper-snclock\scripts\screen_snclock.py audit
+python ..\..\skills\starwhisper-snclock\scripts\screen_snclock.py window --within-days 2 --conservative
 ```
 
 `rank` 和 `screen` 使用发现时的年龄；`window` 才按当前或 `--asof` 指定时刻重新检查年龄窗口。历史表中的年轻候选不能直接作为今晚仍年轻的候选。
