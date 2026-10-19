@@ -20,8 +20,7 @@ StarWhisper keeps code, data, and experiment material in directories for each re
 StarWhisper/
 ├── projects/   Research projects, with their code, data, and setup notes
 ├── skills/     Installable research skills, scripts, and references
-├── docs/       Research notes, figures, and the documentation site
-└── archive/    Earlier presentations, retired entrypoints, and historical logs
+└── docs/       Research notes, figures, and the documentation site
 ```
 
 | Directory | Start here | What belongs here |
@@ -29,7 +28,6 @@ StarWhisper/
 | [projects](../projects/README.md) | Choose a research topic and read its README | Keep code, models, data, and results with their project; install environments separately |
 | [skills](../skills/README.md) | Choose by task | The 17 skill names remain the same; see [INSTALL.md](../skills/INSTALL.md) for setup |
 | [docs](index.html) | Read the [research notes](research-en.md) | Cross-project documentation, paper figures, and asset provenance |
-| [archive](../archive/README.md) | Find historical material | Earlier illustrations, retired skill entrypoint, NGSS logs, and prototype placeholders |
 
 The eight project directories use lowercase names with hyphens. Each project README describes its internal data layout and working directory. Configure NGSS service URLs and station deployment paths for the actual environment.
 
@@ -88,8 +86,5 @@ The October 2026 layout uses the paths below. Relative paths inside projects sta
 | `AllSky-Camera-XL/` | [projects/allsky-camera/](../projects/allsky-camera/) |
 | `snclock/` | [projects/snclock/](../projects/snclock/) |
 | `explore/` | [projects/explore/](../projects/explore/) |
-| `GOTTA_Prototype/` | [archive/gotta-prototype/](../archive/gotta-prototype/) |
-| `example/` | [archive/showcase/](../archive/showcase/) |
-| `skill/` | [archive/legacy-skills/](../archive/legacy-skills/) |
 
-NGSS historical logs and compiled caches are in [archive/ngss](../archive/ngss/README.md). The old `GOTTA_Prototype` contained placeholders only; see its [archive note](../archive/gotta-prototype/README.md).
+Earlier showcase images, the retired skill entrypoint, NGSS historical logs and compiled caches, and the `GOTTA_Prototype` placeholders have been removed from the current branch. They remain available in the [snapshot before cleanup](https://github.com/Yu-Yang-Li/StarWhisper/tree/9496f3683a6138e9133510cd45f8bacd6588045b/archive).

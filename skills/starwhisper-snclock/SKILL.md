@@ -71,4 +71,4 @@ python scripts/screen_snclock.py --csv path\to\other_table.csv --json rank
 
 ## 相关
 
-抓取、强制测光、可见性和三日筛选工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。真假源分类样机在本仓库的 `archive/gotta-prototype/`。观测配置与曝光预算检查见 [`starwhisper-night-plan`](../starwhisper-night-plan/SKILL.md)。
+抓取、强制测光、可见性和三日筛选工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。观测配置与曝光预算检查见 [`starwhisper-night-plan`](../starwhisper-night-plan/SKILL.md)。

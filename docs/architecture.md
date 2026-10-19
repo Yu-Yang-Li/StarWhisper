@@ -20,8 +20,7 @@ StarWhisper 按研究方向保存代码、数据和实验材料。各项目有�
 StarWhisper/
 ├── projects/   研究项目，各自保存代码、数据与运行说明
 ├── skills/     可安装的科研技能、脚本与参考文件
-├── docs/       研究说明、图表与文档站
-└── archive/    早期展示、旧入口和历史运行材料
+└── docs/       研究说明、图表与文档站
 ```
 
 | 目录 | 从哪里开始 | 内容放置原则 |
@@ -29,7 +28,6 @@ StarWhisper/
 | [projects](../projects/README.md) | 选择研究方向，再读项目 README | 代码、模型、数据和结果随所属项目保存；环境分别安装 |
 | [skills](../skills/README.md) | 按任务选择技能 | 17 个技能仍按原名称安装，安装设置见 [INSTALL.md](../skills/INSTALL.md) |
 | [docs](index.html) | 阅读[研究说明](research.md) | 保存跨项目说明、论文图表和素材来源 |
-| [archive](../archive/README.md) | 查找历史材料 | 保存旧展示图片、旧技能入口、NGSS 日志和样机占位文件 |
 
 `projects/` 下有 8 个项目目录，使用小写、连字符命名。项目内部的数据布局和运行方法见各自 README；NGSS 的外部服务地址与台站部署路径仍需按实际环境配置。
 
@@ -88,8 +86,5 @@ skills/<技能名>/
 | `AllSky-Camera-XL/` | [projects/allsky-camera/](../projects/allsky-camera/) |
 | `snclock/` | [projects/snclock/](../projects/snclock/) |
 | `explore/` | [projects/explore/](../projects/explore/) |
-| `GOTTA_Prototype/` | [archive/gotta-prototype/](../archive/gotta-prototype/) |
-| `example/` | [archive/showcase/](../archive/showcase/) |
-| `skill/` | [archive/legacy-skills/](../archive/legacy-skills/) |
 
-NGSS 的历史日志和编译缓存另存于 [archive/ngss](../archive/ngss/README.md)。旧版 `GOTTA_Prototype` 只有占位文件，实际内容见[归档说明](../archive/gotta-prototype/README.md)。
+旧展示图片、旧技能入口、NGSS 历史日志与编译缓存，以及 `GOTTA_Prototype` 占位文件已从当前分支移除。需要追溯时，可查看[清理前的文件快照](https://github.com/Yu-Yang-Li/StarWhisper/tree/9496f3683a6138e9133510cd45f8bacd6588045b/archive)。

@@ -47,7 +47,7 @@ Targets of opportunity, weather changes, or problems with tracking, focus, camer
 
 ## 2026 · Virtual Sitian
 
-Virtual Sitian became a runnable SN Clock system in 2026. Its early science application estimates supernova explosion epochs and selects young-SN candidates. See the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) for an overview and [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) for installable skills. The earlier real/bogus prototype directory contained placeholders only; they are retained in the [archive](../archive/gotta-prototype/README.md).
+Virtual Sitian became a runnable SN Clock system in 2026. Its early science application estimates supernova explosion epochs and selects young-SN candidates. See the [Virtual-GOTTA map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) for an overview and [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) for installable skills.
 
 [`projects/snclock/`](../projects/snclock/README.md) contains one historical prediction output: post-explosion ages for 22 TNS sources at their discovery time, given as q16 / q50 / q84 quantiles and split into two tiers by whether the source falls within two days. Only 2 sources are within two days at the conservative q84. The table covers less than the declared screening window, and most rows lack retained input snapshots; the data notes explain these limitations. Read it with [`starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md):
 

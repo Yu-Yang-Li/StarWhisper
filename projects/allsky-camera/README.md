@@ -120,7 +120,7 @@ python run_pipeline.py \
 每次运行会生成：
 
 ```text
-AllSky-Camera-XL/output/
+projects/allsky-camera/output/
   <image_stem>/
     input/
       <original image>

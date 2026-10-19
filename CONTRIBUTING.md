@@ -2,7 +2,7 @@
 
 欢迎报告问题、补充复现记录或提交改进。提交前请阅读[对应项目](README.md#项目)的 README；已公开的数据和复现说明见[研究文档](docs/research.md)。
 
-目录职责和依赖关系见[仓库结构](docs/architecture.md)。科研代码与数据处理放在 `projects/<项目>/`，历史材料放在 `archive/`；技能的简短用法、按需读取的细则和实际脚本分别维护在 `SKILL.md`、`references/` 与 `scripts/`。安装和环境设置统一写在 [skills/INSTALL.md](skills/INSTALL.md)。
+目录职责和依赖关系见[仓库结构](docs/architecture.md)。科研代码与数据处理放在 `projects/<项目>/`；技能的简短用法、按需读取的细则和实际脚本分别维护在 `SKILL.md`、`references/` 与 `scripts/`。运行日志与编译缓存不提交到仓库。安装和环境设置统一写在 [skills/INSTALL.md](skills/INSTALL.md)。
 
 ## 报告问题
 

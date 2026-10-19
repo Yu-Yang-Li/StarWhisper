@@ -18,7 +18,7 @@ StarWhisper（星语）收录了天文语言模型、光变曲线与光谱分析
 | 恒星光谱 | [低信噪比光谱分析](projects/stellar-spectra/README.md) |
 | 观测与调度 | [NGSS](projects/ngss/README.md) · [全天相机](projects/allsky-camera/README.md) · [Explore](projects/explore/README.md) · [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
 
-各项目的内容和运行条件见[项目目录](projects/README.md)。文献检索、研究设计、统计、写作与绘图工具见[科研技能](skills/README.md)；早期展示和旧入口见[归档](archive/README.md)。
+各项目的内容和运行条件见[项目目录](projects/README.md)。文献检索、研究设计、统计、写作与绘图工具见[科研技能](skills/README.md)。
 
 论文图表、实验结果和复现说明见[研究文档](docs/research.md)。
 

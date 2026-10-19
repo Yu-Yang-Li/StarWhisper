@@ -47,7 +47,7 @@ StarWhisper 3 用于天文问答和代码生成。训练数据在 [`projects/lan
 
 ## 2026 · 虚拟司天
 
-虚拟司天在 2026 年形成可运行的 SN Clock 系统。早期科学应用是超新星时钟，用于估计爆发时刻和筛选年轻超新星候选。公开说明见 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。相关工作流的可安装技能见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)，原真假源分类样机目录仅有占位文件，已保存在[归档](../archive/gotta-prototype/README.md)。
+虚拟司天在 2026 年形成可运行的 SN Clock 系统。早期科学应用是超新星时钟，用于估计爆发时刻和筛选年轻超新星候选。公开说明见 [Virtual-GOTTA 地图](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html)。相关工作流的可安装技能见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw)。
 
 [`projects/snclock/`](../projects/snclock/README.md) 保存了一次历史预测：22 个 TNS 源在发现时刻的爆发后年龄估计，以 q16 / q50 / q84 三个分位表示，并按是否落在两天内分为两档。其中只有 2 个源在保守口径 q84 下也处于两天内。表的实际覆盖范围小于声明的筛选窗口，多数行的输入快照未留存；具体限制见数据说明。读表可用 [`starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md)：
 

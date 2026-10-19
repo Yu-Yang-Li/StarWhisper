@@ -28,17 +28,17 @@ Telescope 用于巡天自动观测，Explore 比较观测策略的收益、巡�
 
 ## 已公开结果
 
-90 episode / 策略，种子 `11/22/33`。数字见 [`published_metrics.csv`](published_metrics.csv)。逐条判定可以直接跑：
+90 episode / 策略，种子 `11/22/33`。数字见 [`published_metrics.csv`](published_metrics.csv)。从本目录逐条判定：
 
 ```powershell
-python ..\skills\starwhisper-explore\scripts\eval_gate.py bar
-python ..\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
+python ..\..\skills\starwhisper-explore\scripts\eval_gate.py bar
+python ..\..\skills\starwhisper-explore\scripts\eval_gate.py gate --agent rule_agent
 ```
 
 自备实验表需使用相同列名，并将 `--csv` 放在子命令前：
 
 ```powershell
-python ..\skills\starwhisper-explore\scripts\eval_gate.py --csv my_run.csv gate --agent my_policy
+python ..\..\skills\starwhisper-explore\scripts\eval_gate.py --csv my_run.csv gate --agent my_policy
 ```
 
 规则 Agent 相对确定性优先级：跟进率高 23.52 个百分点，效用大约高 1.6%，巡天完成度低 9.44 个百分点，超过预注册的 5 个百分点上限。三个种子的结果方向一致，已记录的复跑哈希一致。因此报告为稳定负结果。

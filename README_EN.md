@@ -18,7 +18,7 @@ StarWhisper collects code, data, and models from work on astronomy language mode
 | Stellar spectra | [Low-SNR spectral analysis](projects/stellar-spectra/README.md) |
 | Observing and scheduling | [NGSS](projects/ngss/README.md) · [All-sky camera](projects/allsky-camera/README.md) · [Explore](projects/explore/README.md) · [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
 
-See the [project index](projects/README.md) for contents and setup, [research skills](skills/README.md) for literature, experiment design, statistics, writing, and figures, and the [archive](archive/README.md) for earlier materials.
+See the [project index](projects/README.md) for contents and setup, and [research skills](skills/README.md) for literature, experiment design, statistics, writing, and figures.
 
 Paper figures, experimental results, and reproduction notes are in the [research notes](docs/research-en.md).
 
