@@ -2,7 +2,7 @@
 
 近邻星系巡天（NGSS）的观测自动化代码，对应论文 [StarWhisper Telescope](https://doi.org/10.1038/s44172-025-00520-4)。程序负责制定观测计划、管理目标、连接 NINA，以及传输和处理观测数据。
 
-[项目首页](../README.md) · [研究文档](../docs/research.md) · [离线配置检查](../skills/starwhisper-night-plan/SKILL.md)
+[项目首页](../../README.md) · [研究文档](../../docs/research.md) · [离线配置检查](../../skills/starwhisper-night-plan/SKILL.md)
 
 ## 目录
 
@@ -14,11 +14,13 @@
 | `observe.yml` | Python 环境依赖 |
 | `observe_config.json` | 观测配置 |
 | `Make_Observation_Plan.json`、`NGSS_Agent.json` | n8n 工作流示例 |
-| `observation Schedule/`、`runningLog/` | 观测计划与历史日志材料 |
+| `observation Schedule/` | 观测计划样例 |
+
+原有的 n8n 历史日志和 Python 编译缓存保存在[归档目录](../../archive/ngss/README.md)。服务自己的新日志按部署环境保存。
 
 ## 环境与启动
 
-运行需要 NINA、FTP、x-opstep 和已配置的望远镜连接。先在 `NGSS/` 目录创建环境：
+运行需要 NINA、FTP、x-opstep 和已配置的望远镜连接。先在 `projects/ngss/` 目录创建环境：
 
 ```bash
 conda env create -f observe.yml
@@ -61,7 +63,7 @@ uvicorn src.app.app2:app --reload
 | `ExposureTime` | 单次曝光时间，单位为秒 |
 | `WaitTime` | 每个目标的额外指向与读出时间，单位为分钟 |
 
-调整前可用 [`starwhisper-night-plan`](../skills/starwhisper-night-plan/SKILL.md) 在本地检查字段、目标表和曝光预算。该技能读取文件，不连接设备。
+调整前可用 [`starwhisper-night-plan`](../../skills/starwhisper-night-plan/SKILL.md) 在本地检查字段、目标表和曝光预算。该技能读取文件，不连接设备。
 
 ## 设备与数据处理依赖
 

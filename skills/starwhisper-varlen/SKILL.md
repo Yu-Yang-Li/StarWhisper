@@ -9,7 +9,7 @@ license: Apache-2.0
 读取已经公开的 11 个配置结果，在相同数据设定下比较模型，并检查自备光变表的观测点数与标签。
 
 结果由 `scripts/eval_varlen.py` 读取，只依赖 Python 标准库。脚本不训练、不下载权重、不改变数据划分。
-> 主设定：3–30 个观测点、7 个合并类、75/10/15、`random_state = 42`。代码在 [`Early Classification from Sparse Light Curves/`](../../Early%20Classification%20from%20Sparse%20Light%20Curves/README.md)。
+> 主设定：3–30 个观测点、7 个合并类、75/10/15、`random_state = 42`。代码在 [`projects/sparse-light-curves/`](../../projects/sparse-light-curves/README.md)。
 
 默认读取技能附带的 `references/published_metrics.csv`，数值来自各配置的 `test_metrics.json` / `metrics.txt`。只在同一 `pool` 内比较；`50obs` 的准确率不是 varlen 3–30 的结果。
 

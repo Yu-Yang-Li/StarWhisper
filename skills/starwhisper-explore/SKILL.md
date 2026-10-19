@@ -10,9 +10,9 @@ license: Apache-2.0
 
 计算使用 `scripts/eval_gate.py`，只依赖 Python 标准库。脚本读取指标表，不运行仿真或复现运行哈希。
 
-实验说明见 [`explore/`](../../explore/README.md)。`StarWhisper-Explore-v0.2` 使用合成环境：兴隆、单镜、一夜六时隙、种子 `11/22/33`。环境代码尚未收录到本仓库。
+实验说明见 [`projects/explore/`](../../projects/explore/README.md)。`StarWhisper-Explore-v0.2` 使用合成环境：兴隆、单镜、一夜六时隙、种子 `11/22/33`。环境代码尚未收录到本仓库。
 
-默认读取仓库的 `explore/published_metrics.csv`；找不到仓库时使用技能内附带的同名表。自备实验表用 `--csv` 指定，需使用相同列名。
+默认读取仓库的 `projects/explore/published_metrics.csv`；找不到仓库时使用技能内附带的同名表。自备实验表用 `--csv` 指定，需使用相同列名。
 
 ## 何时使用
 

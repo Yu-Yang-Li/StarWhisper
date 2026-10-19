@@ -20,25 +20,49 @@ RA_RANGE = (0.0, 360.0)
 DEC_RANGE = (-90.0, 90.0)
 
 
+def project_dir(root: Path) -> Path:
+    project = root / "projects" / "ngss"
+    return project if project.is_dir() else root / "NGSS"
+
+
 def repo_root() -> Path | None:
     env = os.environ.get("STARWHISPER_ROOT")
-    if env and Path(env, "NGSS").is_dir():
+    if env and project_dir(Path(env)).is_dir():
         return Path(env)
     here = Path(__file__).resolve()
     for parent in [here, *here.parents]:
-        if (parent / "NGSS").is_dir() and (parent / "skills").is_dir():
+        if project_dir(parent).is_dir() and (parent / "skills").is_dir():
             return parent
     return None
 
 
+def read_config(path: Path) -> dict:
+    config = json.loads(path.read_text(encoding="utf-8"))
+    if "time_windows" in config or not any(key in config for key in ("early_night", "FilterType", "ExposureTime")):
+        return config
+    wait = config.get("WaitTime")
+    return {
+        **config,
+        "time_windows": {key: config[key] for key in ("early_night", "midnight", "midmorning", "early_morning") if key in config},
+        "constraints": {"d_moon": config.get("d_moon")},
+        "filters": config.get("FilterType"),
+        "exposure": {
+            "count": config.get("TotalExposureCount"),
+            "time": config.get("ExposureTime"),
+            "wait": 0,
+            "target_overhead_seconds": wait * 60 if isinstance(wait, (int, float)) else wait,
+        },
+    }
+
+
 def resolve_config(explicit: Path | None) -> tuple[dict, str]:
     if explicit:
-        return json.loads(explicit.read_text(encoding="utf-8")), str(explicit)
+        return read_config(explicit), str(explicit)
     root = repo_root()
-    live = root / "NGSS" / "observe_config.json" if root else None
+    live = project_dir(root) / "observe_config.json" if root else None
     if live and live.exists():
-        return json.loads(live.read_text(encoding="utf-8")), "NGSS/observe_config.json"
-    return json.loads(EXAMPLE_CONFIG.read_text(encoding="utf-8")), "bundled example (NGSS/observe_config.json not found)"
+        return read_config(live), live.relative_to(root).as_posix()
+    return read_config(EXAMPLE_CONFIG), "bundled example (projects/ngss/observe_config.json or legacy NGSS/observe_config.json not found)"
 
 
 def check_config(config: dict) -> list[dict]:
@@ -77,6 +101,10 @@ def check_config(config: dict) -> list[dict]:
     wait = exposure.get("wait")
     if wait is None or wait < 0:
         fail("error", "exposure.wait", f"must be zero or positive minutes, got {wait!r}")
+    if "target_overhead_seconds" in exposure:
+        overhead = exposure["target_overhead_seconds"]
+        if not isinstance(overhead, (int, float)) or overhead < 0:
+            fail("error", "exposure.target_overhead_seconds", f"NGSS WaitTime must be zero or positive minutes, got {config.get('WaitTime')!r}")
 
     if "inherit" not in config:
         fail("warn", "inherit", "not set; the planner will not know whether to reuse the previous schedule")
@@ -84,8 +112,10 @@ def check_config(config: dict) -> list[dict]:
     return findings
 
 
-def budget(config: dict, slew_seconds: float) -> dict:
+def budget(config: dict, slew_seconds: float | None) -> dict:
     exposure = config.get("exposure") or {}
+    if slew_seconds is None:
+        slew_seconds = float(exposure.get("target_overhead_seconds", 60.0))
     count = float(exposure.get("count") or 0)
     exp_time = float(exposure.get("time") or 0)
     wait_min = float(exposure.get("wait") or 0)
@@ -241,8 +271,8 @@ def cmd_endpoints(args):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", type=Path, help="observe_config.json; defaults to NGSS/ then bundled example")
-    parser.add_argument("--slew-seconds", type=float, default=60.0)
+    parser.add_argument("--config", type=Path, help="observe_config.json; defaults to projects/ngss/, legacy NGSS/, then bundled example")
+    parser.add_argument("--slew-seconds", type=float, help="override per-target overhead; defaults to NGSS WaitTime or 60 seconds for the bundled schema")
     parser.add_argument("--json", action="store_true")
     sub = parser.add_subparsers(dest="cmd", required=True)
 

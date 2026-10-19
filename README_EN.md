@@ -11,17 +11,14 @@ StarWhisper collects code, data, and models from work on astronomy language mode
 
 ## Projects
 
-| Project | Description | Code and documentation |
-| --- | --- | --- |
-| Astronomy language models | Astronomy questions, scientific text, and code | [Training data](LLM_Data/README.md) · [StarWhisper 3 weights](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
-| Light curves and pulsars | Kepler / K2 variable-star classification and pulsar-candidate classification | [StarWhisper LC](StarWhisper_LC/README.md) · [Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) |
-| Sparse light curves | Early classification of sparse ZTF / ATLAS light curves | [Training, evaluation, and weights](Early%20Classification%20from%20Sparse%20Light%20Curves/README.md) |
-| Stellar spectra | Low-SNR stellar-spectra analysis | [Code and documentation](Low-SNR-Stellar-Spectra-as-Language/README.md) |
-| StarWhisper Telescope | Planning, observing, and exception handling on the Nearby Galaxy Supernovae Survey | [NGSS](NGSS/README.md) · [Paper](https://doi.org/10.1038/s44172-025-00520-4) |
-| All-sky camera | Image masking and observing-sequence adjustment | [Xinglong all-sky camera](AllSky-Camera-XL/README.md) |
-| Virtual Sitian | Supernova explosion-epoch estimates and young-candidate screening | [SN Clock data](snclock/README.md) · [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) · [Project map](https://yu-yang-li.github.io/StarWhisper/virtual-gotta-map.html) |
-| StarWhisper Explore | Observing-policy experiments in a synthetic environment | [Experiments and results](explore/README.md) |
-| Research skills | Literature search, research design, statistics, writing, figures, and presentations | [Skill list and installation](skills/README.md) |
+| Research area | Projects |
+| --- | --- |
+| Astronomy language models | [Training data](projects/language-models/README.md) · [StarWhisper 3 weights](https://www.modelscope.cn/models/AstroYuYang/StarWhisper3) |
+| Light curves and transients | [Kepler / K2 classification](projects/light-curves/README.md) · [Sparse light curves](projects/sparse-light-curves/README.md) · [SN Clock](projects/snclock/README.md) · [Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) |
+| Stellar spectra | [Low-SNR spectral analysis](projects/stellar-spectra/README.md) |
+| Observing and scheduling | [NGSS](projects/ngss/README.md) · [All-sky camera](projects/allsky-camera/README.md) · [Explore](projects/explore/README.md) · [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) |
+
+See the [project index](projects/README.md) for contents and setup, [research skills](skills/README.md) for literature, experiment design, statistics, writing, and figures, and the [archive](archive/README.md) for earlier materials.
 
 Paper figures, experimental results, and reproduction notes are in the [research notes](docs/research-en.md).
 
@@ -37,7 +34,7 @@ cd StarWhisper
 python skills/starwhisper-snclock/scripts/screen_snclock.py rank --top 10
 ```
 
-Python 3.10 or newer is required, with no additional dependencies. The table contains historical predictions for 22 sources; see the [data notes](snclock/README.md) for their origin and limitations. Use current data when screening current candidates.
+Python 3.10 or newer is required, with no additional dependencies. The table contains historical predictions for 22 sources; see the [data notes](projects/snclock/README.md) for their origin and limitations. Use current data when screening current candidates.
 
 ## Papers and citation
 

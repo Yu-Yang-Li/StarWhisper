@@ -6,12 +6,12 @@
 
 入口为 `run_pipeline.py`。输出包括调整后的计划和 NINA TargetSet 文件，实际执行仍需观测系统加载并确认。
 
-[项目首页](../README.md) · [研究文档](../docs/research.md)
+[项目首页](../../README.md) · [研究文档](../../docs/research.md)
 
 ## 目录
 
 ```text
-AllSky-Camera-XL/
+projects/allsky-camera/
   configs/
     default.json
   Pic2mask/
@@ -184,4 +184,4 @@ python sequence_adjust_tool/scheme_horizon_to_image/标注地平坐标系.py \
 ~/.codex/skills/photo-to-replan/SKILL.md
 ```
 
-该技能仍需访问完整的 `AllSky-Camera-XL/` 项目目录；复制说明文件不会安装模型、依赖或标定数据。使用时应明确仓库位置，并从本目录运行入口脚本。
+该技能仍需访问完整的 `projects/allsky-camera/` 项目目录；复制说明文件不会安装模型、依赖或标定数据。使用时应明确仓库位置，并从本目录运行入口脚本。

@@ -2,7 +2,7 @@
 
 This directory contains scripts for segmenting sparse ZTF/ATLAS light curves, extracting handcrafted features or end-to-end sequences, training eleven model configurations, and aggregating test-set metrics. The main **varlen** benchmark uses **3–30 observations** per segment, **seven merged variability classes**, and a **75 / 10 / 15** train/validation/test split (`random_state = 42`).
 
-[StarWhisper](../README_EN.md) · [Research notes](../docs/research-en.md) · [Read the published metrics](../skills/starwhisper-varlen/SKILL.md)
+[StarWhisper](../../README_EN.md) · [Research notes](../../docs/research-en.md) · [Read the published metrics](../../skills/starwhisper-varlen/SKILL.md)
 
 **Models compared**
 
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 ## Reproduction
 
-Run from this directory (`Early Classification from Sparse Light Curves/`) after installing dependencies:
+Run from this directory (`projects/sparse-light-curves/`) after installing dependencies:
 
 ```bash
 # Segments & splits

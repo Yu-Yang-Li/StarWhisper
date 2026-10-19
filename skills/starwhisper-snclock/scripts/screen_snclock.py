@@ -23,13 +23,18 @@ def parse_utc(value: str) -> datetime:
     return datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
 
 
+def data_dir(root: Path) -> Path:
+    project = root / "projects" / "snclock"
+    return project if project.is_dir() else root / "snclock"
+
+
 def repo_root() -> Path | None:
     env = os.environ.get("STARWHISPER_ROOT")
-    if env and Path(env, "snclock").is_dir():
+    if env and data_dir(Path(env)).is_dir():
         return Path(env)
     here = Path(__file__).resolve()
     for parent in [here, *here.parents]:
-        if (parent / "snclock").is_dir() and (parent / "skills").is_dir():
+        if data_dir(parent).is_dir() and (parent / "skills").is_dir():
             return parent
     return None
 
@@ -37,10 +42,10 @@ def repo_root() -> Path | None:
 def default_csv() -> Path:
     root = repo_root()
     if not root:
-        raise SystemExit("no snclock/ found; pass --csv or set STARWHISPER_ROOT")
-    tables = sorted((root / "snclock").glob("snclock_*.csv"))
+        raise SystemExit("no projects/snclock/ or legacy snclock/ found; pass --csv or set STARWHISPER_ROOT")
+    tables = sorted(data_dir(root).glob("snclock_*.csv"))
     if not tables:
-        raise SystemExit("snclock/ has no snclock_*.csv; pass --csv")
+        raise SystemExit(f"{data_dir(root)} has no snclock_*.csv; pass --csv")
     return tables[-1]
 
 

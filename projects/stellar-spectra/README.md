@@ -2,7 +2,7 @@
 
 Spectral diffusion and discrete-token modeling for stellar spectra at low signal-to-noise ratio. Pre-training uses long, high-SNR sequences (~3030 pixels); fine-tuning uses shorter sequences (~303 pixels) in SNR stages, such as 25–30 → 9–11 → 7–9.
 
-[Model weights](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) · [Original repository](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) · [MIT license](LICENSE) · [StarWhisper](../README.md)
+[Model weights](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) · [Original repository](https://github.com/Jared-web03/Low-SNR-Stellar-Spectra-as-Language) · [MIT license](LICENSE) · [StarWhisper](../../README.md)
 
 ---
 
@@ -67,7 +67,7 @@ Load with the same architecture as in `src/spectral_lm/` and training scripts un
 
 ## Training & reproduction
 
-Run the commands below from `Low-SNR-Stellar-Spectra-as-Language/`. In the shell examples, `REPO_ROOT` means the absolute path to this directory, rather than the parent StarWhisper directory.
+Run the commands below from `projects/stellar-spectra/`. In the shell examples, `REPO_ROOT` means the absolute path to this directory, rather than the parent StarWhisper directory.
 
 The canonical **model** and **train/finetune** entrypoints live outside `code/`:
 

@@ -1,7 +1,7 @@
 {
   "start": "uvicorn src.app.app2:app --reload",
-  "cwd": "NGSS",
-  "source": "NGSS/src/app/app2.py",
+  "cwd": "projects/ngss",
+  "source": "projects/ngss/src/app/app2.py",
   "routes": [
     {"method": "GET", "path": "/look_config", "class": "read"},
     {"method": "GET", "path": "/check_log", "class": "read"},

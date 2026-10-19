@@ -9,27 +9,29 @@ StarWhisper 按研究方向保存代码、数据和实验材料。各项目有�
 | 要做的事 | 先读什么 | 接着做什么 |
 | --- | --- | --- |
 | 了解论文、结果与适用范围 | [研究说明](research.md) | 查对应项目和原论文 |
-| 复现或修改某个研究项目 | 该项目的 README，见下表 | 准备其数据、模型与运行环境 |
+| 复现或修改某个研究项目 | [项目目录](../projects/README.md)中的 README | 准备其数据、模型与运行环境 |
 | 在 Codex / Cursor 中使用技能 | [技能目录](../skills/README.md) | 按需安装，再读相应 `SKILL.md` |
 | 检查仓库附带表格或配置 | 下方离线工具关系表 | 先运行读取命令，确认实际输入文件 |
-| 修改台站服务或观测流程 | [NGSS](../NGSS/README.md) 或 [全天相机](../AllSky-Camera-XL/README.md) | 核对外部系统、设备权限和项目自己的检查方法 |
+| 修改台站服务或观测流程 | [NGSS](../projects/ngss/README.md) 或 [全天相机](../projects/allsky-camera/README.md) | 核对外部系统、设备权限和项目自己的检查方法 |
 
 ## 目录职责
 
-| 目录 | 保存什么 | 运行与数据关系 |
+```text
+StarWhisper/
+├── projects/   研究项目，各自保存代码、数据与运行说明
+├── skills/     可安装的科研技能、脚本与参考文件
+├── docs/       研究说明、图表与文档站
+└── archive/    早期展示、旧入口和历史运行材料
+```
+
+| 目录 | 从哪里开始 | 内容放置原则 |
 | --- | --- | --- |
-| [LLM_Data](../LLM_Data/README.md) | 天文语言模型的训练文本说明与材料 | 模型权重通过项目列出的外部地址获取 |
-| [StarWhisper_LC](../StarWhisper_LC/README.md) | Kepler / K2 光变分类测试代码 | 与稀疏光变基准分别使用 |
-| [Early Classification from Sparse Light Curves](../Early%20Classification%20from%20Sparse%20Light%20Curves/README.md) | 稀疏光变训练、评估、权重与结果 | 数据池、标签与比较条件由该项目定义 |
-| [Low-SNR-Stellar-Spectra-as-Language](../Low-SNR-Stellar-Spectra-as-Language/README.md) | 恒星光谱训练与分析 | 自有词表、数据处理与模型依赖 |
-| [NGSS](../NGSS/README.md) | 巡天配置、计划、服务与观测操作 | 依赖 NINA、FTP、MQTT 等台站系统；部分接口会改变外部状态 |
-| [AllSky-Camera-XL](../AllSky-Camera-XL/README.md) | 天空图像推断、掩码与观测序列调整 | 使用图像模型和校准数据；生成序列文件不表示已执行观测 |
-| [GOTTA_Prototype](../GOTTA_Prototype) | 真假源分类样机材料 | 样机结果按其数据范围解释 |
-| [snclock](../snclock/README.md) | 一次历史爆发年龄预测表及字段说明 | 供离线读取与候选筛选；不是实时数据服务 |
-| [explore](../explore/README.md) | 合成观测策略的实验设定与指标 | 可重算指标比较，环境代码尚未收录 |
-| [skills](../skills/README.md) | 17 个可安装技能及配套工具 | 安装说明见 [INSTALL.md](../skills/INSTALL.md)；各技能按任务读取参考文件 |
-| [skill](../skill/README.md) | 旧技能入口的迁移说明 | 当前安装脚本只扫描 `skills/` |
-| [docs](index.html) 与 [example](../example/README.md) | 研究说明、图表、素材来源与旧展示材料 | 文档站点从 `docs/index.html` 开始 |
+| [projects](../projects/README.md) | 选择研究方向，再读项目 README | 代码、模型、数据和结果随所属项目保存；环境分别安装 |
+| [skills](../skills/README.md) | 按任务选择技能 | 17 个技能仍按原名称安装，安装设置见 [INSTALL.md](../skills/INSTALL.md) |
+| [docs](index.html) | 阅读[研究说明](research.md) | 保存跨项目说明、论文图表和素材来源 |
+| [archive](../archive/README.md) | 查找历史材料 | 保存旧展示图片、旧技能入口、NGSS 日志和样机占位文件 |
+
+`projects/` 下有 8 个项目目录，使用小写、连字符命名。项目内部的数据布局和运行方法见各自 README；NGSS 的外部服务地址与台站部署路径仍需按实际环境配置。
 
 脉冲星代码在独立的 [StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar) 仓库，虚拟司天相关工作流在 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 维护。外部项目以各自的安装和运行说明为准。
 
@@ -39,12 +41,12 @@ StarWhisper 按研究方向保存代码、数据和实验材料。各项目有�
 
 | 工具 | 默认读取 | 显式输入或找不到仓库时 |
 | --- | --- | --- |
-| [SN Clock](../skills/starwhisper-snclock/SKILL.md) | `snclock/snclock_*.csv` 中按文件名排序的最后一张表 | 用 `--csv` 指定；缺少表时退出并说明原因 |
-| [Explore](../skills/starwhisper-explore/SKILL.md) | `explore/published_metrics.csv` | 用 `--csv` 指定；找不到仓库时读技能附带指标表 |
-| [夜计划](../skills/starwhisper-night-plan/SKILL.md) | `NGSS/observe_config.json` | 用 `--config` 指定；缺少该文件时读示例配置并标注来源 |
+| [SN Clock](../skills/starwhisper-snclock/SKILL.md) | `projects/snclock/snclock_*.csv` 中按文件名排序的最后一张表 | 用 `--csv` 指定；缺少表时退出并说明原因 |
+| [Explore](../skills/starwhisper-explore/SKILL.md) | `projects/explore/published_metrics.csv` | 用 `--csv` 指定；找不到仓库时读技能附带指标表 |
+| [夜计划](../skills/starwhisper-night-plan/SKILL.md) | `projects/ngss/observe_config.json` | 用 `--config` 指定；缺少该文件时读示例配置并标注来源 |
 | [稀疏光变比较](../skills/starwhisper-varlen/SKILL.md) | 技能附带的结果表与 `contract.json` | 按既定数据池比较；`check --csv` 检查用户输入的点数和标签 |
 
-安装技能不会复制整个科研项目。需要访问仓库文件时设置 `STARWHISPER_ROOT`；也可在命令中指定输入文件。夜计划的预算是固定假设下的估算，与 NGSS 的实际计划和硬件执行分别核对。
+安装技能不会复制整个科研项目。需要访问仓库文件时将 `STARWHISPER_ROOT` 设为仓库根目录；工具兼容旧版的顶层项目路径；也可在命令中指定输入文件。夜计划的预算是固定假设下的估算，与 NGSS 的实际计划和硬件执行分别核对。
 
 ## 科研技能怎样组织
 
@@ -70,4 +72,24 @@ skills/<技能名>/
 - 技能安装、仓库数据定位和外部服务设置统一说明在 [安装文档](../skills/INSTALL.md)。
 - 生成文件写到各技能的工作目录，密钥、私人配置与未公开资料不提交到仓库。
 
-修改命令、路径或输入格式时，同时检查对应文档和测试。跨项目变化先核对调用者和数据约定；无需为文档整理统一训练环境或移动已有数据。提交方法见 [贡献说明](../CONTRIBUTING.md)。
+修改命令、路径或输入格式时，同时检查对应文档和测试。跨项目变化先核对调用者和数据约定；移动目录时同时更新文档链接与离线工具的数据定位。提交方法见 [贡献说明](../CONTRIBUTING.md)。
+
+## 目录迁移
+
+2026 年 10 月整理后的路径如下。项目内部的相对路径继续沿用；从仓库根目录执行的命令需使用新位置。
+
+| 原位置 | 当前位置 |
+| --- | --- |
+| `LLM_Data/` | [projects/language-models/](../projects/language-models/) |
+| `StarWhisper_LC/` | [projects/light-curves/](../projects/light-curves/) |
+| `Early Classification from Sparse Light Curves/` | [projects/sparse-light-curves/](../projects/sparse-light-curves/) |
+| `Low-SNR-Stellar-Spectra-as-Language/` | [projects/stellar-spectra/](../projects/stellar-spectra/) |
+| `NGSS/` | [projects/ngss/](../projects/ngss/) |
+| `AllSky-Camera-XL/` | [projects/allsky-camera/](../projects/allsky-camera/) |
+| `snclock/` | [projects/snclock/](../projects/snclock/) |
+| `explore/` | [projects/explore/](../projects/explore/) |
+| `GOTTA_Prototype/` | [archive/gotta-prototype/](../archive/gotta-prototype/) |
+| `example/` | [archive/showcase/](../archive/showcase/) |
+| `skill/` | [archive/legacy-skills/](../archive/legacy-skills/) |
+
+NGSS 的历史日志和编译缓存另存于 [archive/ngss](../archive/ngss/README.md)。旧版 `GOTTA_Prototype` 只有占位文件，实际内容见[归档说明](../archive/gotta-prototype/README.md)。

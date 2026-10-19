@@ -9,27 +9,29 @@ StarWhisper keeps code, data, and experiment material in directories for each re
 | Task | Start with | Next step |
 | --- | --- | --- |
 | Understand papers, results, and scope | [Research notes](research-en.md) | Read the project and original paper |
-| Reproduce or modify a research project | Its README, listed below | Prepare its data, models, and environment |
+| Reproduce or modify a research project | Its README in the [project index](../projects/README.md) | Prepare its data, models, and environment |
 | Use skills in Codex / Cursor | [Skill directory](../skills/README.md) | Install the needed set and read its `SKILL.md` |
 | Inspect bundled tables or configuration | The offline tool table below | Confirm which input file the command reads |
-| Modify station services or observing workflows | [NGSS](../NGSS/README.md) or [all-sky camera](../AllSky-Camera-XL/README.md) | Check external systems, permissions, and project validation |
+| Modify station services or observing workflows | [NGSS](../projects/ngss/README.md) or [all-sky camera](../projects/allsky-camera/README.md) | Check external systems, permissions, and project validation |
 
 ## Directory responsibilities
 
-| Directory | Material | Runtime and data relationship |
+```text
+StarWhisper/
+├── projects/   Research projects, with their code, data, and setup notes
+├── skills/     Installable research skills, scripts, and references
+├── docs/       Research notes, figures, and the documentation site
+└── archive/    Earlier presentations, retired entrypoints, and historical logs
+```
+
+| Directory | Start here | What belongs here |
 | --- | --- | --- |
-| [LLM_Data](../LLM_Data/README.md) | Astronomy language-model training text and notes | Model weights use the external locations listed by the project |
-| [StarWhisper_LC](../StarWhisper_LC/README.md) | Kepler / K2 classification test code | Separate from the sparse light-curve benchmark |
-| [Early Classification from Sparse Light Curves](../Early%20Classification%20from%20Sparse%20Light%20Curves/README.md) | Sparse light-curve training, evaluation, weights, and results | The project defines its data pools, labels, and comparison protocol |
-| [Low-SNR-Stellar-Spectra-as-Language](../Low-SNR-Stellar-Spectra-as-Language/README.md) | Stellar-spectrum training and analysis | Own vocabulary, preprocessing, and model dependencies |
-| [NGSS](../NGSS/README.md) | Survey configuration, planning, services, and observing operations | Uses NINA, FTP, MQTT, and station systems; some routes change external state |
-| [AllSky-Camera-XL](../AllSky-Camera-XL/README.md) | Image inference, masks, and observing-sequence adjustment | Uses image models and calibration data; a generated sequence is not an executed observation |
-| [GOTTA_Prototype](../GOTTA_Prototype) | Real/bogus classification prototype material | Interpret results within the prototype's data scope |
-| [snclock](../snclock/README.md) | A historical explosion-age prediction table and field notes | Offline inspection and screening, rather than a live data service |
-| [explore](../explore/README.md) | Synthetic observing-policy setup and metrics | Metric comparisons can be recalculated; environment code is not included |
-| [skills](../skills/README.md) | 17 installable skills and supporting tools | See [INSTALL.md](../skills/INSTALL.md); load references for the current task |
-| [skill](../skill/README.md) | Migration note for the old skill location | Current installers scan `skills/` |
-| [docs](index.html) and [example](../example/README.md) | Research notes, figures, provenance, and older examples | The documentation site starts at `docs/index.html` |
+| [projects](../projects/README.md) | Choose a research topic and read its README | Keep code, models, data, and results with their project; install environments separately |
+| [skills](../skills/README.md) | Choose by task | The 17 skill names remain the same; see [INSTALL.md](../skills/INSTALL.md) for setup |
+| [docs](index.html) | Read the [research notes](research-en.md) | Cross-project documentation, paper figures, and asset provenance |
+| [archive](../archive/README.md) | Find historical material | Earlier illustrations, retired skill entrypoint, NGSS logs, and prototype placeholders |
+
+The eight project directories use lowercase names with hyphens. Each project README describes its internal data layout and working directory. Configure NGSS service URLs and station deployment paths for the actual environment.
 
 Pulsar code is maintained in [StarWhisper-Pulsar](https://github.com/ACMISLab/StarWhisper-Pulsar), and related Virtual Sitian workflows in [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw). Follow those repositories' own setup instructions.
 
@@ -39,12 +41,12 @@ The four `starwhisper-*` skills read CSV / JSON. They do not import training pro
 
 | Tool | Default input | Explicit input or fallback |
 | --- | --- | --- |
-| [SN Clock](../skills/starwhisper-snclock/SKILL.md) | Last filename-sorted `snclock/snclock_*.csv` | Use `--csv`; missing data produces an error |
-| [Explore](../skills/starwhisper-explore/SKILL.md) | `explore/published_metrics.csv` | Use `--csv`; without the repository, use the skill's bundled metrics |
-| [Night planning](../skills/starwhisper-night-plan/SKILL.md) | `NGSS/observe_config.json` | Use `--config`; missing configuration uses a labelled bundled example |
+| [SN Clock](../skills/starwhisper-snclock/SKILL.md) | Last filename-sorted `projects/snclock/snclock_*.csv` | Use `--csv`; missing data produces an error |
+| [Explore](../skills/starwhisper-explore/SKILL.md) | `projects/explore/published_metrics.csv` | Use `--csv`; without the repository, use the skill's bundled metrics |
+| [Night planning](../skills/starwhisper-night-plan/SKILL.md) | `projects/ngss/observe_config.json` | Use `--config`; missing configuration uses a labelled bundled example |
 | [Sparse light-curve comparison](../skills/starwhisper-varlen/SKILL.md) | Bundled results and `contract.json` | Compare within the defined data pool; `check --csv` checks user point counts and labels |
 
-Installing skills does not copy entire research projects. Set `STARWHISPER_ROOT` when repository data is needed, or specify inputs in the command. The night budget is an estimate under fixed assumptions; check it separately against actual NGSS plans and hardware execution.
+Installing skills does not copy entire research projects. Set `STARWHISPER_ROOT` to the repository root when data is needed; the tools also support the old top-level project paths, or specify inputs in the command. The night budget is an estimate under fixed assumptions; check it separately against actual NGSS plans and hardware execution.
 
 ## Skill organisation
 
@@ -70,4 +72,24 @@ The deck scripts use generation and review scripts from the neighboring `giiisp-
 - Maintain installation, repository data location, and external-service setup in the [installation guide](../skills/INSTALL.md).
 - Write generated files to the skill's work directory. Do not commit credentials, private configuration, or unpublished material.
 
-When changing commands, paths, or input formats, check the associated documentation and tests. Review callers and data conventions before cross-project changes. Documentation maintenance does not require a shared training environment or moving existing data. See [Contributing](../CONTRIBUTING.md).
+When changing commands, paths, or input formats, check the associated documentation and tests. Review callers and data conventions before cross-project changes. Directory moves must update documentation links and offline input discovery together. See [Contributing](../CONTRIBUTING.md).
+
+## Directory migration
+
+The October 2026 layout uses the paths below. Relative paths inside projects stay the same; commands started from the repository root must use the new location.
+
+| Previous location | Current location |
+| --- | --- |
+| `LLM_Data/` | [projects/language-models/](../projects/language-models/) |
+| `StarWhisper_LC/` | [projects/light-curves/](../projects/light-curves/) |
+| `Early Classification from Sparse Light Curves/` | [projects/sparse-light-curves/](../projects/sparse-light-curves/) |
+| `Low-SNR-Stellar-Spectra-as-Language/` | [projects/stellar-spectra/](../projects/stellar-spectra/) |
+| `NGSS/` | [projects/ngss/](../projects/ngss/) |
+| `AllSky-Camera-XL/` | [projects/allsky-camera/](../projects/allsky-camera/) |
+| `snclock/` | [projects/snclock/](../projects/snclock/) |
+| `explore/` | [projects/explore/](../projects/explore/) |
+| `GOTTA_Prototype/` | [archive/gotta-prototype/](../archive/gotta-prototype/) |
+| `example/` | [archive/showcase/](../archive/showcase/) |
+| `skill/` | [archive/legacy-skills/](../archive/legacy-skills/) |
+
+NGSS historical logs and compiled caches are in [archive/ngss](../archive/ngss/README.md). The old `GOTTA_Prototype` contained placeholders only; see its [archive note](../archive/gotta-prototype/README.md).

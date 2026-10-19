@@ -2,7 +2,7 @@
 
 本目录保存虚拟司天早期科学应用的一次历史预测：估计 TNS 暂现源的**爆发后年龄**，查看哪些源在发现时可能仍处于爆发两天内。
 
-配套技能：[`skills/starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md)。
+配套技能：[`skills/starwhisper-snclock`](../../skills/starwhisper-snclock/SKILL.md)。
 
 | 文件 | 内容 |
 | --- | --- |
@@ -45,4 +45,4 @@ python ..\skills\starwhisper-snclock\scripts\screen_snclock.py window --within-d
 
 `rank` 和 `screen` 使用发现时的年龄；`window` 才按当前或 `--asof` 指定时刻重新检查年龄窗口。历史表中的年轻候选不能直接作为今晚仍年轻的候选。
 
-完整工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。本目录保存预测表，读表工具见 [`starwhisper-snclock`](../skills/starwhisper-snclock/SKILL.md)。
+完整工作流见 [SitianClaw](https://github.com/Yu-Yang-Li/SitianClaw) 的 `snc-*` 技能。本目录保存预测表，读表工具见 [`starwhisper-snclock`](../../skills/starwhisper-snclock/SKILL.md)。
