@@ -1,0 +1,3 @@
+-r requirements.txt
+PyMuPDF>=1.24.0
+pymupdf4llm==0.0.11

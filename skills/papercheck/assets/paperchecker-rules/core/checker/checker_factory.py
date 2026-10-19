@@ -1,7 +1,6 @@
 from typing import Dict, Type, List
 from core.checker.base_checker import BaseChecker
 from core.checker.citation_checker import CitationChecker
-from core.checker.relevance_checker import RelevanceChecker
 from models.compliance import CheckType
 
 class CheckerFactory:
@@ -9,7 +8,6 @@ class CheckerFactory:
 
     _checkers: Dict[CheckType, Type[BaseChecker]] = {
         CheckType.CITATIONS: CitationChecker,
-        CheckType.RELEVANCE: RelevanceChecker,
         # 将来可以注册更多检查器
     }
     

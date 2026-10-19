@@ -1,96 +1,50 @@
-# PaperCheck Runtime Notes
+# PaperCheck 运行说明
 
-## Architecture
+PaperCheck 在本地提取论文引用、参考文献和上下文，再由当前模型检查引用是否支持论述。`assets/paperchecker-rules/` 只保留文档提取、引用匹配、UCAS / GB/T 7714 规则和报告结构。
 
-- `scripts/extract_citation_evidence.py` is the default no-key path. It extracts citation/reference/context evidence from `.docx`.
-- The mounted Codex model reviews the extracted evidence and writes the semantic citation-support judgment.
-- `assets/paperchecker-rules` is the bundled TaShan-PaperChecker rules engine for GB/T 7714-2015, UCAS-style format checks, and citation/reference matching.
+## 安装依赖
 
-The old PaperCheck AI project needed a provider API key because it was not itself a Codex skill. This skill does not need that pattern: it uses local extraction plus the current model that is already running the skill.
+从本技能目录运行：
 
-## Evidence Extraction
-
-```powershell
-python ..\scripts\progressive_papercheck.py "<path-to-paper.docx-or-pdf>" --mode subjective --out "<path-to-evidence.json>" --report "<path-to-report.md>"
+```bash
+python -m pip install -r assets/paperchecker-rules/requirements.txt
+python scripts/check_papercheck_env.py
 ```
 
-Use modes to match the two upstream project styles:
+处理 PDF 时另装本地解析依赖：
 
-- `quick` maps to the rule-engine workflow: local extraction, UCAS/GB/T rules, missing citations, unused references, and format issues.
-- `subjective` maps to the PaperCheck AI workflow without a provider key: it prepares citation/context/reference evidence for the mounted Codex model to judge support.
-- `full` keeps the same no-key model review path and adds source-verification caveats. Only claim source-content support when the user supplies source PDFs or verified retrieval evidence.
-
-The evidence JSON contains:
-
-- citation markers and expanded ranges
-- numbered references
-- missing citations and unused references
-- local context around each citation
-- `needs_model_review` markers for citations where Codex should judge support
-
-The Markdown report contains runtime status, MinerU/fallback status, evidence summary, rules summary, semantic review queue, and audit limits.
-
-Review rule: judge only from extracted context, reference entry, and any user-supplied paper/PDF. If the actual cited paper content is unavailable, mark that limitation instead of overclaiming.
-
-## Rules Engine
-
-Bundled source: `assets/paperchecker-rules`
-
-Install:
-
-```powershell
-cd .\assets\paperchecker-rules
-pip install -r requirements.txt
+```bash
+python -m pip install -r assets/paperchecker-rules/requirements-pdf.txt
 ```
 
-Start:
+普通检查不需要外部模型密钥。技能包不包含网页、API 服务、账号、短信或部署工具。上游规则的 MIT 许可保存在 `assets/paperchecker-rules/LICENSE`。
 
-```powershell
-python run_server.py
+## 执行检查
+
+```bash
+python scripts/progressive_papercheck.py paper.docx --mode subjective --out evidence.json --report report.md
 ```
 
-Default local URL after startup is usually `http://127.0.0.1:8002`. Confirm with:
+将文件名换成实际路径，也可输入 PDF。三个模式共用本地规则：
 
-```powershell
-Invoke-RestMethod http://127.0.0.1:8002/api/health
+- `quick`：结构提取、引用匹配与格式规则。
+- `subjective`：默认；增加供当前模型审阅的引用、上下文与参考文献对应项。
+- `full`：在此基础上整理原文和来源核验范围。
+
+证据 JSON 包含引用编号、范围展开、参考文献、缺失引用、未使用条目和 `needs_model_review` 标记。Markdown 报告包含实际解析方式、规则结果、模型审阅队列与限制。格式规则不自动适用于 AAS、MNRAS 或全部天文期刊。
+
+## PDF 解析
+
+配置 `MINERU_API_KEY` 后，PDF 解析可使用 MinerU。也可在本机 `assets/paperchecker-rules/config/config.json` 的 `mineru_config.api_key` 中配置；不要将私人配置提交到仓库。
+
+未配置或 MinerU 不可用时，依次尝试 `pymupdf4llm.to_markdown()` 和 PyMuPDF 的逐页文本提取。环境检查会报告依赖和配置状态，输出会标明回退方式。文本层 PDF 可以继续处理；扫描件、多栏、表格、公式和跨页参考文献仍需人工核对或 OCR / 版面解析。
+
+没有被引论文的原文或已核验来源时，只能判断题名、引用上下文与参考文献的对应关系，不能声称核对了全文。
+
+## 自检与打包
+
+```bash
+python scripts/quick_validate.py
 ```
 
-Upload check:
-
-```powershell
-curl.exe -s -X POST -F "file=@<path-to-paper.docx>" -F "author_format=full" -F "citation_standard=ucas" "http://127.0.0.1:8002/api/v2/analysis/report" -o report.json
-```
-
-Expected success fields: `contract_version`, `run.status=succeeded`, `summary.match_rate`, and issue groups under `issues`.
-
-## PDF Extraction And MinerU
-
-For PDF uploads, the rules engine tries this order:
-
-1. MinerU API converts the PDF into Markdown with layout-aware extraction.
-2. If MinerU is missing, expired, or unavailable, PaperCheck first tries local `pymupdf4llm.to_markdown()` to preserve Markdown-like structure.
-3. If `pymupdf4llm` is unavailable, fails, or returns unusable text, PaperCheck falls back to local `PyMuPDF/fitz` and calls `page.get_text(sort=True)` page by page.
-
-When `scripts/check_papercheck_env.py` reports `pdf_extraction.configured=false`, tell the user:
-
-- MinerU is not configured.
-- They can set `MINERU_API_KEY` or fill `assets/paperchecker-rules/config/config.json` under `mineru_config.api_key`.
-- Until then, PaperCheck will continue with the local `pymupdf4llm` / `PyMuPDF` fallback if those dependencies are installed.
-- The fallback is the best no-key built-in option currently packaged here for text-layer PDFs, especially when `pymupdf4llm` can preserve headings, lists, and some table structure. It is still not the optimal production parser for scanned PDFs, complex multi-column layout, tables, formulas, headers/footers, or references split across pages. MinerU or another OCR/layout parser is preferred for higher-confidence PDF audits.
-
-## Known Limits
-
-- Evidence extraction only supports `.docx` directly.
-- Rules-service upload supports `.docx`, `.doc`, and `.pdf` according to the upstream rules project, but extraction quality depends on document structure.
-- The current model can judge support from extracted context and reference text, but it cannot verify the actual cited paper's full content unless the paper/PDF is provided.
-
-## Packaging Boundary
-
-The skill package should contain `SKILL.md`, `agents/`, `scripts/`, `references/`, and cleaned `assets/paperchecker-rules`. It must not contain:
-
-- provider API keys
-- `node_modules`
-- uploaded or sample papers
-- generated markdown/JSON reports
-- cache directories
-- local config values
+包内保留入口说明、脚本、参考文件、测试和精简后的本地规则。依赖目录、缓存、私人配置、上传论文和生成报告均不打入技能包。完整的早期规则服务可从 Git 历史找回。
