@@ -1,7 +1,12 @@
+import os
+from pathlib import Path
+
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+
 import torch
 
 ckpt = torch.load(
-    "transformer_feat_varlen_scratch/best_model.pth",
+    BASE_DIR / "train_models/transformer_feat_varlen_scratch/best_model.pth",
     map_location="cpu",
     weights_only=False,
 )

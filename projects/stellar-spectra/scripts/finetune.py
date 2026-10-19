@@ -303,7 +303,9 @@ def load_token_mapping():
 def load_pretrained_model(seq_len=8192):
     """加载预训练模型并适配新序列长度"""
     logger.info("🔄 加载预训练模型...")
-    ckpt_path = os.environ.get('PRETRAIN_CKPT_PATH', '/home/share/guofangkeda/wangcunshi/Spectrum/Spec/Spec/pth/checkpoint_step_21000.pth')
+    ckpt_path = os.environ.get('PRETRAIN_CKPT_PATH', '').strip()
+    if not ckpt_path:
+        raise FileNotFoundError("Set PRETRAIN_CKPT_PATH to the checkpoint for this fine-tuning stage")
     checkpoint = torch.load(ckpt_path, map_location='cpu', weights_only=False)
     
     # 创建新模型，序列长度拉满
@@ -1193,7 +1195,7 @@ def finetune(model, train_loader, val_loader, config, param_stats):
 
     # 步级评估设置
     step_eval_freq = int(config.get('step_eval_freq_steps', 0))
-    step_eval_csv = str(config.get('step_eval_csv', os.environ.get('STEP_EVAL_CSV', '/home/share/guofangkeda/wangcunshi/Spectrum/Spec/Spec/pretrain_data/spectrum_tokenized_val_subset.csv')))
+    step_eval_csv = str(config.get('step_eval_csv', os.environ.get('STEP_EVAL_CSV', '')))
     step_eval_workers = int(config.get('step_eval_workers', 0))
     step_eval_rank0_only = bool(config.get('step_eval_rank0_only', True))
     # 子集评估离线缓存到内存（更快）
@@ -1543,6 +1545,13 @@ def main():
     """主函数"""
     print("🚀 优化微调脚本 (V2) - 修正参数解析 | 支持多卡DDP")
     
+    required_paths = ['TRAIN_CSV', 'VAL_CSV', 'PRETRAIN_CKPT_PATH']
+    if int(os.environ.get('STEP_EVAL_FREQ_STEPS', '500')) > 0:
+        required_paths.append('STEP_EVAL_CSV')
+    missing = [name for name in required_paths if not os.environ.get(name, '').strip()]
+    if missing:
+        raise FileNotFoundError("Set explicit input paths before fine-tuning: " + ", ".join(missing))
+
     config = {
         'batch_size': int(os.environ.get('BATCH_SIZE', '16')),
         'epochs': int(os.environ.get('EPOCHS', '1')),
@@ -1565,7 +1574,7 @@ def main():
         'ckpt_compat_pretrain_naming': os.environ.get('CKPT_COMPAT_PRETRAIN_NAMING', '1') == '1',
         # 步级评估配置
         'step_eval_freq_steps': int(os.environ.get('STEP_EVAL_FREQ_STEPS', '500')),
-        'step_eval_csv': os.environ.get('STEP_EVAL_CSV', '/home/share/guofangkeda/wangcunshi/Spectrum/Spec/Spec/pretrain_data/spectrum_tokenized_val_subset.csv'),
+        'step_eval_csv': os.environ.get('STEP_EVAL_CSV', ''),
         'step_eval_workers': int(os.environ.get('STEP_EVAL_WORKERS', '0')),
         # 新增：训练步级日志频率（单位：参数更新步）；0 表示关闭
         'train_log_every_steps': int(os.environ.get('TRAIN_LOG_EVERY_STEPS', '20')),
@@ -1620,8 +1629,8 @@ def main():
         model = base_model
     token_to_id = load_token_mapping()
 
-    train_csv = os.environ.get('TRAIN_CSV', '/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune_data/spectrum_tokenized_train.csv')
-    val_csv = os.environ.get('VAL_CSV', '/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune_data/spectrum_tokenized_val.csv')
+    train_csv = os.environ['TRAIN_CSV']
+    val_csv = os.environ['VAL_CSV']
 
     # 优先使用离线分片（每个 rank 只读自己的 shard），否则回退到原始 CSV
     train_csv_resolved, train_using_shards = _resolve_sharded_path(train_csv, role='train', world_size=world_size_env, global_rank=global_rank)

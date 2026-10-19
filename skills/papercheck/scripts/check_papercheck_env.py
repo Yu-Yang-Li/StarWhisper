@@ -18,10 +18,10 @@ DEFAULT_RULES_REPO = Path(
 )
 PYTHON_IMPORTS = (
     "docx",
-    "fastapi",
-    "fitz",
-    "uvicorn",
     "requests",
+)
+PDF_IMPORTS = (
+    "fitz",
     "pymupdf4llm",
 )
 MINERU_AUTH_URL = "https://mineru.net"
@@ -70,7 +70,7 @@ def mineru_status(rules_repo: Path) -> dict:
         "user_action": (
             "Set MINERU_API_KEY or fill assets/paperchecker-rules/config/config.json mineru_config.api_key "
             f"after applying for MinerU access at {MINERU_AUTH_URL}. If no key is available, install PyMuPDF and pymupdf4llm "
-            "from assets/paperchecker-rules/requirements.txt; PaperCheck will continue with local fallback and should label PDF findings as fallback/needs-review."
+            "from assets/paperchecker-rules/requirements-pdf.txt; PaperCheck will continue with local fallback and should label PDF findings as fallback/needs-review."
         ),
     }
 
@@ -86,8 +86,8 @@ def main() -> int:
         SKILL_ROOT / "scripts" / "extract_citation_evidence.py",
         rules_repo / "README.md",
         rules_repo / "requirements.txt",
-        rules_repo / "run_server.py",
-        rules_repo / "app" / "main.py",
+        rules_repo / "services" / "report_service.py",
+        rules_repo / "contracts" / "v2_contract.py",
         rules_repo / "core" / "checker" / "citation_checker.py",
     ]
 
@@ -95,7 +95,10 @@ def main() -> int:
         "skill_root": str(SKILL_ROOT),
         "rules_repo": exists(rules_repo),
         "required_files": [exists(path) for path in required],
-        "python_imports": [import_status(module) for module in PYTHON_IMPORTS],
+        "python_imports": [
+            {**import_status(module), "required": module in PYTHON_IMPORTS}
+            for module in (*PYTHON_IMPORTS, *PDF_IMPORTS)
+        ],
         "pdf_extraction": mineru_status(rules_repo),
         "python": shutil.which("python") or shutil.which("py") or sys.executable,
         "warnings": [],
@@ -105,7 +108,7 @@ def main() -> int:
     }
 
     missing_imports = [
-        item["module"] for item in report["python_imports"] if not item["importable"]
+        item["module"] for item in report["python_imports"] if item["required"] and not item["importable"]
     ]
     if missing_imports:
         report["warnings"].append(

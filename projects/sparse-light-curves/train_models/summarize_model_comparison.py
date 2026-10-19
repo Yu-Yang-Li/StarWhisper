@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+import os
+
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -25,7 +27,7 @@ from matplotlib.patches import Patch
 
 from experiment_registry import collect_metrics_table
 
-BASE = Path("/root/shared-nvme/train_models")
+BASE = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve() / "train_models"
 OUT = BASE / "results"
 INFER_CSV = OUT / "inference_time_benchmark.csv"
 DEPLOY_CSV = OUT / "inference_time_benchmark_deploy.csv"

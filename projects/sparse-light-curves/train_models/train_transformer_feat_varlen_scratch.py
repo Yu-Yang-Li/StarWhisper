@@ -11,6 +11,8 @@ Transformer 分类器（1117特征版）
   (若存在) num_points vs accuracy、训练日志与配置、模型/编码器/标准化器。
 """
 
+import os
+
 import logging
 import sys
 from dataclasses import dataclass
@@ -24,7 +26,7 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 from split_utils import load_split_feature_bundle, to_transformer_train_bundle  # noqa: E402
 
 MODEL_DIR = BASE_DIR / "train_models/transformer_feat_varlen_scratch"

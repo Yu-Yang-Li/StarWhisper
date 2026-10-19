@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import re
 import numpy as np
@@ -7,8 +8,8 @@ import csv
 
 
 # 参数设置
-input_base = "/data1/R10000FITS"
-output_base = "/data1/R1800FITS_300"
+input_base = os.environ.get("PHOENIX_INPUT_ROOT", str(Path(__file__).resolve().parents[2] / "data/R10000FITS"))
+output_base = os.environ.get("PHOENIX_OUTPUT_ROOT", str(Path(__file__).resolve().parents[2] / "data/R1800FITS_300"))
 
 snr_list = [1, 2]
 metallicities = ["Z-{:.1f}".format(i * 0.1) for i in range(10, 41)]  # Z-1.0 ~ Z-4.0

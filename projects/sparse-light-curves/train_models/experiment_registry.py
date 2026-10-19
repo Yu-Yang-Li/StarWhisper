@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import os
+
 import json
 import re
 from dataclasses import dataclass, field
@@ -11,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
-BASE = Path("/root/shared-nvme")
+BASE = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 TRAIN_MODELS = BASE / "train_models"
 SPLIT_ROOT = BASE / "data/split"
 

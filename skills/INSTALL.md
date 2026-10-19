@@ -65,6 +65,7 @@ Linux / macOS 使用 `export STARWHISPER_ROOT="$PWD"`；长期保留时写入自
 | 论文全文审查 | [thesis-audit-reviewer/requirements.txt](thesis-audit-reviewer/requirements.txt) |
 | PPT 打包与检查 | [visual-deck-builder/scripts/requirements.txt](visual-deck-builder/scripts/requirements.txt) |
 | 引用规则检查 | [papercheck 的 requirements.txt](papercheck/assets/paperchecker-rules/requirements.txt) |
+| PaperCheck 本地 PDF 解析 | [requirements-pdf.txt](papercheck/assets/paperchecker-rules/requirements-pdf.txt)；无需启动网页或 API 服务 |
 | 基线模型模板 | [模型模板说明](research-baseline-builder/references/model-templates.md)，各脚本开头也列有依赖 |
 
 科研训练代码的环境以各项目 README 为准。技能安装不会自动安装 NINA、FTP、MQTT 或图像推断模型。

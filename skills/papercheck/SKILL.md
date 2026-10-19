@@ -26,7 +26,7 @@ python scripts/progressive_papercheck.py "paper.docx" --mode subjective --out "e
 | `subjective` | 默认；规则检查，并准备当前模型的引用支持审查 |
 | `full` | 增加对已提供原文、DOI 或开放来源证据的核验，并说明来源限制 |
 
-附带规则不自动代表 AAS、MNRAS 或所有天文期刊的格式要求。规则输出、证据提取和模型判断要分别说明。需要配置、规则服务或 PDF 解析方法时阅读 [运行说明](references/runtime.md)。
+附带规则不自动代表 AAS、MNRAS 或所有天文期刊的格式要求。规则输出、证据提取和模型判断要分别说明。依赖安装、配置与 PDF 解析方法见 [运行说明](references/runtime.md)；规则在本地执行，无需启动服务。
 
 ## 逐条核对
 

@@ -3,14 +3,16 @@
 """
 Transformer 分类器微调脚本（基于1117_50obs模型）
 - 预训练模型: transformer_feat_50obs_pretrain
-- 训练集: /root/shared-nvme/features/train2_1117_20251117_235357_balanced.csv
-- 验证集: /root/shared-nvme/features/test2_1117_20251117_235357_balanced.csv
+- 训练集: <data-root>/features/train2_1117_20251117_235357_balanced.csv
+- 验证集: <data-root>/features/test2_1117_20251117_235357_balanced.csv
 
 说明:
 - 加载预训练模型进行微调
 - 使用较小的学习率进行微调
 - 保持相同的模型架构和特征处理方式
 """
+
+import os
 
 import logging
 import sys
@@ -25,7 +27,7 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 # 预训练模型目录
 PRETRAINED_MODEL_DIR = BASE_DIR / "train_models/transformer_feat_50obs_pretrain"
 # 微调数据集

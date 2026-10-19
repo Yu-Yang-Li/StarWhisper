@@ -18,6 +18,8 @@
 
 from __future__ import annotations
 
+import os
+
 import logging
 import sys
 from pathlib import Path
@@ -29,8 +31,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-BASE_DIR = SCRIPT_DIR.parent
-SPLIT_ROOT = SCRIPT_DIR / "split"
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+SPLIT_ROOT = BASE_DIR / "data/split"
 
 RANDOM_STATE = 42
 TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.75, 0.10, 0.15

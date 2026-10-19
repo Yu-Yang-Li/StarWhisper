@@ -15,8 +15,8 @@ def run_check_env(tmp_path, env=None):
     for relative in [
         "README.md",
         "requirements.txt",
-        "run_server.py",
-        "app/main.py",
+        "services/report_service.py",
+        "contracts/v2_contract.py",
         "core/checker/citation_checker.py",
     ]:
         path = rules_repo / relative

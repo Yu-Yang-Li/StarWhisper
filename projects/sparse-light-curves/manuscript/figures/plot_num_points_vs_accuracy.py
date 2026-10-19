@@ -2,6 +2,7 @@
 """Regenerate fig_num_points_vs_accuracy.pdf from experiment CSVs."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import matplotlib
@@ -10,7 +11,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[2])).expanduser().resolve()
 BASE = ROOT / "train_models"
 OUT = Path(__file__).resolve().parent
 

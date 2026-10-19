@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import os
+
 import argparse
 import importlib.util
 import json
@@ -18,9 +20,9 @@ import pandas as pd
 from tqdm import tqdm
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-BASE_DIR = SCRIPT_DIR.parent
-SPLIT_DIR = SCRIPT_DIR / "split"
-FEATURE_DIR = SCRIPT_DIR / "features"
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
+SPLIT_DIR = BASE_DIR / "data/split"
+FEATURE_DIR = BASE_DIR / "data/features"
 FEATURE_DIR.mkdir(parents=True, exist_ok=True)
 
 if str(SCRIPT_DIR) not in sys.path:
@@ -42,9 +44,9 @@ def _get_extractor(set_name: str):
     if set_name in _EXTRACTOR_CACHE:
         return _EXTRACTOR_CACHE[set_name]
     path = (
-        BASE_DIR / "features/extract_features_full.py"
+        SCRIPT_DIR.parent / "features/extract_features_full.py"
         if set_name == "1117"
-        else BASE_DIR / "features/extract_features_reduced.py"
+        else SCRIPT_DIR.parent / "features/extract_features_reduced.py"
     )
     spec = importlib.util.spec_from_file_location(f"ext_{set_name}", path)
     mod = importlib.util.module_from_spec(spec)

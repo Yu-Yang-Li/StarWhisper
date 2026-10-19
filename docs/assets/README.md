@@ -21,19 +21,11 @@ these files at `https://yu-yang-li.github.io/StarWhisper/assets/<file>`.
 | `goai-metrics-source.png` | Research notes | Original GOAI policy trade-off figure |
 | `goai-verification-source.png` | Research notes | Original GOAI validation-path diagram |
 
-## Retained earlier assets
-
-`starwhisper-hero.jpg`, `starwhisper-architecture.jpg`,
-`starwhisper-observe-loop.jpg`, `starwhisper-skills-matrix.jpg`, and
-`starwhisper-verification.jpg` are earlier generated illustrations. `demo-1.png`
-and `demo-2.png` are earlier capability sketches. They remain available for old
-links and provenance; the repository home no longer embeds them.
-
 ## Cover provenance
 
-Created with the built-in `imagegen` tool, using `starwhisper-hero.jpg` as the edit
-target. The illustration carries no observations, measurements, or interface
-readouts.
+Created with the built-in `imagegen` tool from an earlier concept illustration.
+The original edit input is available in Git history. The current illustration
+carries no observations, measurements, or interface readouts.
 
 <details>
 <summary>Generation prompt</summary>

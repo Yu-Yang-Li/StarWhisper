@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+import os
+
 import logging
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,7 +20,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 logger = logging.getLogger(__name__)
 
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 SPLIT_ROOT = BASE_DIR / "data/split"
 
 FEATURE_POOLS = {

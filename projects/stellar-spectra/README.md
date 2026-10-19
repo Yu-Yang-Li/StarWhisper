@@ -9,7 +9,7 @@ Spectral diffusion and discrete-token modeling for stellar spectra at low signal
 ## Updates
 
 - **Mar 31, 2026:** Public **training code**, **`code/` data pipeline**, and **English documentation**. **Model weights** are on [Hugging Face — Jaredxjc/Low-SNR-Stellar-Spectra-as-Language](https://huggingface.co/Jaredxjc/Low-SNR-Stellar-Spectra-as-Language) (MIT).
-- **Mar 31, 2026:** **Full tokenized spectra datasets** for redistribution: **Coming soon** (will be linked from this README and the HF dataset card when released).
+- The full ready-to-train tokenized dataset is not bundled in this repository; prepare it with the processing scripts below.
 
 ---
 
@@ -27,7 +27,7 @@ Load with the same architecture as in `src/spectral_lm/` and training scripts un
 
 > **Data processing code — released.** The full pipeline for building tokenized training CSVs is in this repository: **`code/`** (LAMOST download, PHOENIX-based simulation, flux tokenization, catalog merge, augmentation) plus **`scripts/preprocess_data.py`** for generic CSV trees and **`vocab/vocabulary.csv`** for the fixed vocabulary.
 >
-> **Curated full dataset (ready-to-train CSVs) — coming soon.** We will publish a downloadable release (and/or a Hugging Face dataset) for users who do not wish to regenerate data from raw spectra. Until then, follow the **Data pipeline** section below and LAMOST data-access rules to produce files locally.
+> **Ready-to-train CSVs are not bundled.** Follow the **Data pipeline** section below and LAMOST data-access rules to produce files locally.
 
 ---
 
@@ -37,7 +37,7 @@ Load with the same architecture as in `src/spectral_lm/` and training scripts un
 
 1. **PHOENIX templates** — High-resolution synthetic spectra from the [PHOENIX grid (Göttingen)](https://phoenix.astro.physik.uni-goettingen.de/?page_id=15). Retrieve files over **FTP** with a standard client (e.g. FileZilla); a **full local mirror** is appropriate when generating large synthetic sets.
 2. **Interpolation and low-resolution Ca II spectra** — Regrid PHOENIX onto the working wavelength scale in `code/interpolation&decrease_resolution/ShowOut/interpolation0415.py`. Then apply **`CaII.py`** / **`CaII_300p.py`**: reduce resolving power, inject **SNR-matched Gaussian noise**, and retain the **Ca II** region; **`CaII_300p.py`** yields **~300 pixels** per spectrum for short-sequence fine-tuning. Outputs use metallicity-style directories (e.g. `Z-1.0`–`Z-4.0`).
-3. **LAMOST DR12** — Register at LAMOST; build a **CSV target list** via the [DR12 search portal](https://www.lamost.org/dr12/v1.1/search) (CSV output, SNR/SNRZ and [Fe/H] cuts, stellar type **Star**). Obtain a **PyLAMOST token** from the [user portal](https://www.lamost.org/lmusers/user/). Download and stage spectra with **`code/pylamost-master/pylamost.py`** and **`lamost_dr12_pipeline.py`**; stellar parameters come from the **survey catalog** bundled with the query.
+3. **LAMOST DR12** — Register at LAMOST; build a **CSV target list** via the [DR12 search portal](https://www.lamost.org/dr12/v1.1/search) (CSV output, SNR/SNRZ and [Fe/H] cuts, stellar type **Star**). Obtain a **PyLAMOST token** from the [user portal](https://www.lamost.org/lmusers/user/). Download and stage spectra with **`code/pylamost-master/pylamost-master/lamost_dr12_pipeline.py`**, using its adjacent `pylamost.py` client; stellar parameters come from the **survey catalog** bundled with the query.
 4. **Augmentation and training CSVs** — Optional row-level augmentation in `code/lamost_data_augmentation/` (adds **`augmentation_id`**). Flux tokenization and catalog merge to the trainer’s column layout live in **`code/lamost_sft_data/`** (`lamost_flux_preprocessing.py`, `convert_lamost_to_pretrain_format.py`, `mix_spectra.py`).
 
 ### Pipeline summary (single reference)
@@ -56,12 +56,12 @@ Load with the same architecture as in `src/spectral_lm/` and training scripts un
 
 | Path | Purpose |
 |------|---------|
-| `code/pylamost-master/` | LAMOST API client, DR12 download pipeline (`lamost_dr12_pipeline.py`, `lamost_dr12_50.py`, samples). |
+| `code/pylamost-master/pylamost-master/` | LAMOST API client and the current DR12 download pipeline (`lamost_dr12_pipeline.py`). Earlier one-object and preview experiments are in `legacy/lamost/`. |
 | `code/interpolation&decrease_resolution/` | Resolution reduction, SNR noise, Ca II extraction; `ShowOut/` holds helper notebooks and small parameter CSVs. |
 | `code/lamost_sft_data/` | Flux tokenization, catalog merge to 20-column CSV, `mix_spectra.py`, `run1207.sh`. |
 | `code/lamost_data_augmentation/` | As above plus **`augmentation_id`**; batch entry `run.sh`. |
 
-*Dependencies (typical):* `pandas`, `numpy`, `tqdm`, `scikit-learn`; `astropy` / `scipy` where noted in scripts. Configure **absolute paths** inside those scripts for your environment.
+*Dependencies (typical):* `pandas`, `numpy`, `tqdm`, `scikit-learn`; `astropy` / `scipy` where noted in scripts. Input paths are supplied as command-line arguments or environment variables; see **Local configuration** below.
 
 ---
 
@@ -78,7 +78,7 @@ The canonical **model** and **train/finetune** entrypoints live outside `code/`:
 | `scripts/pretrain.py` | Pre-training |
 | `scripts/finetune.py` | Fine-tuning |
 | `vocab/vocabulary.csv` | Default vocabulary (`token_id`, `token`); see `vocab/README.md` |
-| `legacy_pretrain/` | Optional legacy SLURM launcher (`launch_slurm_pretrain.sh`) |
+| [legacy/](legacy/README.md) | Earlier preprocessing, pretrainer/model source, site-specific SLURM launcher and download sketches |
 
 ### Prerequisites
 
@@ -94,7 +94,7 @@ Install `torch` for your CUDA version from [PyTorch](https://pytorch.org).
 
 | Placeholder | Meaning |
 |-------------|---------|
-| `REPO_ROOT` | Root of this repository (clone path). |
+| `REPO_ROOT` | Absolute path to `StarWhisper/projects/stellar-spectra/`. |
 | `RAW_SPECTRA_DIR` | Directory tree of **input** spectrum CSV files (recursive scan). |
 | `FITS_ROOT` | Parent folder that contains SNR subfolders (used with `--make_groups`). Example: `FITS_ROOT/SNR10/.../*.csv`. |
 | `VOCAB_FILE` | Fixed vocabulary CSV. Default: `REPO_ROOT/vocab/vocabulary.csv`. |
@@ -233,7 +233,7 @@ torchrun --standalone --nproc_per_node="${NPROC_PER_NODE}" \
   "${REPO_ROOT}/scripts/finetune.py"
 ```
 
-**3b / 3c** — chain from `FT25_CKPT` and `FT911_CKPT` similarly (see previous README versions or `examples/env_finetune_snr_*.example.sh`).
+**3b / 3c** — chain from `FT25_CKPT` and `FT911_CKPT` similarly, using `examples/env_finetune_snr_9_11.example.sh` and `examples/env_finetune_snr_7_9.example.sh`.
 
 **Shell helpers**
 
@@ -247,7 +247,22 @@ bash examples/launch_finetune.example.sh
 
 ## Local configuration
 
-Some scripts under `code/` retain paths from the original computing environment. Set the data and output paths for your own environment before running them. The complete tokenized dataset is still listed as coming soon; model weights are linked above.
+| Workflow | Explicit inputs |
+| --- | --- |
+| Generic tokenization | `--data_dir`; grouped SNR processing requires `--make_groups --fits_root` |
+| Fine-tuning | `TRAIN_CSV`, `VAL_CSV`, `PRETRAIN_CKPT_PATH`; also `STEP_EVAL_CSV` when step evaluation is enabled |
+| PHOENIX processing | `PHOENIX_INPUT_ROOT` and `PHOENIX_OUTPUT_ROOT`; defaults are under this project's `data/` directory |
+| LAMOST download | `LAMOST_TOKEN`, `LAMOST_DATA_ROOT`, and optionally `LAMOST_WAVELENGTH_FILE` |
+| LAMOST tokenization | `--data_dir`; shell examples use `LAMOST_DATA_ROOT` |
+| Mixing tokenized spectra | Four command arguments, or `MIX_A_PATH`, `MIX_B1_PATH`, `MIX_B2_PATH`, `MIX_OUT_DIR` |
+
+Fine-tuning checks the required inputs before loading a model. Select the step-evaluation CSV for the current experiment explicitly; it does not substitute another cohort. Set `STEP_EVAL_FREQ_STEPS=0` to disable that evaluation. Existing seeds, SNR stages and model settings are retained.
+
+Data, vocabularies and checkpoints stay with the project. Current entrypoints are in `scripts/`; data-generation tools are in `code/`; earlier implementations are described in [legacy/README.md](legacy/README.md). Importing the PHOENIX interpolation helper no longer starts generation jobs.
+
+After installing the project dependencies, run `python -m pytest tests -q` for
+input validation, vocabulary lookup and import checks. These checks do not train
+a model or download spectra.
 
 ## Citation
 

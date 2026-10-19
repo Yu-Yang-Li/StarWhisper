@@ -107,8 +107,8 @@ def validate(smoke_input: Path | None, skip_tests: bool) -> list[str]:
         "scripts/check_papercheck_env.py",
         "assets/paperchecker-rules/README.md",
         "assets/paperchecker-rules/requirements.txt",
-        "assets/paperchecker-rules/run_server.py",
-        "assets/paperchecker-rules/app/main.py",
+        "assets/paperchecker-rules/services/report_service.py",
+        "assets/paperchecker-rules/contracts/v2_contract.py",
         "assets/paperchecker-rules/core/extractor/pdf_extractor.py",
     ]
     for rel in required:
@@ -122,7 +122,7 @@ def validate(smoke_input: Path | None, skip_tests: bool) -> list[str]:
         failures.append(str(exc))
 
     failures.extend(scan_residue())
-    for module in ["docx", "fastapi", "fitz", "pymupdf4llm", "requests", "uvicorn"]:
+    for module in ["docx", "requests"]:
         fail_if(not importable(module), f"Python module not importable: {module}", failures)
 
     if failures:

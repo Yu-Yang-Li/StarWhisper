@@ -23,14 +23,10 @@ from typing import List, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor
 
 
-DEFAULT_A_PATH = \
-    "/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune2/spectrum_tokenized_val_shuffled_global.csv"
-DEFAULT_B1_PATH = \
-    "/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune_data/spectrum_tokenized_val_shuffled_global_partA.csv"
-DEFAULT_B2_PATH = \
-    "/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune_data/spectrum_tokenized_val_shuffled_global_partB.csv"
-DEFAULT_OUTPUT_DIR = \
-    "/home/share/guofangkeda/wangcunshi/Spectrum/Spectrum copy/finetune_mix"
+DEFAULT_A_PATH = None
+DEFAULT_B1_PATH = None
+DEFAULT_B2_PATH = None
+DEFAULT_OUTPUT_DIR = None
 
 
 # 允许通过环境变量覆盖每个光谱的行数（默认3030）。
@@ -979,6 +975,8 @@ def main(argv: List[str]) -> int:
 
     mode = os.environ.get("MIX_MODE", "default").strip().lower()
     if mode == "default":
+        if not all((a_path, b1_path, b2_path, output_dir)):
+            raise ValueError("Set MIX_A_PATH, MIX_B1_PATH, MIX_B2_PATH and MIX_OUT_DIR, or pass all four paths")
         print(
             "配置:\n"
             f"  A: {a_path}\n"

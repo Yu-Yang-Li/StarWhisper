@@ -8,7 +8,7 @@
   本文件同时提供 LS 特征提取、旧 legacy 模型加载等工具函数。
 
 推荐用法（部署性能）:
-  cd /root/shared-nvme
+  cd projects/sparse-light-curves
   conda run -n astro_classifier python train_models/run_benchmark_inference.py \\
       --device gpu --skip-legacy
 
@@ -21,6 +21,8 @@ LS 特征提取依赖:
   - 特征 CSV 的 file_path 列
   - 原始光变 CSV 位于 BASE_DIR 下，如 train2/RR/xxx.csv
 """
+
+import os
 
 import logging
 import pickle
@@ -47,7 +49,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 路径配置
-BASE_DIR = Path("/root/shared-nvme")
+BASE_DIR = Path(os.environ.get("STARWHISPER_SPARSE_ROOT", Path(__file__).resolve().parents[1])).expanduser().resolve()
 TRANSFORMER_MODEL_DIR = BASE_DIR / "train_models/transformer_feat_varlen_scratch"
 XGBOOST_MODEL_DIR = BASE_DIR / "image_manuscript/xgboost_7class_best_acc0.9352"
 TEST_FILE = BASE_DIR / "features/test2_1117_20251117_235357_balanced.csv"
@@ -402,7 +404,7 @@ def resolve_lightcurve_csv_path(
     """
     将特征 CSV 中的 file_path 解析为原始光变曲线 CSV 的绝对路径。
 
-    file_path 常见格式: train2\\RR\\ZTFJ....csv（相对 shared-nvme 根目录）
+    file_path 常见格式: train2\\RR\\ZTFJ....csv（相对数据根目录）
     """
     base = base_dir or BASE_DIR
     fp = str(file_path).replace("\\", "/").strip().lstrip("/")
